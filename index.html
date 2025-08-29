@@ -1244,15 +1244,6 @@
             feedback.style.display = 'block';
         });
         
-        // Module starting functionality
-        document.querySelectorAll('.start-module').forEach(button => {
-            button.addEventListener('click', () => {
-                const module = button.getAttribute('data-module');
-                alert(`Starting the ${module} module! This would open the learning content in a real application.`);
-                updateProgress(10);
-            });
-        });
-        
         // Video play button
         document.getElementById('play-video').addEventListener('click', () => {
             alert('Video playback would start in a real application. This is a simulation.');
