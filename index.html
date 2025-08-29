@@ -486,9 +486,9 @@
             <h1><i class="fas fa-tree"></i> Ecological & Cultural Site Inspection</h1>
             <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
             <div class="progress-bar">
-                <div class="progress" style="width: 35%"></div>
+                <div class="progress" id="main-progress" style="width: 35%"></div>
             </div>
-            <p>Course Progress: 35% Complete</p>
+            <p>Course Progress: <span id="progress-text">35%</span> Complete</p>
         </header>
         
         <div class="nav-tabs">
@@ -529,7 +529,7 @@
                         <p>Learn the fundamentals of ecological site inspections and their importance in conservation work.</p>
                         <div class="badge badge-primary">15 min</div>
                         <div class="badge badge-secondary">Beginner</div>
-                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                        <button class="btn start-module" data-module="intro"><i class="fas fa-play"></i> Start Module</button>
                     </div>
                 </div>
                 
@@ -542,7 +542,7 @@
                         <p>Explore Tasmania's unique ecosystems and their conservation significance.</p>
                         <div class="badge badge-primary">20 min</div>
                         <div class="badge badge-secondary">Intermediate</div>
-                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                        <button class="btn start-module" data-module="ecosystems"><i class="fas fa-play"></i> Start Module</button>
                     </div>
                 </div>
                 
@@ -555,7 +555,7 @@
                         <p>Understand how to identify and protect cultural heritage sites during inspections.</p>
                         <div class="badge badge-primary">25 min</div>
                         <div class="badge badge-warning">Advanced</div>
-                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                        <button class="btn start-module" data-module="heritage"><i class="fas fa-play"></i> Start Module</button>
                     </div>
                 </div>
                 
@@ -568,7 +568,7 @@
                         <p>Learn about the laws and regulations governing site inspections in Tasmania.</p>
                         <div class="badge badge-primary">18 min</div>
                         <div class="badge badge-secondary">Intermediate</div>
-                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                        <button class="btn start-module" data-module="legislation"><i class="fas fa-play"></i> Start Module</button>
                     </div>
                 </div>
             </div>
@@ -582,7 +582,7 @@
                     <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--primary);"></i>
                 </div>
                 <p>Watch this comprehensive video guide to learn the step-by-step process of conducting ecological and cultural site inspections in Tasmania.</p>
-                <button class="btn"><i class="fas fa-play"></i> Play Video</button>
+                <button class="btn" id="play-video"><i class="fas fa-play"></i> Play Video</button>
             </div>
         </section>
         
@@ -635,15 +635,17 @@
                     </div>
                     <div class="form-group">
                         <label>Select the predominant ecosystem type in the marked area:</label>
-                        <select>
-                            <option>Cool temperate rainforest</option>
-                            <option>Alpine vegetation</option>
-                            <option>Eucalypt forest</option>
-                            <option>Coastal heathland</option>
-                            <option>Wetland</option>
+                        <select id="ecosystem-select">
+                            <option value="">Select ecosystem type</option>
+                            <option value="rainforest">Cool temperate rainforest</option>
+                            <option value="alpine">Alpine vegetation</option>
+                            <option value="eucalypt">Eucalypt forest</option>
+                            <option value="heathland">Coastal heathland</option>
+                            <option value="wetland">Wetland</option>
                         </select>
                     </div>
-                    <button class="btn"><i class="fas fa-check"></i> Check Answer</button>
+                    <button class="btn" id="check-ecosystem"><i class="fas fa-check"></i> Check Answer</button>
+                    <div class="feedback" id="ecosystem-feedback"></div>
                 </div>
             </div>
             
@@ -661,29 +663,30 @@
                         <label>Select all that apply:</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="checkbox" id="threat1">
+                                <input type="checkbox" id="threat1" value="compaction">
                                 <label for="threat1">Soil compaction</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="threat2">
+                                <input type="checkbox" id="threat2" value="weeds">
                                 <label for="threat2">Weed invasion</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="threat3">
+                                <input type="checkbox" id="threat3" value="fragmentation">
                                 <label for="threat3">Habitat fragmentation</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="threat4">
+                                <input type="checkbox" id="threat4" value="erosion">
                                 <label for="threat4">Erosion risk</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="threat5">
+                                <input type="checkbox" id="threat5" value="pollution">
                                 <label for="threat5">Water pollution</label>
                             </div>
                         </div>
                     </div>
                     
-                    <button class="btn"><i class="fas fa-check"></i> Check Answers</button>
+                    <button class="btn" id="check-threats"><i class="fas fa-check"></i> Check Answers</button>
+                    <div class="feedback" id="threats-feedback"></div>
                 </div>
             </div>
         </section>
@@ -730,23 +733,23 @@
                     <label>Ecosystem Types Present</label>
                     <div class="checkbox-group">
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco1">
+                            <input type="checkbox" id="eco1" value="rainforest">
                             <label for="eco1">Cool temperate rainforest</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco2">
+                            <input type="checkbox" id="eco2" value="alpine">
                             <label for="eco2">Alpine vegetation</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco3">
+                            <input type="checkbox" id="eco3" value="eucalypt">
                             <label for="eco3">Eucalypt forest</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco4">
+                            <input type="checkbox" id="eco4" value="heathland">
                             <label for="eco4">Coastal heathland</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco5">
+                            <input type="checkbox" id="eco5" value="wetland">
                             <label for="eco5">Wetland</label>
                         </div>
                     </div>
@@ -840,8 +843,9 @@
                 </div>
             </div>
             
-            <button class="btn"><i class="fas fa-paper-plane"></i> Submit Inspection Report</button>
-            <button class="btn btn-secondary"><i class="fas fa-save"></i> Save as Draft</button>
+            <button class="btn" id="submit-inspection"><i class="fas fa-paper-plane"></i> Submit Inspection Report</button>
+            <button class="btn btn-secondary" id="save-draft"><i class="fas fa-save"></i> Save as Draft</button>
+            <div class="feedback" id="inspection-feedback"></div>
         </section>
         
         <!-- Revision & Quiz Section -->
@@ -857,18 +861,28 @@
                 
                 <div class="interactive-box">
                     <div id="quiz-container">
-                        <div class="quiz-question">
+                        <div class="quiz-question" id="question-1">
                             <h4>Question 1: What is the first step in conducting an ecological site inspection?</h4>
-                            <div class="quiz-option">A. Document all plant species</div>
-                            <div class="quiz-option">B. Assess soil conditions</div>
-                            <div class="quiz-option">C. Review existing information about the site</div>
-                            <div class="quiz-option">D. Look for wildlife</div>
-                            <button class="btn"><i class="fas fa-check"></i> Check Answer</button>
+                            <div class="quiz-option" data-correct="false">A. Document all plant species</div>
+                            <div class="quiz-option" data-correct="false">B. Assess soil conditions</div>
+                            <div class="quiz-option" data-correct="true">C. Review existing information about the site</div>
+                            <div class="quiz-option" data-correct="false">D. Look for wildlife</div>
+                            <button class="btn check-answer" data-question="1"><i class="fas fa-check"></i> Check Answer</button>
                             <div class="feedback correct">Correct! Reviewing existing information helps you know what to look for during the inspection.</div>
+                        </div>
+                        
+                        <div class="quiz-question" id="question-2" style="display: none;">
+                            <h4>Question 2: Which legislation primarily protects Aboriginal heritage in Tasmania?</h4>
+                            <div class="quiz-option" data-correct="false">A. Environmental Protection Act</div>
+                            <div class="quiz-option" data-correct="true">B. Aboriginal Heritage Act</div>
+                            <div class="quiz-option" data-correct="false">C. Nature Conservation Act</div>
+                            <div class="quiz-option" data-correct="false">D. Land Use Planning Act</div>
+                            <button class="btn check-answer" data-question="2"><i class="fas fa-check"></i> Check Answer</button>
+                            <div class="feedback correct">Correct! The Aboriginal Heritage Act 1975 is the primary legislation protecting Aboriginal heritage in Tasmania.</div>
                         </div>
                     </div>
                     
-                    <button class="btn" style="margin-top: 20px;"><i class="fas fa-arrow-right"></i> Next Question</button>
+                    <button class="btn" id="next-question" style="margin-top: 20px;"><i class="fas fa-arrow-right"></i> Next Question</button>
                 </div>
             </div>
             
@@ -880,18 +894,18 @@
                 <p>Use these flashcards to revise key concepts and terminology.</p>
                 
                 <div class="interactive-box" style="text-align: center;">
-                    <div style="height: 150px; display: flex; justify-content: center; align-items: center; background-color: var(--light); border-radius: 10px; margin-bottom: 20px; padding: 20px;">
+                    <div id="flashcard-content" style="height: 150px; display: flex; justify-content: center; align-items: center; background-color: var(--light); border-radius: 10px; margin-bottom: 20px; padding: 20px;">
                         <h4>What does EVC stand for?</h4>
                     </div>
-                    <button class="btn"><i class="fas fa-eye"></i> Reveal Answer</button>
-                    <div class="feedback" style="display: none;">
+                    <button class="btn" id="reveal-flashcard"><i class="fas fa-eye"></i> Reveal Answer</button>
+                    <div class="feedback" id="flashcard-answer" style="display: none;">
                         Ecological Vegetation Class - a classification system for vegetation types in Tasmania.
                     </div>
                 </div>
                 
                 <div style="text-align: center; margin-top: 20px;">
-                    <button class="btn"><i class="fas fa-arrow-left"></i> Previous</button>
-                    <button class="btn">Next <i class="fas fa-arrow-right"></i></button>
+                    <button class="btn" id="prev-flashcard"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button class="btn" id="next-flashcard">Next <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
             
@@ -920,7 +934,26 @@
                         </div>
                     </div>
                     
-                    <button class="btn" style="margin-top: 20px;"><i class="fas fa-check"></i> Check Matching</button>
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="match-1">Match 1 to:</label>
+                        <select id="match-1">
+                            <option value="">Select match</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="match-2">Match 2 to:</label>
+                        <select id="match-2">
+                            <option value="">Select match</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" id="check-matching"><i class="fas fa-check"></i> Check Matching</button>
+                    <div class="feedback" id="matching-feedback"></div>
                 </div>
             </div>
         </section>
@@ -940,28 +973,28 @@
                         <i class="fas fa-file-pdf"></i>
                         <h4>Site Inspection Checklist</h4>
                         <p>PDF, 256KB</p>
-                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="checklist"><i class="fas fa-download"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
                         <i class="fas fa-book"></i>
                         <h4>Tasmanian Threatened Species Guide</h4>
                         <p>PDF, 3.2MB</p>
-                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="species-guide"><i class="fas fa-download"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
                         <i class="fas fa-landmark"></i>
                         <h4>Cultural Heritage Assessment Guidelines</h4>
                         <p>PDF, 1.8MB</p>
-                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="heritage-guide"><i class="fas fa-download"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
                         <i class="fas fa-gavel"></i>
                         <h4>Legislative Requirements Summary</h4>
                         <p>PDF, 512KB</p>
-                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="legislation"><i class="fas fa-download"></i> Download</button>
                     </div>
                 </div>
             </div>
@@ -973,22 +1006,22 @@
                 </div>
                 <ul style="list-style: none;">
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;">
                             <i class="fas fa-external-link-alt"></i> Natural Values Atlas
                         </a>
                     </li>
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;">
                             <i class="fas fa-external-link-alt"></i> Tasmanian Heritage Council
                         </a>
                     </li>
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;">
                             <i class="fas fa-external-link-alt"></i> DPIPWE Website
                         </a>
                     </li>
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;">
                             <i class="fas fa-external-link-alt"></i> Aboriginal Heritage Tasmania
                         </a>
                     </li>
@@ -1048,8 +1081,52 @@
                 feedback.textContent = 'Correct! This is a Tasmanian Pademelon, a common marsupial in Tasmania.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
+                updateProgress(2);
             } else {
-                feedback.textContent = 'Incorrect. Try again!';
+                feedback.textContent = 'Incorrect. Try again! The correct answer is Tasmanian Pademelon.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Ecosystem mapping activity
+        document.getElementById('check-ecosystem').addEventListener('click', () => {
+            const select = document.getElementById('ecosystem-select');
+            const feedback = document.getElementById('ecosystem-feedback');
+            
+            if (select.value === 'rainforest') {
+                feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(2);
+            } else {
+                feedback.textContent = 'Incorrect. Try again! The correct answer is Cool temperate rainforest.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Threat identification activity
+        document.getElementById('check-threats').addEventListener('click', () => {
+            const threat1 = document.getElementById('threat1').checked;
+            const threat2 = document.getElementById('threat2').checked;
+            const threat3 = document.getElementById('threat3').checked;
+            const threat4 = document.getElementById('threat4').checked;
+            const threat5 = document.getElementById('threat5').checked;
+            const feedback = document.getElementById('threats-feedback');
+            
+            // All threats should be selected for this scenario
+            if (threat1 && threat2 && threat3 && threat4 && threat5) {
+                feedback.textContent = 'Correct! All these threats are potential concerns when establishing new walking tracks.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(3);
+            } else {
+                feedback.textContent = 'Not quite. In this scenario, all the listed threats are potential concerns when establishing new walking tracks through native vegetation.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
@@ -1065,34 +1142,175 @@
             });
         });
         
-        // Flashcard functionality
-        const flashcards = document.querySelectorAll('.interactive-box');
-        flashcards.forEach(box => {
-            const button = box.querySelector('button');
-            if (button && button.textContent.includes('Reveal Answer')) {
-                button.addEventListener('click', () => {
-                    const feedback = box.querySelector('.feedback');
-                    if (feedback.style.display === 'none') {
-                        feedback.style.display = 'block';
-                        button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
-                    } else {
-                        feedback.style.display = 'none';
-                        button.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+        // Check quiz answers
+        document.querySelectorAll('.check-answer').forEach(button => {
+            button.addEventListener('click', () => {
+                const questionId = button.getAttribute('data-question');
+                const questionDiv = document.getElementById('question-' + questionId);
+                const options = questionDiv.querySelectorAll('.quiz-option');
+                const feedback = questionDiv.querySelector('.feedback');
+                
+                let correctSelected = false;
+                
+                options.forEach(option => {
+                    if (option.style.backgroundColor === 'rgb(233, 236, 239)' && option.getAttribute('data-correct') === 'true') {
+                        correctSelected = true;
                     }
                 });
+                
+                if (correctSelected) {
+                    feedback.textContent = feedback.textContent || 'Correct!';
+                    feedback.classList.add('correct');
+                    feedback.classList.remove('incorrect');
+                    updateProgress(5);
+                } else {
+                    feedback.textContent = 'Incorrect. Try again!';
+                    feedback.classList.add('incorrect');
+                    feedback.classList.remove('correct');
+                }
+                
+                feedback.style.display = 'block';
+            });
+        });
+        
+        // Next question button
+        document.getElementById('next-question').addEventListener('click', () => {
+            const question1 = document.getElementById('question-1');
+            const question2 = document.getElementById('question-2');
+            
+            if (question1.style.display !== 'none') {
+                question1.style.display = 'none';
+                question2.style.display = 'block';
+                document.getElementById('next-question').style.display = 'none';
             }
         });
         
-        // Simulate module progress
-        document.querySelectorAll('.module-card .btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const progressBar = document.querySelector('.progress');
-                const currentWidth = parseInt(progressBar.style.width);
-                progressBar.style.width = (currentWidth + 5) + '%';
-                
-                alert('Module started! Your progress will be saved as you complete the activities.');
+        // Flashcard functionality
+        const flashcards = [
+            { question: "What does EVC stand for?", answer: "Ecological Vegetation Class - a classification system for vegetation types in Tasmania." },
+            { question: "What is a threatened species?", answer: "A species that is vulnerable to extinction in the near future." },
+            { question: "What is the purpose of a site inspection?", answer: "To assess ecological and cultural values, identify potential impacts, and inform management decisions." }
+        ];
+        
+        let currentFlashcard = 0;
+        
+        document.getElementById('reveal-flashcard').addEventListener('click', () => {
+            const answerDiv = document.getElementById('flashcard-answer');
+            const button = document.getElementById('reveal-flashcard');
+            
+            if (answerDiv.style.display === 'none') {
+                answerDiv.style.display = 'block';
+                button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+            } else {
+                answerDiv.style.display = 'none';
+                button.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+            }
+        });
+        
+        document.getElementById('next-flashcard').addEventListener('click', () => {
+            currentFlashcard = (currentFlashcard + 1) % flashcards.length;
+            updateFlashcard();
+        });
+        
+        document.getElementById('prev-flashcard').addEventListener('click', () => {
+            currentFlashcard = (currentFlashcard - 1 + flashcards.length) % flashcards.length;
+            updateFlashcard();
+        });
+        
+        function updateFlashcard() {
+            document.getElementById('flashcard-content').innerHTML = `<h4>${flashcards[currentFlashcard].question}</h4>`;
+            document.getElementById('flashcard-answer').textContent = flashcards[currentFlashcard].answer;
+            document.getElementById('flashcard-answer').style.display = 'none';
+            document.getElementById('reveal-flashcard').innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+        }
+        
+        // Terminology matching activity
+        document.getElementById('check-matching').addEventListener('click', () => {
+            const match1 = document.getElementById('match-1').value;
+            const match2 = document.getElementById('match-2').value;
+            const feedback = document.getElementById('matching-feedback');
+            
+            if (match1 === 'B' && match2 === 'A') {
+                feedback.textContent = 'Correct! EVC is a classification system, and Pre-European vegetation refers to the original vegetation.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(3);
+            } else {
+                feedback.textContent = 'Incorrect. Try again! EVC is a classification system (B), and Pre-European vegetation refers to the original vegetation (A).';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Module starting functionality
+        document.querySelectorAll('.start-module').forEach(button => {
+            button.addEventListener('click', () => {
+                const module = button.getAttribute('data-module');
+                alert(`Starting the ${module} module! This would open the learning content in a real application.`);
+                updateProgress(10);
             });
         });
+        
+        // Video play button
+        document.getElementById('play-video').addEventListener('click', () => {
+            alert('Video playback would start in a real application. This is a simulation.');
+            updateProgress(5);
+        });
+        
+        // Inspection form submission
+        document.getElementById('submit-inspection').addEventListener('click', () => {
+            const siteName = document.getElementById('site-name').value;
+            const feedback = document.getElementById('inspection-feedback');
+            
+            if (!siteName) {
+                feedback.textContent = 'Please enter a site name before submitting.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            } else {
+                feedback.textContent = 'Inspection submitted successfully! Good work.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(15);
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Save draft button
+        document.getElementById('save-draft').addEventListener('click', () => {
+            const feedback = document.getElementById('inspection-feedback');
+            feedback.textContent = 'Inspection saved as draft.';
+            feedback.classList.add('correct');
+            feedback.classList.remove('incorrect');
+            feedback.style.display = 'block';
+        });
+        
+        // Download resources
+        document.querySelectorAll('.download-resource').forEach(button => {
+            button.addEventListener('click', () => {
+                const resource = button.getAttribute('data-resource');
+                alert(`Downloading ${resource}... In a real application, this would download the file.`);
+            });
+        });
+        
+        // External links
+        document.querySelectorAll('.external-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('This would open an external website in a real application.');
+            });
+        });
+        
+        // Progress tracking
+        let progress = 35;
+        
+        function updateProgress(value) {
+            progress = Math.min(progress + value, 100);
+            document.getElementById('main-progress').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = progress + '%';
+        }
     </script>
 </body>
 </html>
