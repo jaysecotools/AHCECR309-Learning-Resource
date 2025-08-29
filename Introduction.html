@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecological Site Inspection Fundamentals - Tasmania</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #689F38;
+            --accent: #8BC34A;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --tas-blue: #006989;
+            --tas-orange: #E64A19;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23F1F8E9" width="100" height="100"/><path fill="%238BC34A" opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--tas-blue), var(--tas-orange));
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-tab:hover {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .nav-tab.active {
+            background-color: var(--light);
+            color: var(--dark);
+            border-bottom: 4px solid var(--tas-orange);
+            font-weight: bold;
+        }
+        
+        .nav-tab i {
+            font-size: 1.4rem;
+        }
+        
+        .content-section {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            padding: 10px 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .interactive-box {
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: var(--light);
+        }
+        
+        .feedback {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .species-card {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .species-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-right: 1px solid #eee;
+        }
+        
+        .species-info {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .quiz-option {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .site-map {
+            height: 350px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect fill="%23ddd" width="40" height="40"/></svg>');
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .module-img {
+            height: 160px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+        }
+        
+        .module-content {
+            padding: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .inspection-checklist {
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .checklist-item input {
+            width: auto;
+            margin-right: 15px;
+        }
+        
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .download-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .download-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .species-card {
+                flex-direction: column;
+            }
+            
+            .species-img {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .checkbox-item {
+                min-width: 100%;
+            }
+            
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .learning-objectives {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .learning-objectives h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .learning-objectives ul {
+            padding-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 10px;
+        }
+
+        .key-concept {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid var(--primary);
+            background-color: #f9f9f9;
+        }
+
+        .key-concept h4 {
+            color: var(--primary);
+        }
+
+        .tas-example {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--tas-blue);
+        }
+
+        .tas-example h4 {
+            color: var(--tas-blue);
+        }
+
+        .summary-box {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .summary-box h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .summary-box ul {
+            padding-left: 20px;
+        }
+
+        .summary-box li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tree"></i> Ecological Site Inspection Fundamentals</h1>
+            <p>Tasmanian Context - AHCECR309</p>
+            <div class="progress-bar">
+                <div class="progress" id="main-progress" style="width: 20%"></div>
+            </div>
+            <p>Course Progress: <span id="progress-text">20%</span> Complete</p>
+        </header>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-target="overview">
+                <i class="fas fa-home"></i>
+                <span>Overview</span>
+            </div>
+            <div class="nav-tab" data-target="concepts">
+                <i class="fas fa-lightbulb"></i>
+                <span>Key Concepts</span>
+            </div>
+            <div class="nav-tab" data-target="tasmania">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Tasmanian Context</span>
+            </div>
+            <div class="nav-tab" data-target="interactive">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Interactive Activities</span>
+            </div>
+            <div class="nav-tab" data-target="summary">
+                <i class="fas fa-check-circle"></i>
+                <span>Summary</span>
+            </div>
+        </div>
+        
+        <!-- Overview Section -->
+        <section id="overview" class="content-section active">
+            <h2><i class="fas fa-home"></i> Ecological Site Inspection Overview</h2>
+            
+            <div class="learning-objectives">
+                <h3><i class="fas fa-bullseye"></i> Learning Objectives</h3>
+                <p>By the end of this module, you will be able to:</p>
+                <ul>
+                    <li>Understand the purpose and importance of ecological site inspections</li>
+                    <li>Identify key components of a comprehensive site inspection</li>
+                    <li>Recognize Tasmania's unique ecological features and conservation values</li>
+                    <li>Apply appropriate assessment techniques for different ecosystem types</li>
+                    <li>Document findings effectively using standard protocols</li>
+                    <li>Identify potential ecological risks and management recommendations</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>What is Ecological Site Inspection?</h3>
+                </div>
+                <p>Ecological site inspection is a systematic process of assessing and documenting the ecological values, conditions, and potential impacts of a specific area. In Tasmania, these inspections are crucial for:</p>
+                <ul>
+                    <li>Conservation planning and management</li>
+                    <li>Development assessment and approval processes</li>
+                    <li>Monitoring ecosystem health and changes over time</li>
+                    <li>Identifying threatened species and communities</li>
+                    <li>Informing restoration and rehabilitation efforts</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Inspection Process Overview</h3>
+                </div>
+                <p>A comprehensive ecological site inspection typically involves these key steps:</p>
+                <ol>
+                    <li><strong>Pre-inspection planning</strong> - Review existing information, maps, and data</li>
+                    <li><strong>Site assessment</strong> - Field inspection documenting flora, fauna, and ecological communities</li>
+                    <li><strong>Threat identification</strong> - Recording weeds, pests, erosion, and other impacts</li>
+                    <li><strong>Data recording</strong> - Systematic documentation using standard forms and methods</li>
+                    <li><strong>Analysis and reporting</strong> - Evaluating significance and preparing recommendations</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Why Tasmania is Special</h3>
+                </div>
+                <p>Tasmania's unique ecological characteristics require specialized inspection approaches:</p>
+                <ul>
+                    <li>World Heritage Areas with exceptional universal value</li>
+                    <li>High number of endemic species found nowhere else on Earth</li>
+                    <li>Diverse ecosystems ranging from alpine to coastal environments</li>
+                    <li>Significant Aboriginal cultural heritage values intertwined with ecological values</li>
+                    <li>Specific legislative requirements under Tasmanian law</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Key Concepts Section -->
+        <section id="concepts" class="content-section">
+            <h2><i class="fas fa-lightbulb"></i> Key Concepts in Ecological Site Inspection</h2>
+            
+            <div class="key-concept">
+                <h4><i class="fas fa-seedling"></i> Ecological Vegetation Classes (EVCs)</h4>
+                <p>EVCs are the standard unit for classifying vegetation types in Tasmania. They describe native vegetation communities that share similar environmental characteristics and species composition. Understanding EVCs is essential for:</p>
+                <ul>
+                    <li>Identifying the conservation significance of vegetation</li>
+                    <li>Assessing vegetation quality and condition</li>
+                    <li>Setting appropriate management objectives</li>
+                    <li>Determining offset requirements for development</li>
+                </ul>
+            </div>
+            
+            <div class="key-concept">
+                <h4><i class="fas fa-search"></i> Rapid Habitat Assessment</h4>
+                <p>Rapid habitat assessment techniques allow for efficient evaluation of ecological values during site inspections. Key components include:</p>
+                <ul>
+                    <li>Vegetation structure and composition assessment</li>
+                    <li>Habitat features evaluation (logs, rocks, hollows)</li>
+                    <li>Weed and disturbance mapping</li>
+                    <li>Condition scoring using standardized metrics</li>
+                </ul>
+            </div>
+            
+            <div class="key-concept">
+                <h4><i class="fas fa-balance-scale"></i> Legislation and Policy Framework</h4>
+                <p>Ecological site inspections in Tasmania must consider multiple legislative instruments:</p>
+                <ul>
+                    <li><strong>Environment Protection and Biodiversity Conservation Act 1999</strong> (Commonwealth)</li>
+                    <li><strong>Nature Conservation Act 2002</strong> (Tasmania)</li>
+                    <li><strong>Threatened Species Protection Act 1995</strong> (Tasmania)</li>
+                    <li><strong>Vegetation Management Bill 2023</strong> (proposed Tasmanian legislation)</li>
+                    <li>Various local government planning schemes</li>
+                </ul>
+            </div>
+            
+            <div class="key-concept">
+                <h4><i class="fas fa-camera"></i> Documentation Methods</h4>
+                <p>Proper documentation is essential for ecological site inspections:</p>
+                <ul>
+                    <li>Standardized data collection forms</li>
+                    <li>Geotagged photography with scale references</li>
+                    <li>GPS mapping of boundaries and features</li>
+                    <li>Sketch maps showing key features and transects</li>
+                    <li>Detailed field notes with timestamps</li>
+                </ul>
+            </div>
+            
+            <div class="interactive-box">
+                <h4><i class="fas fa-question-circle"></i> Knowledge Check: Key Concepts</h4>
+                <p>What is the primary purpose of classifying vegetation into Ecological Vegetation Classes (EVCs)?</p>
+                
+                <div class="quiz-option" data-correct="false">To create an inventory of all plant species in Tasmania</div>
+                <div class="quiz-option" data-correct="true">To provide a standard framework for assessing conservation values and vegetation condition</div>
+                <div class="quiz-option" data-correct="false">To restrict development in areas with high biodiversity</div>
+                <div class="quiz-option" data-correct="false">To document Aboriginal cultural connections to vegetation</div>
+                
+                <button class="btn" id="check-concept"><i class="fas fa-check"></i> Check Answer</button>
+                <div class="feedback" id="concept-feedback"></div>
+            </div>
+        </section>
+        
+        <!-- Tasmanian Context Section -->
+        <section id="tasmania" class="content-section">
+            <h2><i class="fas fa-map-marker-alt"></i> Tasmanian Ecological Context</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-mountain"></i>
+                    <h3>Tasmania's Unique Ecosystems</h3>
+                </div>
+                <p>Tasmania contains ecosystems of global significance that require special consideration during site inspections:</p>
+                
+                <div class="tas-example">
+                    <h4>Cool Temperate Rainforest</h4>
+                    <p>These ancient forests dominated by myrtle beech (Nothofagus cunninghamii) and sassafras (Atherosperma moschatum) are restricted to high-rainfall areas of Tasmania. They provide critical habitat for many endemic species and are protected under multiple conservation agreements.</p>
+                </div>
+                
+                <div class="tas-example">
+                    <h4>Alpine and Subalpine Ecosystems</h4>
+                    <p>Tasmania's alpine areas above 800-1000m elevation contain unique cushion plants, coniferous heathlands, and ancient pencil pines (Athrotaxis spp.). These slow-growing communities are highly vulnerable to climate change and disturbance.</p>
+                </div>
+                
+                <div class="tas-example">
+                    <h4>Coastal Heathlands and Grasslands</h4>
+                    <p>Tasmania's extensive coastline supports diverse heathland communities adapted to salt spray and nutrient-poor soils. These areas provide important habitat for ground-nesting birds and contain many endemic plant species.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-paw"></i>
+                    <h3>Threatened Species of Concern</h3>
+                </div>
+                <p>During Tasmanian site inspections, particular attention should be paid to these threatened species:</p>
+                
+                <div class="species-card">
+                    <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef;">
+                        <i class="fas fa-feather-alt" style="font-size: 3rem; color: var(--dark);"></i>
+                    </div>
+                    <div class="species-info">
+                        <h4>Swift Parrot (Lathamus discolor)</h4>
+                        <p>Critically endangered migratory parrot that breeds only in eastern Tasmania. Depends on blue gum (Eucalyptus globulus) and black gum (E. ovata) forests for nesting and feeding.</p>
+                        <span class="badge badge-danger">Critically Endangered</span>
+                        <span class="badge badge-primary">EPBC Listed</span>
+                    </div>
+                </div>
+                
+                <div class="species-card">
+                    <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef;">
+                        <i class="fas fa-tree" style="font-size: 3rem; color: var(--dark);"></i>
+                    </div>
+                    <div class="species-info">
+                        <h4>Miena Cider Gum (Eucalyptus gunnii subsp. divaricata)</h4>
+                        <p>Endangered eucalypt restricted to the Central Plateau of Tasmania. Threatened by drought, climate change, and browsing by herbivores.</p>
+                        <span class="badge badge-danger">Endangered</span>
+                        <span class="badge badge-primary">EPBC Listed</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Tasmanian Conservation Challenges</h3>
+                </div>
+                <p>Site inspections in Tasmania must consider these specific conservation challenges:</p>
+                
+                <div class="interactive-box">
+                    <h4>Biosecurity Threats</h4>
+                    <p>Tasmania's relative isolation has provided some protection from mainland pests and diseases, making biosecurity particularly important. Inspectors should be alert for:</p>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="threat1" value="phytophthora">
+                            <label for="threat1">Phytophthora root rot</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="threat2" value="rabbits">
+                            <label for="threat2">Rabbit populations</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="threat3" value="deer">
+                            <label for="threat3">Feral deer encroachment</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="threat4" value="weeds">
+                            <label for="threat4">Weeds of national significance</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="check-threats"><i class="fas fa-check"></i> Check Answers</button>
+                    <div class="feedback" id="threats-feedback"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Interactive Activities Section -->
+        <section id="interactive" class="content-section">
+            <h2><i class="fas fa-puzzle-piece"></i> Interactive Activities</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-search"></i>
+                    <h3>Virtual Site Inspection</h3>
+                </div>
+                <p>Practice your inspection skills with this simulated Tasmanian site. Examine the map and description below, then answer the questions.</p>
+                
+                <div class="site-map">
+                    <div style="text-align: center;">
+                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--dark); margin-bottom: 15px;"></i>
+                        <p>Site Location: Eastern Tiers, Tasmania</p>
+                        <p>Area: 15ha mixed forest with riparian zone</p>
+                        <p>Previous Land Use: Selective logging 20 years ago</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Based on the location and description, what key ecological values would you prioritize assessing during your inspection?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value1" value="habitat">
+                            <label for="value1">Swift parrot nesting habitat</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value2" value="riparian">
+                            <label for="value2">Riparian zone condition</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value3" value="weeds">
+                            <label for="value3">Weed invasion from previous disturbance</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value4" value="soil">
+                            <label for="value4">Soil erosion from historical logging</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>What legislation is most relevant for protecting potential values at this site?</label>
+                    <select id="legislation-select">
+                        <option value="">Select legislation</option>
+                        <option value="epbc">EPBC Act 1999 (Commonwealth)</option>
+                        <option value="nature">Nature Conservation Act 2002 (Tasmania)</option>
+                        <option value="threatened">Threatened Species Protection Act 1995 (Tasmania)</option>
+                        <option value="water">Water Management Act 1999 (Tasmania)</option>
+                    </select>
+                </div>
+                
+                <button class="btn" id="submit-inspection"><i class="fas fa-paper-plane"></i> Submit Assessment</button>
+                <div class="feedback" id="inspection-feedback"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Inspection Checklist Builder</h3>
+                </div>
+                <p>Create a customized inspection checklist for different Tasmanian ecosystem types:</p>
+                
+                <div class="form-group">
+                    <label for="ecosystem-type">Select Ecosystem Type:</label>
+                    <select id="ecosystem-type">
+                        <option value="">Select ecosystem</option>
+                        <option value="rainforest">Cool Temperate Rainforest</option>
+                        <option value="alpine">Alpine Vegetation</option>
+                        <option value="grassy">Grassy Woodland</option>
+                        <option value="coastal">Coastal Heathland</option>
+                        <option value="wetland">Freshwater Wetland</option>
+                    </select>
+                </div>
+                
+                <div class="inspection-checklist">
+                    <h4>Recommended Assessment Components:</h4>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="item1">
+                        <label for="item1">Canopy composition and structure</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="item2">
+                        <label for="item2">Understory diversity and condition</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="item3">
+                        <label for="item3">Ground cover and soil exposure</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="item4">
+                        <label for="item4">Presence of logs and coarse woody debris</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="item5">
+                        <label for="item5">Weed species abundance and distribution</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="item6">
+                        <label for="item6">Evidence of fauna activity (scats, diggings, nests)</label>
+                    </div>
+                </div>
+                
+                <button class="btn" id="generate-checklist"><i class="fas fa-download"></i> Generate Checklist</button>
+            </div>
+        </section>
+        
+        <!-- Summary Section -->
+        <section id="summary" class="content-section">
+            <h2><i class="fas fa-check-circle"></i> Summary and Key Takeaways</h2>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-key"></i> Key Principles</h3>
+                <ul>
+                    <li>Ecological site inspections require systematic approach and thorough documentation</li>
+                    <li>Understanding Tasmanian ecosystems and their conservation values is essential</li>
+                    <li>Legislative frameworks guide protection requirements for significant values</li>
+                    <li>Both ecological and cultural values must be considered in assessments</li>
+                    <li>Risk assessment should inform management recommendations</li>
+                </ul>
+            </div>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-tools"></i> Essential Skills</h3>
+                <ul>
+                    <li>Vegetation identification and community classification</li>
+                    <li>Threatened species habitat recognition</li>
+                    <li>Weed and pest identification</li>
+                    <li>Condition assessment techniques</li>
+                    <li>Standardized data recording methods</li>
+                    <li>Map reading and GPS use</li>
+                </ul>
+            </div>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-book"></i> Further Learning</h3>
+                <p>To develop your ecological site inspection skills further:</p>
+                <ul>
+                    <li>Complete field-based training with experienced ecologists</li>
+                    <li>Join local naturalist groups and participate in surveys</li>
+                    <li>Study Tasmania's threatened species listings and recovery plans</li>
+                    <li>Familiarize yourself with DPIPWE's Natural Values Atlas</li>
+                    <li>Practice using vegetation monitoring protocols and forms</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-award"></i>
+                    <h3>Course Completion</h3>
+                </div>
+                <p>Congratulations on completing the Ecological Site Inspection Fundamentals module!</p>
+                <p>You've learned about the key concepts, Tasmanian context, and practical approaches to ecological site assessment.</p>
+                
+                <div class="progress-bar">
+                    <div class="progress" style="width: 100%"></div>
+                </div>
+                <p>Final Progress: <span>100%</span> Complete</p>
+                
+                <button class="btn" id="get-certificate"><i class="fas fa-certificate"></i> Download Certificate of Completion</button>
+            </div>
+        </section>
+        
+        <footer>
+            <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works</p>
+            <p>Part of AHC31424 Certificate III in Conservation and Ecosystem Management</p>
+            <p>Tasmanian Context | © 2023 Learning Resource</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab navigation functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding section
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Key Concepts Quiz
+        document.getElementById('check-concept').addEventListener('click', () => {
+            const options = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('concept-feedback');
+            let correctSelected = false;
+            
+            options.forEach(option => {
+                if (option.style.backgroundColor === 'rgb(233, 236, 239)' && option.getAttribute('data-correct') === 'true') {
+                    correctSelected = true;
+                }
+            });
+            
+            if (correctSelected) {
+                feedback.textContent = 'Correct! EVCs provide a standardized framework for assessing conservation values and vegetation condition across Tasmania.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(5);
+            } else {
+                feedback.textContent = 'Not quite. Try again! Remember that EVCs are primarily a classification system for assessment purposes.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Quiz option selection
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.quiz-option').forEach(o => o.style.backgroundColor = '#f8f9fa');
+                option.style.backgroundColor = '#e9ecef';
+            });
+        });
+        
+        // Threats identification activity
+        document.getElementById('check-threats').addEventListener('click', () => {
+            const threat1 = document.getElementById('threat1').checked;
+            const threat2 = document.getElementById('threat2').checked;
+            const threat3 = document.getElementById('threat3').checked;
+            const threat4 = document.getElementById('threat4').checked;
+            const feedback = document.getElementById('threats-feedback');
+            
+            // All threats should be selected for this activity
+            if (threat1 && threat2 && threat3 && threat4) {
+                feedback.textContent = 'Correct! All these biosecurity threats are of concern in Tasmania and should be monitored during site inspections.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(5);
+            } else {
+                feedback.textContent = 'Not all correct. In Tasmania, all these biosecurity threats are significant concerns that should be checked during inspections.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Virtual inspection submission
+        document.getElementById('submit-inspection').addEventListener('click', () => {
+            const value1 = document.getElementById('value1').checked;
+            const value2 = document.getElementById('value2').checked;
+            const value3 = document.getElementById('value3').checked;
+            const value4 = document.getElementById('value4').checked;
+            const legislation = document.getElementById('legislation-select').value;
+            const feedback = document.getElementById('inspection-feedback');
+            
+            // All values should be selected and EPBC Act is most relevant for swift parrot habitat
+            if (value1 && value2 && value3 && value4 && legislation === 'epbc') {
+                feedback.textContent = 'Excellent assessment! You correctly identified all key values and recognized the importance of the EPBC Act for protecting swift parrot habitat.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(10);
+            } else {
+                feedback.textContent = 'Good effort, but some elements need adjustment. Remember that all these values are important in eastern Tasmania, and the EPBC Act is particularly relevant for threatened species like the swift parrot.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Checklist generator
+        document.getElementById('generate-checklist').addEventListener('click', () => {
+            const ecosystemType = document.getElementById('ecosystem-type').value;
+            if (!ecosystemType) {
+                alert('Please select an ecosystem type first.');
+                return;
+            }
+            
+            alert(`Custom checklist for ${ecosystemType} generated! In a real application, this would download a PDF checklist.`);
+            updateProgress(5);
+        });
+        
+        // Certificate download
+        document.getElementById('get-certificate').addEventListener('click', () => {
+            alert('Certificate of completion downloaded! In a real application, this would generate a PDF certificate.');
+        });
+        
+        // Ecosystem type selector for checklist
+        document.getElementById('ecosystem-type').addEventListener('change', function() {
+            // Reset all checkboxes
+            document.querySelectorAll('.checklist-item input').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Check relevant items based on ecosystem type
+            switch(this.value) {
+                case 'rainforest':
+                    document.getElementById('item1').checked = true;
+                    document.getElementById('item2').checked = true;
+                    document.getElementById('item4').checked = true;
+                    document.getElementById('item6').checked = true;
+                    break;
+                case 'alpine':
+                    document.getElementById('item3').checked = true;
+                    document.getElementById('item5').checked = true;
+                    document.getElementById('item6').checked = true;
+                    break;
+                case 'grassy':
+                    document.getElementById('item2').checked = true;
+                    document.getElementById('item3').checked = true;
+                    document.getElementById('item5').checked = true;
+                    document.getElementById('item6').checked = true;
+                    break;
+                case 'coastal':
+                    document.getElementById('item2').checked = true;
+                    document.getElementById('item3').checked = true;
+                    document.getElementById('item5').checked = true;
+                    break;
+                case 'wetland':
+                    document.getElementById('item2').checked = true;
+                    document.getElementById('item3').checked = true;
+                    document.getElementById('item5').checked = true;
+                    document.getElementById('item6').checked = true;
+                    break;
+            }
+        });
+        
+        // Progress tracking
+        let progress = 20;
+        
+        function updateProgress(value) {
+            progress = Math.min(progress + value, 100);
+            document.getElementById('main-progress').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = progress + '%';
+            
+            // If we reach 100%, update the final summary section too
+            if (progress === 100) {
+                document.querySelector('#summary .progress').style.width = '100%';
+                document.querySelector('#summary span').textContent = '100%';
+            }
+        }
+    </script>
+</body>
+</html>
