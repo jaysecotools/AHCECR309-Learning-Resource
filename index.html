@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecological & Cultural Site Inspection - Tasmania</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #689F38;
+            --accent: #8BC34A;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --tas-blue: #006989;
+            --tas-orange: #E64A19;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23F1F8E9" width="100" height="100"/><path fill="%238BC34A" opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--tas-blue), var(--tas-orange));
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-tab:hover {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .nav-tab.active {
+            background-color: var(--light);
+            color: var(--dark);
+            border-bottom: 4px solid var(--tas-orange);
+            font-weight: bold;
+        }
+        
+        .nav-tab i {
+            font-size: 1.4rem;
+        }
+        
+        .content-section {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            padding: 10px 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .interactive-box {
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: var(--light);
+        }
+        
+        .feedback {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .species-card {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .species-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-right: 1px solid #eee;
+        }
+        
+        .species-info {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .quiz-option {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .site-map {
+            height: 350px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect fill="%23ddd" width="40" height="40"/></svg>');
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .module-img {
+            height: 160px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+        }
+        
+        .module-content {
+            padding: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .inspection-checklist {
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .checklist-item input {
+            width: auto;
+            margin-right: 15px;
+        }
+        
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .download-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .download-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .species-card {
+                flex-direction: column;
+            }
+            
+            .species-img {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .checkbox-item {
+                min-width: 100%;
+            }
+            
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tree"></i> Ecological & Cultural Site Inspection</h1>
+            <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
+            <div class="progress-bar">
+                <div class="progress" style="width: 35%"></div>
+            </div>
+            <p>Course Progress: 35% Complete</p>
+        </header>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-target="learning">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Learning Materials</span>
+            </div>
+            <div class="nav-tab" data-target="interactive">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Interactive Activities</span>
+            </div>
+            <div class="nav-tab" data-target="inspection">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Site Inspection Tool</span>
+            </div>
+            <div class="nav-tab" data-target="revision">
+                <i class="fas fa-brain"></i>
+                <span>Revision & Quiz</span>
+            </div>
+            <div class="nav-tab" data-target="resources">
+                <i class="fas fa-book-open"></i>
+                <span>Resources</span>
+            </div>
+        </div>
+        
+        <!-- Learning Materials Section -->
+        <section id="learning" class="content-section active">
+            <h2><i class="fas fa-graduation-cap"></i> Learning Materials</h2>
+            <p>Explore the following modules to learn about ecological and cultural site inspections in Tasmania.</p>
+            
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Introduction to Ecological Site Inspection</h3>
+                        <p>Learn the fundamentals of ecological site inspections and their importance in conservation work.</p>
+                        <div class="badge badge-primary">15 min</div>
+                        <div class="badge badge-secondary">Beginner</div>
+                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Tasmanian Ecosystems</h3>
+                        <p>Explore Tasmania's unique ecosystems and their conservation significance.</p>
+                        <div class="badge badge-primary">20 min</div>
+                        <div class="badge badge-secondary">Intermediate</div>
+                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-monument"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Cultural Heritage Considerations</h3>
+                        <p>Understand how to identify and protect cultural heritage sites during inspections.</p>
+                        <div class="badge badge-primary">25 min</div>
+                        <div class="badge badge-warning">Advanced</div>
+                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Legislative Framework</h3>
+                        <p>Learn about the laws and regulations governing site inspections in Tasmania.</p>
+                        <div class="badge badge-primary">18 min</div>
+                        <div class="badge badge-secondary">Intermediate</div>
+                        <button class="btn" style="margin-top: 15px;">Start Module</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 30px;">
+                <div class="card-header">
+                    <i class="fas fa-video"></i>
+                    <h3>Video Lesson: Conducting Site Inspections</h3>
+                </div>
+                <div style="height: 300px; background-color: #e9ecef; border-radius: 10px; display: flex; justify-content: center; align-items: center; margin: 20px 0;">
+                    <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--primary);"></i>
+                </div>
+                <p>Watch this comprehensive video guide to learn the step-by-step process of conducting ecological and cultural site inspections in Tasmania.</p>
+                <button class="btn"><i class="fas fa-play"></i> Play Video</button>
+            </div>
+        </section>
+        
+        <!-- Interactive Activities Section -->
+        <section id="interactive" class="content-section">
+            <h2><i class="fas fa-puzzle-piece"></i> Interactive Activities</h2>
+            <p>Test your knowledge with these interactive exercises and simulations.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-search"></i>
+                    <h3>Tasmanian Species Identification</h3>
+                </div>
+                <p>Learn to identify key Tasmanian flora and fauna species that may be encountered during site inspections.</p>
+                
+                <div class="interactive-box">
+                    <div class="species-card">
+                        <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef;">
+                            <i class="fas fa-paw" style="font-size: 3rem; color: var(--dark);"></i>
+                        </div>
+                        <div class="species-info">
+                            <h4>What species is this?</h4>
+                            <div class="form-group">
+                                <select id="species-select">
+                                    <option value="">Select a species</option>
+                                    <option value="pademelon">Tasmanian Pademelon</option>
+                                    <option value="devil">Tasmanian Devil</option>
+                                    <option value="quoll">Eastern Quoll</option>
+                                    <option value="gum">Eucalyptus globulus</option>
+                                    <option value="fern">Dicksonia antarctica</option>
+                                </select>
+                            </div>
+                            <button class="btn" id="check-species"><i class="fas fa-check"></i> Check Answer</button>
+                            <div class="feedback" id="species-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Ecosystem Mapping</h3>
+                </div>
+                <p>Practice identifying different ecosystem types on a topographic map.</p>
+                
+                <div class="interactive-box">
+                    <div class="site-map">
+                        <i class="fas fa-map" style="font-size: 3rem; color: var(--dark);"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Select the predominant ecosystem type in the marked area:</label>
+                        <select>
+                            <option>Cool temperate rainforest</option>
+                            <option>Alpine vegetation</option>
+                            <option>Eucalypt forest</option>
+                            <option>Coastal heathland</option>
+                            <option>Wetland</option>
+                        </select>
+                    </div>
+                    <button class="btn"><i class="fas fa-check"></i> Check Answer</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Threat Identification</h3>
+                </div>
+                <p>Identify potential ecological threats in different scenarios.</p>
+                
+                <div class="interactive-box">
+                    <p><strong>Scenario:</strong> You're inspecting a site where a new walking track is proposed through a patch of native vegetation. What potential threats should you look for?</p>
+                    
+                    <div class="form-group">
+                        <label>Select all that apply:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat1">
+                                <label for="threat1">Soil compaction</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat2">
+                                <label for="threat2">Weed invasion</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat3">
+                                <label for="threat3">Habitat fragmentation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat4">
+                                <label for="threat4">Erosion risk</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat5">
+                                <label for="threat5">Water pollution</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn"><i class="fas fa-check"></i> Check Answers</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Site Inspection Tool Section -->
+        <section id="inspection" class="content-section">
+            <h2><i class="fas fa-clipboard-check"></i> Site Inspection Tool</h2>
+            <p>Use this interactive form to practice conducting ecological and cultural site inspections.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Site Details</h3>
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Site Name/Location</label>
+                    <input type="text" id="site-name" placeholder="Enter site name or location">
+                </div>
+                
+                <div class="form-group">
+                    <label for="inspection-date">Inspection Date</label>
+                    <input type="date" id="inspection-date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="weather-conditions">Weather Conditions</label>
+                    <select id="weather-conditions">
+                        <option value="">Select weather condition</option>
+                        <option value="sunny">Sunny</option>
+                        <option value="cloudy">Cloudy</option>
+                        <option value="rainy">Rainy</option>
+                        <option value="windy">Windy</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Ecological Assessment</h3>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ecosystem Types Present</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco1">
+                            <label for="eco1">Cool temperate rainforest</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco2">
+                            <label for="eco2">Alpine vegetation</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco3">
+                            <label for="eco3">Eucalypt forest</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco4">
+                            <label for="eco4">Coastal heathland</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco5">
+                            <label for="eco5">Wetland</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="vegetation-condition">Vegetation Condition</label>
+                    <select id="vegetation-condition">
+                        <option value="">Select condition</option>
+                        <option value="pristine">Pristine/Undisturbed</option>
+                        <option value="good">Good</option>
+                        <option value="moderate">Moderately Disturbed</option>
+                        <option value="degraded">Degraded</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="threats-observed">Threats Observed</label>
+                    <textarea id="threats-observed" rows="3" placeholder="Describe any threats observed (weeds, erosion, etc.)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="significant-species">Significant Species Observed</label>
+                    <textarea id="significant-species" rows="3" placeholder="List any significant species observed"></textarea>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-monument"></i>
+                    <h3>Cultural Heritage Assessment</h3>
+                </div>
+                
+                <div class="form-group">
+                    <label>Are there any visible cultural heritage features?</label>
+                    <div>
+                        <input type="radio" id="heritage-yes" name="heritage" value="yes">
+                        <label for="heritage-yes">Yes</label>
+                        <input type="radio" id="heritage-no" name="heritage" value="no">
+                        <label for="heritage-no">No</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="heritage-description">If yes, describe the features</label>
+                    <textarea id="heritage-description" rows="3" placeholder="Describe any cultural heritage features observed"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Is the area known to have Aboriginal heritage significance?</label>
+                    <div>
+                        <input type="radio" id="aboriginal-yes" name="aboriginal" value="yes">
+                        <label for="aboriginal-yes">Yes</label>
+                        <input type="radio" id="aboriginal-no" name="aboriginal" value="no">
+                        <label for="aboriginal-no">No</label>
+                        <input type="radio" id="aboriginal-unknown" name="aboriginal" value="unknown">
+                        <label for="aboriginal-unknown">Unknown</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Risk Assessment</h3>
+                </div>
+                
+                <div class="form-group">
+                    <label for="erosion-risk">Erosion Risk</label>
+                    <select id="erosion-risk">
+                        <option value="">Select risk level</option>
+                        <option value="low">Low</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="weed-risk">Weed Invasion Risk</label>
+                    <select id="weed-risk">
+                        <option value="">Select risk level</option>
+                        <option value="low">Low</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recommendations">Recommendations</label>
+                    <textarea id="recommendations" rows="4" placeholder="Enter recommendations based on your inspection"></textarea>
+                </div>
+            </div>
+            
+            <button class="btn"><i class="fas fa-paper-plane"></i> Submit Inspection Report</button>
+            <button class="btn btn-secondary"><i class="fas fa-save"></i> Save as Draft</button>
+        </section>
+        
+        <!-- Revision & Quiz Section -->
+        <section id="revision" class="content-section">
+            <h2><i class="fas fa-brain"></i> Revision & Quiz</h2>
+            <p>Test your knowledge of ecological and cultural site inspection procedures.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>Quick Quiz</h3>
+                </div>
+                
+                <div class="interactive-box">
+                    <div id="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1: What is the first step in conducting an ecological site inspection?</h4>
+                            <div class="quiz-option">A. Document all plant species</div>
+                            <div class="quiz-option">B. Assess soil conditions</div>
+                            <div class="quiz-option">C. Review existing information about the site</div>
+                            <div class="quiz-option">D. Look for wildlife</div>
+                            <button class="btn"><i class="fas fa-check"></i> Check Answer</button>
+                            <div class="feedback correct">Correct! Reviewing existing information helps you know what to look for during the inspection.</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" style="margin-top: 20px;"><i class="fas fa-arrow-right"></i> Next Question</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-sticky-note"></i>
+                    <h3>Flashcards</h3>
+                </div>
+                <p>Use these flashcards to revise key concepts and terminology.</p>
+                
+                <div class="interactive-box" style="text-align: center;">
+                    <div style="height: 150px; display: flex; justify-content: center; align-items: center; background-color: var(--light); border-radius: 10px; margin-bottom: 20px; padding: 20px;">
+                        <h4>What does EVC stand for?</h4>
+                    </div>
+                    <button class="btn"><i class="fas fa-eye"></i> Reveal Answer</button>
+                    <div class="feedback" style="display: none;">
+                        Ecological Vegetation Class - a classification system for vegetation types in Tasmania.
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button class="btn">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <h3>Key Terminology</h3>
+                </div>
+                
+                <div class="interactive-box">
+                    <p><strong>Match the terms to their definitions:</strong></p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="padding: 15px; background-color: #f8f9fa; border-radius: 10px;">
+                            <p>1. Ecological Vegetation Class (EVC)</p>
+                        </div>
+                        <div style="padding: 15px; background-color: #f8f9fa; border-radius: 10px;">
+                            <p>A. The original vegetation that would have existed at a site</p>
+                        </div>
+                        
+                        <div style="padding: 15px; background-color: #f8f9fa; border-radius: 10px;">
+                            <p>2. Pre-European vegetation</p>
+                        </div>
+                        <div style="padding: 15px; background-color: #f8f9fa; border-radius: 10px;">
+                            <p>B. A classification system for vegetation types</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" style="margin-top: 20px;"><i class="fas fa-check"></i> Check Matching</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Resources Section -->
+        <section id="resources" class="content-section">
+            <h2><i class="fas fa-book-open"></i> Resources</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-file-download"></i>
+                    <h3>Downloadable Resources</h3>
+                </div>
+                
+                <div class="downloads-grid">
+                    <div class="download-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <h4>Site Inspection Checklist</h4>
+                        <p>PDF, 256KB</p>
+                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                    </div>
+                    
+                    <div class="download-card">
+                        <i class="fas fa-book"></i>
+                        <h4>Tasmanian Threatened Species Guide</h4>
+                        <p>PDF, 3.2MB</p>
+                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                    </div>
+                    
+                    <div class="download-card">
+                        <i class="fas fa-landmark"></i>
+                        <h4>Cultural Heritage Assessment Guidelines</h4>
+                        <p>PDF, 1.8MB</p>
+                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                    </div>
+                    
+                    <div class="download-card">
+                        <i class="fas fa-gavel"></i>
+                        <h4>Legislative Requirements Summary</h4>
+                        <p>PDF, 512KB</p>
+                        <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-link"></i>
+                    <h3>Useful Links</h3>
+                </div>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                            <i class="fas fa-external-link-alt"></i> Natural Values Atlas
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                            <i class="fas fa-external-link-alt"></i> Tasmanian Heritage Council
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                            <i class="fas fa-external-link-alt"></i> DPIPWE Website
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: left; justify-content: flex-start;">
+                            <i class="fas fa-external-link-alt"></i> Aboriginal Heritage Tasmania
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-video"></i>
+                    <h3>Video Resources</h3>
+                </div>
+                <p>Watch these videos to learn more about site inspection techniques:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="height: 180px; background-color: #e9ecef; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <p>Identifying Tasmanian Ecosystems</p>
+                    </div>
+                    <div style="height: 180px; background-color: #e9ecef; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <p>Cultural Heritage Assessment</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works</p>
+            <p>Part of AHC31424 Certificate III in Conservation and Ecosystem Management</p>
+            <p>Tasmanian Context | © 2023 Learning Resource</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab navigation functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding section
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Species identification activity
+        document.getElementById('check-species').addEventListener('click', () => {
+            const select = document.getElementById('species-select');
+            const feedback = document.getElementById('species-feedback');
+            
+            if (select.value === 'pademelon') {
+                feedback.textContent = 'Correct! This is a Tasmanian Pademelon, a common marsupial in Tasmania.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+            } else {
+                feedback.textContent = 'Incorrect. Try again!';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Quiz functionality
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.quiz-option').forEach(o => o.style.backgroundColor = '#f8f9fa');
+                option.style.backgroundColor = '#e9ecef';
+            });
+        });
+        
+        // Flashcard functionality
+        const flashcards = document.querySelectorAll('.interactive-box');
+        flashcards.forEach(box => {
+            const button = box.querySelector('button');
+            if (button && button.textContent.includes('Reveal Answer')) {
+                button.addEventListener('click', () => {
+                    const feedback = box.querySelector('.feedback');
+                    if (feedback.style.display === 'none') {
+                        feedback.style.display = 'block';
+                        button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+                    } else {
+                        feedback.style.display = 'none';
+                        button.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+                    }
+                });
+            }
+        });
+        
+        // Simulate module progress
+        document.querySelectorAll('.module-card .btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const progressBar = document.querySelector('.progress');
+                const currentWidth = parseInt(progressBar.style.width);
+                progressBar.style.width = (currentWidth + 5) + '%';
+                
+                alert('Module started! Your progress will be saved as you complete the activities.');
+            });
+        });
+    </script>
+</body>
+</html>
