@@ -361,7 +361,6 @@
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
-            position: relative;
         }
         
         .module-card:hover {
@@ -465,15 +464,10 @@
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: bold;
-            display: none;
         }
         
-        .module-card.active-module .module-active {
-            display: block;
-        }
-        
-        .module-card.active-module {
-            border: 2px solid var(--tas-orange);
+        .module-card {
+            position: relative;
         }
         
         @media (max-width: 768px) {
@@ -499,6 +493,29 @@
             .module-grid {
                 grid-template-columns: 1fr;
             }
+        }
+
+        .debug-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .debug-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--danger);
+        }
+        
+        .debug-info {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -542,8 +559,7 @@
             <p>Explore the following modules to learn about ecological and cultural site inspections in Tasmania.</p>
             
             <div class="module-grid">
-                <div class="module-card" id="module-1">
-                    <div class="module-active">Currently Viewing</div>
+                <div class="module-card">
                     <div class="module-img">
                         <i class="fas fa-leaf"></i>
                     </div>
@@ -552,12 +568,11 @@
                         <p>Learn the fundamentals of ecological site inspections and their importance in conservation work.</p>
                         <div class="badge badge-primary">15 min</div>
                         <div class="badge badge-secondary">Beginner</div>
-                        <a href="Module 1.html" class="btn start-module" data-module="1"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="#" class="btn start-module" data-module="Introduction to Ecological Site Inspection"><i class="fas fa-play"></i> Start Module</a>
                     </div>
                 </div>
                 
-                <div class="module-card" id="module-2">
-                    <div class="module-active">Currently Viewing</div>
+                <div class="module-card">
                     <div class="module-img">
                         <i class="fas fa-mountain"></i>
                     </div>
@@ -566,12 +581,11 @@
                         <p>Explore Tasmania's unique ecosystems and their conservation significance.</p>
                         <div class="badge badge-primary">20 min</div>
                         <div class="badge badge-secondary">Intermediate</div>
-                        <a href="Module 2.html" class="btn start-module" data-module="2"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="#" class="btn start-module" data-module="Tasmanian Ecosystems"><i class="fas fa-play"></i> Start Module</a>
                     </div>
                 </div>
                 
-                <div class="module-card" id="module-3">
-                    <div class="module-active">Currently Viewing</div>
+                <div class="module-card">
                     <div class="module-img">
                         <i class="fas fa-monument"></i>
                     </div>
@@ -580,12 +594,11 @@
                         <p>Understand how to identify and protect cultural heritage sites during inspections.</p>
                         <div class="badge badge-primary">25 min</div>
                         <div class="badge badge-warning">Advanced</div>
-                        <a href="Module 3.html" class="btn start-module" data-module="3"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="#" class="btn start-module" data-module="Cultural Heritage Considerations"><i class="fas fa-play"></i> Start Module</a>
                     </div>
                 </div>
                 
-                <div class="module-card" id="module-4">
-                    <div class="module-active">Currently Viewing</div>
+                <div class="module-card">
                     <div class="module-img">
                         <i class="fas fa-gavel"></i>
                     </div>
@@ -594,7 +607,7 @@
                         <p>Learn about the laws and regulations governing site inspections in Tasmania.</p>
                         <div class="badge badge-primary">18 min</div>
                         <div class="badge badge-secondary">Intermediate</div>
-                        <a href="Module 4.html" class="btn start-module" data-module="4"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="#" class="btn start-module" data-module="Legislative Framework"><i class="fas fa-play"></i> Start Module</a>
                     </div>
                 </div>
             </div>
@@ -1081,7 +1094,20 @@
         </footer>
     </div>
 
+    <!-- Debug Panel -->
+    <div class="debug-panel">
+        <div class="debug-title">Debug Information</div>
+        <div class="debug-info" id="debug-status">All buttons should be working now</div>
+        <div class="debug-info">Last action: <span id="last-action">None</span></div>
+    </div>
+
     <script>
+        // Debug function to track button actions
+        function logAction(action) {
+            document.getElementById('last-action').textContent = action;
+            console.log('Action: ' + action);
+        }
+
         // Tab navigation functionality
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -1095,6 +1121,8 @@
                 // Show corresponding section
                 const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
+                
+                logAction('Switched to ' + targetId + ' tab');
             });
         });
         
@@ -1103,17 +1131,9 @@
             button.addEventListener('click', (event) => {
                 event.preventDefault(); // This prevents the link from navigating away
                 const module = button.getAttribute('data-module');
-                
-                // Remove active class from all modules
-                document.querySelectorAll('.module-card').forEach(card => {
-                    card.classList.remove('active-module');
-                });
-                
-                // Add active class to the clicked module
-                document.getElementById('module-' + module).classList.add('active-module');
-                
-                alert(`Starting the Module ${module}! This would open the learning content in a real application.`);
+                alert(`Starting the ${module} module! This would open the learning content in a real application.`);
                 updateProgress(10);
+                logAction('Started module: ' + module);
             });
         });
         
@@ -1127,10 +1147,12 @@
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 updateProgress(2);
+                logAction('Correct species identification');
             } else {
                 feedback.textContent = 'Incorrect. Try again! The correct answer is Tasmanian Pademelon.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
+                logAction('Incorrect species identification');
             }
             
             feedback.style.display = 'block';
@@ -1146,10 +1168,12 @@
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 updateProgress(2);
+                logAction('Correct ecosystem identification');
             } else {
                 feedback.textContent = 'Incorrect. Try again! The correct answer is Cool temperate rainforest.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
+                logAction('Incorrect ecosystem identification');
             }
             
             feedback.style.display = 'block';
@@ -1170,10 +1194,12 @@
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 updateProgress(3);
+                logAction('Correct threat identification');
             } else {
                 feedback.textContent = 'Not quite. In this scenario, all the listed threats are potential concerns when establishing new walking tracks through native vegetation.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
+                logAction('Incomplete threat identification');
             }
             
             feedback.style.display = 'block';
@@ -1184,6 +1210,7 @@
             option.addEventListener('click', () => {
                 document.querySelectorAll('.quiz-option').forEach(o => o.style.backgroundColor = '#f8f9fa');
                 option.style.backgroundColor = '#e9ecef';
+                logAction('Selected quiz option');
             });
         });
         
@@ -1208,10 +1235,12 @@
                     feedback.classList.add('correct');
                     feedback.classList.remove('incorrect');
                     updateProgress(5);
+                    logAction('Correct quiz answer for question ' + questionId);
                 } else {
                     feedback.textContent = 'Incorrect. Try again!';
                     feedback.classList.add('incorrect');
                     feedback.classList.remove('correct');
+                    logAction('Incorrect quiz answer for question ' + questionId);
                 }
                 
                 feedback.style.display = 'block';
@@ -1227,6 +1256,7 @@
                 question1.style.display = 'none';
                 question2.style.display = 'block';
                 document.getElementById('next-question').style.display = 'none';
+                logAction('Moved to next question');
             }
         });
         
@@ -1246,20 +1276,24 @@
             if (answerDiv.style.display === 'none') {
                 answerDiv.style.display = 'block';
                 button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+                logAction('Revealed flashcard answer');
             } else {
                 answerDiv.style.display = 'none';
                 button.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+                logAction('Hidden flashcard answer');
             }
         });
         
         document.getElementById('next-flashcard').addEventListener('click', () => {
             currentFlashcard = (currentFlashcard + 1) % flashcards.length;
             updateFlashcard();
+            logAction('Next flashcard');
         });
         
         document.getElementById('prev-flashcard').addEventListener('click', () => {
             currentFlashcard = (currentFlashcard - 1 + flashcards.length) % flashcards.length;
             updateFlashcard();
+            logAction('Previous flashcard');
         });
         
         function updateFlashcard() {
@@ -1280,10 +1314,12 @@
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 updateProgress(3);
+                logAction('Correct terminology matching');
             } else {
                 feedback.textContent = 'Incorrect. Try again! EVC is a classification system (B), and Pre-European vegetation refers to the original vegetation (A).';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
+                logAction('Incorrect terminology matching');
             }
             
             feedback.style.display = 'block';
@@ -1293,6 +1329,7 @@
         document.getElementById('play-video').addEventListener('click', () => {
             alert('Video playback would start in a real application. This is a simulation.');
             updateProgress(5);
+            logAction('Play video button clicked');
         });
         
         // Inspection form submission
@@ -1304,11 +1341,13 @@
                 feedback.textContent = 'Please enter a site name before submitting.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
+                logAction('Inspection submission failed - no site name');
             } else {
                 feedback.textContent = 'Inspection submitted successfully! Good work.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 updateProgress(15);
+                logAction('Inspection submitted successfully');
             }
             
             feedback.style.display = 'block';
@@ -1321,6 +1360,7 @@
             feedback.classList.add('correct');
             feedback.classList.remove('incorrect');
             feedback.style.display = 'block';
+            logAction('Saved inspection as draft');
         });
         
         // Download resources
@@ -1328,6 +1368,7 @@
             button.addEventListener('click', () => {
                 const resource = button.getAttribute('data-resource');
                 alert(`Downloading ${resource}... In a real application, this would download the file.`);
+                logAction('Download resource: ' + resource);
             });
         });
         
@@ -1336,6 +1377,7 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 alert('This would open an external website in a real application.');
+                logAction('External link clicked');
             });
         });
         
@@ -1346,7 +1388,14 @@
             progress = Math.min(progress + value, 100);
             document.getElementById('main-progress').style.width = progress + '%';
             document.getElementById('progress-text').textContent = progress + '%';
+            logAction('Progress updated to: ' + progress + '%');
         }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            logAction('Page loaded successfully');
+            console.log('All JavaScript functionality is now initialized');
+        });
     </script>
 </body>
 </html>
