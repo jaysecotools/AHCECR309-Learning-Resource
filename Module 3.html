@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Heritage Considerations - Tasmania</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #689F38;
+            --accent: #8BC34A;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --tas-blue: #006989;
+            --tas-orange: #E64A19;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23F1F8E9" width="100" height="100"/><path fill="%238BC34A" opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--tas-blue), var(--tas-orange));
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-tab:hover {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .nav-tab.active {
+            background-color: var(--light);
+            color: var(--dark);
+            border-bottom: 4px solid var(--tas-orange);
+            font-weight: bold;
+        }
+        
+        .nav-tab i {
+            font-size: 1.4rem;
+        }
+        
+        .content-section {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            padding: 10px 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .interactive-box {
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: var(--light);
+        }
+        
+        .feedback {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .species-card {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .species-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-right: 1px solid #eee;
+        }
+        
+        .species-info {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .quiz-option {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .site-map {
+            height: 350px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect fill="%23ddd" width="40" height="40"/></svg>');
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .module-img {
+            height: 160px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+        }
+        
+        .module-content {
+            padding: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .inspection-checklist {
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .checklist-item input {
+            width: auto;
+            margin-right: 15px;
+        }
+        
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .download-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .download-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .heritage-feature {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .heritage-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-right: 1px solid #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        
+        .heritage-info {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .scenario-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--tas-orange);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .species-card {
+                flex-direction: column;
+            }
+            
+            .species-img {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .checkbox-item {
+                min-width: 100%;
+            }
+            
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .heritage-feature {
+                flex-direction: column;
+            }
+            
+            .heritage-img {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-monument"></i> Cultural Heritage Considerations</h1>
+            <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
+            <div class="progress-bar">
+                <div class="progress" id="main-progress" style="width: 35%"></div>
+            </div>
+            <p>Course Progress: <span id="progress-text">35%</span> Complete</p>
+        </header>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-target="learning">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Learning Materials</span>
+            </div>
+            <div class="nav-tab" data-target="identification">
+                <i class="fas fa-search"></i>
+                <span>Identifying Heritage</span>
+            </div>
+            <div class="nav-tab" data-target="aboriginal">
+                <i class="fas fa-hands"></i>
+                <span>Aboriginal Heritage</span>
+            </div>
+            <div class="nav-tab" data-target="legislation">
+                <i class="fas fa-gavel"></i>
+                <span>Legislation</span>
+            </div>
+            <div class="nav-tab" data-target="scenarios">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Practice Scenarios</span>
+            </div>
+        </div>
+        
+        <!-- Learning Materials Section -->
+        <section id="learning" class="content-section active">
+            <h2><i class="fas fa-graduation-cap"></i> Cultural Heritage in Tasmania</h2>
+            <p>Understanding cultural heritage considerations is essential for conducting responsible site inspections in Tasmania.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>What is Cultural Heritage?</h3>
+                </div>
+                <p>Cultural heritage refers to places, objects, and traditions that communities have inherited from the past and want to preserve for future generations. In Tasmania, this includes both Aboriginal heritage and historic heritage from European settlement.</p>
+                
+                <p>Tasmania's cultural heritage is diverse and includes:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Aboriginal sites and cultural landscapes</li>
+                    <li>Historic buildings and structures</li>
+                    <li>Industrial and archaeological sites</li>
+                    <li>Cultural landscapes and modified natural areas</li>
+                    <li>Movable cultural heritage objects</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Why Cultural Heritage Matters in Site Inspections</h3>
+                </div>
+                <p>When conducting site inspections, it's crucial to consider cultural heritage because:</p>
+                
+                <div class="checkbox-group" style="margin-top: 15px;">
+                    <div class="checkbox-item">
+                        <input type="checkbox" checked disabled>
+                        <label>Cultural heritage is protected by law</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" checked disabled>
+                        <label>Damage to heritage sites can result in significant penalties</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" checked disabled>
+                        <label>Heritage values contribute to Tasmania's unique character</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" checked disabled>
+                        <label>Understanding heritage helps in comprehensive site assessment</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" checked disabled>
+                        <label>Respecting heritage maintains positive community relationships</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-eye"></i>
+                    <h3>Key Principles for Heritage-Aware Inspections</h3>
+                </div>
+                <p>When conducting site inspections with cultural heritage considerations:</p>
+                
+                <div class="interactive-box">
+                    <h4><i class="fas fa-check-circle"></i> Do:</h4>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        <li>Research the area's heritage potential before visiting</li>
+                        <li>Look for both obvious and subtle heritage indicators</li>
+                        <li>Document any potential heritage features with photos and notes</li>
+                        <li>Consult with Aboriginal Heritage Tasmania if Aboriginal sites are suspected</li>
+                        <li>Follow all legislative requirements for heritage protection</li>
+                    </ul>
+                    
+                    <h4><i class="fas fa-times-circle"></i> Don't:</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>Disturb or remove artifacts or materials from heritage sites</li>
+                        <li>Assume that absence of visible features means no heritage values</li>
+                        <li>Proceed with works if you suspect heritage values without proper assessment</li>
+                        <li>Share sensitive information about Aboriginal heritage locations publicly</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Identifying Heritage Section -->
+        <section id="identification" class="content-section">
+            <h2><i class="fas fa-search"></i> Identifying Cultural Heritage Sites</h2>
+            <p>Learn to recognize potential cultural heritage features during site inspections.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-list"></i>
+                    <h3>Types of Cultural Heritage Features</h3>
+                </div>
+                <p>Cultural heritage can manifest in various forms. During inspections, look for these potential heritage indicators:</p>
+                
+                <div class="heritage-feature">
+                    <div class="heritage-img">
+                        <i class="fas fa-tree" style="font-size: 3rem; color: var(--dark);"></i>
+                    </div>
+                    <div class="heritage-info">
+                        <h4>Aboriginal Cultural Heritage</h4>
+                        <ul>
+                            <li>Shell middens and stone artifacts</li>
+                            <li>Rock art and engraving sites</li>
+                            <li>Scarred trees (culturally modified trees)</li>
+                            <li>Stone arrangements and ceremonial sites</li>
+                            <li>Subsurface archaeological deposits</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="heritage-feature">
+                    <div class="heritage-img">
+                        <i class="fas fa-landmark" style="font-size: 3rem; color: var(--dark);"></i>
+                    </div>
+                    <div class="heritage-info">
+                        <h4>Historic Heritage</h4>
+                        <ul>
+                            <li>Historic buildings and structures</li>
+                            <li>Archaeological sites (foundations, ruins)</li>
+                            <li>Industrial sites (mines, kilns, factories)</li>
+                            <li>Historic landscapes (gardens, pathways)</li>
+                            <li>Artifacts and movable heritage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Assessing Heritage Potential</h3>
+                </div>
+                <p>Before and during site inspections, consider these factors that increase heritage potential:</p>
+                
+                <div class="form-group">
+                    <label>Environmental Context:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Proximity to water sources</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Sheltered locations</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Access to resources</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Historical travel routes</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Visual Indicators:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Unusual stone arrangements</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Mounds or depressions in the landscape</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Non-native vegetation patterns</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" checked disabled>
+                            <label>Evidence of previous structures</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Documentation Procedures</h3>
+                </div>
+                <p>When potential heritage features are identified during inspection:</p>
+                
+                <div class="inspection-checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="doc1">
+                        <label for="doc1">Record precise location (GPS coordinates)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="doc2">
+                        <label for="doc2">Take photographs from multiple angles</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="doc3">
+                        <label for="doc3">Note environmental context and associations</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="doc4">
+                        <label for="doc4">Sketch the site layout if appropriate</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="doc5">
+                        <label for="doc5">Do not disturb or remove any material</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="doc6">
+                        <label for="doc6">Report findings to appropriate authorities</label>
+                    </div>
+                </div>
+                
+                <button class="btn" id="check-documentation"><i class="fas fa-check"></i> Check Documentation Protocol</button>
+                <div class="feedback" id="documentation-feedback"></div>
+            </div>
+        </section>
+        
+        <!-- Aboriginal Heritage Section -->
+        <section id="aboriginal" class="content-section">
+            <h2><i class="fas fa-hands"></i> Aboriginal Heritage Recognition</h2>
+            <p>Understanding and respecting Aboriginal heritage is a critical component of site inspections in Tasmania.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h3>Tasmanian Aboriginal Heritage</h3>
+                </div>
+                <p>Tasmanian Aboriginal heritage represents one of the oldest continuous cultures in the world, dating back over 40,000 years. Aboriginal people have maintained deep connections to Country despite the impacts of colonization.</p>
+                
+                <p>Key aspects of Tasmanian Aboriginal heritage include:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Cultural landscapes reflecting deep spiritual connections to Country</li>
+                    <li>Archaeological sites documenting thousands of years of occupation</li>
+                    <li>Scarred trees marking cultural activities and resource use</li>
+                    <li>Shell middens demonstrating coastal resource use</li>
+                    <li>Rock art sites containing important cultural knowledge</li>
+                </ul>
+                
+                <div class="scenario-box">
+                    <h4><i class="fas fa-lightbulb"></i> Cultural Sensitivity Note:</h4>
+                    <p>Some Aboriginal heritage sites contain sensitive cultural information. It's important to follow appropriate protocols for documentation and information sharing, consulting with Aboriginal Heritage Tasmania and relevant Aboriginal communities.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>Working with Aboriginal Communities</h3>
+                </div>
+                <p>When Aboriginal heritage is identified or suspected during site inspections:</p>
+                
+                <div class="interactive-box">
+                    <h4>Recommended Engagement Process:</h4>
+                    <ol style="margin-left: 20px;">
+                        <li><strong>Cease activity</strong> that may impact potential heritage values</li>
+                        <li><strong>Contact Aboriginal Heritage Tasmania</strong> for guidance</li>
+                        <li><strong>Follow established protocols</strong> for community consultation</li>
+                        <li><strong>Respect cultural authority</strong> and decision-making processes</li>
+                        <li><strong>Implement recommendations</strong> from Aboriginal heritage officers</li>
+                    </ol>
+                </div>
+                
+                <p>Aboriginal communities are the primary knowledge holders for their heritage. Building respectful, collaborative relationships is essential for appropriate heritage management.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Aboriginal Heritage Assessment</h3>
+                </div>
+                <p>When assessing potential Aboriginal heritage during site inspections:</p>
+                
+                <div class="form-group">
+                    <label>Check the following resources before inspection:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource1">
+                            <label for="resource1">Aboriginal Heritage Tasmania Register</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource2">
+                            <label for="resource2">Tasmanian Heritage Register</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource3">
+                            <label for="resource3">Local Aboriginal community organizations</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource4">
+                            <label for="resource4">Previous archaeological assessments</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="check-resources"><i class="fas fa-check"></i> Verify Resources</button>
+                <div class="feedback" id="resources-feedback"></div>
+            </div>
+        </section>
+        
+        <!-- Legislation Section -->
+        <section id="legislation" class="content-section">
+            <h2><i class="fas fa-gavel"></i> Legislative Requirements</h2>
+            <p>Understanding the legal framework for cultural heritage protection in Tasmania is essential for compliance during site inspections.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Key Legislation</h3>
+                </div>
+                <p>Several pieces of legislation protect cultural heritage in Tasmania:</p>
+                
+                <div class="interactive-box">
+                    <h4><i class="fas fa-book"></i> Aboriginal Heritage Act 1975</h4>
+                    <p>The primary legislation protecting Aboriginal heritage in Tasmania. It:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        <li>Provides for the recognition and protection of Aboriginal sites</li>
+                        <li>Establishes the Aboriginal Heritage Council</li>
+                        <li>Requires permits for works that may affect Aboriginal heritage</li>
+                        <li>Creates offenses for damaging Aboriginal heritage</li>
+                    </ul>
+                </div>
+                
+                <div class="interactive-box">
+                    <h4><i class="fas fa-book"></i> Historic Cultural Heritage Act 1995</h4>
+                    <p>Protects historic heritage in Tasmania. It:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        <li>Establishes the Tasmanian Heritage Council</li>
+                        <li>Provides for the Tasmanian Heritage Register</li>
+                        <li>Requires works approval for registered places</li>
+                        <li>Includes provisions for archaeological sites</li>
+                    </ul>
+                </div>
+                
+                <div class="interactive-box">
+                    <h4><i class="fas fa-book"></i> Other Relevant Legislation</h4>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>Land Use Planning and Approvals Act 1993:</strong> Requires consideration of heritage in planning schemes</li>
+                        <li><strong>Environmental Management and Pollution Control Act 1994:</strong> May require heritage considerations in environmental assessments</li>
+                        <li><strong>Commonwealth Aboriginal and Torres Strait Islander Heritage Protection Act 1984:</strong> Provides additional Commonwealth protection</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Compliance Requirements</h3>
+                </div>
+                <p>During site inspections, you must be aware of these legal requirements:</p>
+                
+                <div class="inspection-checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="legal1">
+                        <label for="legal1">Immediately cease works if Aboriginal heritage is discovered</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="legal2">
+                        <label for="legal2">Report suspected Aboriginal heritage to Aboriginal Heritage Tasmania</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="legal3">
+                        <label for="legal3">Check Heritage Register before commencing works</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="legal4">
+                        <label for="legal4">Obtain necessary permits and approvals</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="legal5">
+                        <label for="legal5">Follow conditions of any heritage approvals</label>
+                    </div>
+                </div>
+                
+                <div class="scenario-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Penalties for Non-Compliance:</h4>
+                    <p>Serious penalties apply for damaging cultural heritage, including:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Fines up to $1.5 million for corporations</li>
+                        <li>Fines up to $300,000 for individuals</li>
+                        <li>Imprisonment in serious cases</li>
+                        <li>Restoration orders requiring remediation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>Legislative Knowledge Check</h3>
+                </div>
+                
+                <div class="interactive-box">
+                    <div class="quiz-question">
+                        <h4>Question 1: What is the primary legislation protecting Aboriginal heritage in Tasmania?</h4>
+                        <div class="quiz-option" data-correct="false">A. Historic Cultural Heritage Act 1995</div>
+                        <div class="quiz-option" data-correct="true">B. Aboriginal Heritage Act 1975</div>
+                        <div class="quiz-option" data-correct="false">C. Environmental Management Act 1994</div>
+                        <div class="quiz-option" data-correct="false">D. Land Use Planning Act 1993</div>
+                        <button class="btn check-answer" data-question="1"><i class="fas fa-check"></i> Check Answer</button>
+                        <div class="feedback correct">Correct! The Aboriginal Heritage Act 1975 is the primary legislation protecting Aboriginal heritage in Tasmania.</div>
+                    </div>
+                </div>
+                
+                <div class="interactive-box">
+                    <div class="quiz-question">
+                        <h4>Question 2: What should you do if you discover potential Aboriginal heritage during a site inspection?</h4>
+                        <div class="quiz-option" data-correct="false">A. Document it and continue with planned works</div>
+                        <div class="quiz-option" data-correct="false">B. Remove the material for safekeeping</div>
+                        <div class="quiz-option" data-correct="true">C. Cease works and contact Aboriginal Heritage Tasmania</div>
+                        <div class="quiz-option" data-correct="false">D. Only report it if it looks significant</div>
+                        <button class="btn check-answer" data-question="2"><i class="fas fa-check"></i> Check Answer</button>
+                        <div class="feedback correct">Correct! You must immediately cease works and contact Aboriginal Heritage Tasmania for guidance.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Practice Scenarios Section -->
+        <section id="scenarios" class="content-section">
+            <h2><i class="fas fa-puzzle-piece"></i> Practice Scenarios</h2>
+            <p>Test your knowledge with these interactive scenarios based on real-world situations.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-tree"></i>
+                    <h3>Scenario 1: Coastal Development Inspection</h3>
+                </div>
+                
+                <div class="scenario-box">
+                    <p><strong>Situation:</strong> You're inspecting a coastal site proposed for a walking track development. While assessing the route, you notice an area with scattered shell fragments and dark soil. In one section, you observe what appears to be a concentration of shells and some stone fragments that look worked.</p>
+                    
+                    <h4>What should you do?</h4>
+                    <div class="form-group">
+                        <select id="scenario1-select">
+                            <option value="">Select your response</option>
+                            <option value="continue">Continue with the inspection and note it in your report</option>
+                            <option value="collect">Collect a sample for further analysis</option>
+                            <option value="stop">Stop work in that area and contact Aboriginal Heritage Tasmania</option>
+                            <option value="mark">Mark the area and proceed with the rest of the inspection</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" id="check-scenario1"><i class="fas fa-check"></i> Check Response</button>
+                    <div class="feedback" id="scenario1-feedback"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-industry"></i>
+                    <h3>Scenario 2: Historic Site Assessment</h3>
+                </div>
+                
+                <div class="scenario-box">
+                    <p><strong>Situation:</strong> You're assessing a site for a proposed vegetation management program. The area contains what appears to be the remains of an early 20th-century mining operation, including several stone foundations, metal fragments, and what might be a tailings dump. The site isn't listed on the Heritage Register.</p>
+                    
+                    <h4>How should you proceed?</h4>
+                    <div class="form-group">
+                        <select id="scenario2-select">
+                            <option value="">Select your response</option>
+                            <option value="proceed">Proceed with the vegetation management as planned</option>
+                            <option value="assess">Conduct a preliminary archaeological assessment</option>
+                            <option value="contact">Contact the Tasmanian Heritage Council for advice</option>
+                            <option value="avoid">Avoid the obvious features but work in other areas</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" id="check-scenario2"><i class="fas fa-check"></i> Check Response</button>
+                    <div class="feedback" id="scenario2-feedback"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Scenario 3: Unexpected Discovery</h3>
+                </div>
+                
+                <div class="scenario-box">
+                    <p><strong>Situation:</strong> During ground disturbance for a small project, your team uncovers what appears to be a buried historical artifact. It looks like a metal tool of some kind, possibly from the 19th century. The area wasn't previously identified as having heritage values.</p>
+                    
+                    <h4>What are your immediate actions?</h4>
+                    <div class="form-group">
+                        <label>Select all that apply:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="action1" value="stop">
+                                <label for="action1">Stop work immediately in the area</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="action2" value="secure">
+                                <label for="action2">Secure the area to prevent further disturbance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="action3" value="document">
+                                <label for="action3">Document the find with photos and notes</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="action4" value="remove">
+                                <label for="action4">Carefully remove the artifact for protection</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="action5" value="report">
+                                <label for="action5">Report the find to appropriate heritage authorities</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="check-scenario3"><i class="fas fa-check"></i> Check Response</button>
+                    <div class="feedback" id="scenario3-feedback"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Knowledge Assessment</h3>
+                </div>
+                
+                <div class="interactive-box">
+                    <p>Test your overall knowledge of cultural heritage considerations with this final assessment:</p>
+                    
+                    <div class="quiz-question">
+                        <h4>Question 1: Which of these is NOT typically considered a cultural heritage feature?</h4>
+                        <div class="quiz-option" data-correct="false">A. Shell midden</div>
+                        <div class="quiz-option" data-correct="false">B. Historic building foundation</div>
+                        <div class="quiz-option" data-correct="true">C. Naturally occurring rock formation</div>
+                        <div class="quiz-option" data-correct="false">D. Culturally modified tree</div>
+                        <button class="btn check-answer" data-question="3"><i class="fas fa-check"></i> Check Answer</button>
+                        <div class="feedback correct">Correct! While natural rock formations may have cultural significance, they are not inherently cultural heritage features without evidence of human modification or use.</div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h4>Question 2: When is it acceptable to remove artifacts from a site during inspection?</h4>
+                        <div class="quiz-option" data-correct="false">A. When they appear valuable</div>
+                        <div class="quiz-option" data-correct="false">B. When they might be damaged by weather</div>
+                        <div class="quiz-option" data-correct="false">C. When you need to show them to authorities</div>
+                        <div class="quiz-option" data-correct="true">D. Never without proper authorization</div>
+                        <button class="btn check-answer" data-question="4"><i class="fas fa-check"></i> Check Answer</button>
+                        <div class="feedback correct">Correct! Artifacts should never be removed from their context without proper authorization, as this destroys important archaeological information.</div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="complete-assessment"><i class="fas fa-award"></i> Complete Knowledge Assessment</button>
+                <div class="feedback" id="assessment-feedback"></div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works</p>
+            <p>Part of AHC31424 Certificate III in Conservation and Ecosystem Management</p>
+            <p>Tasmanian Context | © 2023 Learning Resource</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab navigation functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding section
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Documentation protocol check
+        document.getElementById('check-documentation').addEventListener('click', () => {
+            const feedback = document.getElementById('documentation-feedback');
+            feedback.textContent = 'Correct! These are the appropriate documentation procedures for potential heritage sites. Always remember not to disturb or remove any material.';
+            feedback.classList.add('correct');
+            feedback.classList.remove('incorrect');
+            feedback.style.display = 'block';
+            updateProgress(5);
+        });
+        
+        // Resources check
+        document.getElementById('check-resources').addEventListener('click', () => {
+            const feedback = document.getElementById('resources-feedback');
+            feedback.textContent = 'Correct! Consulting these resources before inspection helps identify potential heritage issues and ensures appropriate protocols are followed.';
+            feedback.classList.add('correct');
+            feedback.classList.remove('incorrect');
+            feedback.style.display = 'block';
+            updateProgress(5);
+        });
+        
+        // Scenario 1 check
+        document.getElementById('check-scenario1').addEventListener('click', () => {
+            const select = document.getElementById('scenario1-select');
+            const feedback = document.getElementById('scenario1-feedback');
+            
+            if (select.value === 'stop') {
+                feedback.textContent = 'Correct! This appears to be a potential shell midden, which is Aboriginal heritage. You must stop work and contact Aboriginal Heritage Tasmania immediately.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(5);
+            } else {
+                feedback.textContent = 'Incorrect. This appears to be a potential shell midden, which is Aboriginal heritage. The correct response is to stop work and contact Aboriginal Heritage Tasmania immediately.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Scenario 2 check
+        document.getElementById('check-scenario2').addEventListener('click', () => {
+            const select = document.getElementById('scenario2-select');
+            const feedback = document.getElementById('scenario2-feedback');
+            
+            if (select.value === 'contact') {
+                feedback.textContent = 'Correct! Even if not listed, these features may have heritage significance. Contacting the Tasmanian Heritage Council for advice is the appropriate response.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(5);
+            } else {
+                feedback.textContent = 'Incorrect. Even if not listed, these features may have heritage significance. The correct response is to contact the Tasmanian Heritage Council for advice.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Scenario 3 check
+        document.getElementById('check-scenario3').addEventListener('click', () => {
+            const action1 = document.getElementById('action1').checked;
+            const action2 = document.getElementById('action2').checked;
+            const action3 = document.getElementById('action3').checked;
+            const action4 = document.getElementById('action4').checked;
+            const action5 = document.getElementById('action5').checked;
+            const feedback = document.getElementById('scenario3-feedback');
+            
+            if (action1 && action2 && action3 && action5 && !action4) {
+                feedback.textContent = 'Correct! These are the appropriate actions for an unexpected discovery. You should never remove artifacts without proper authorization.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(5);
+            } else {
+                feedback.textContent = 'Not quite. The correct actions are: stop work, secure the area, document the find, and report to authorities. You should never remove artifacts without proper authorization.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Quiz functionality
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.quiz-option').forEach(o => o.style.backgroundColor = '#f8f9fa');
+                option.style.backgroundColor = '#e9ecef';
+            });
+        });
+        
+        // Check quiz answers
+        document.querySelectorAll('.check-answer').forEach(button => {
+            button.addEventListener('click', () => {
+                const questionId = button.getAttribute('data-question');
+                const questionDiv = document.querySelector(`.quiz-question`);
+                const options = questionDiv.querySelectorAll('.quiz-option');
+                const feedback = questionDiv.querySelector('.feedback');
+                
+                let correctSelected = false;
+                
+                options.forEach(option => {
+                    if (option.style.backgroundColor === 'rgb(233, 236, 239)' && option.getAttribute('data-correct') === 'true') {
+                        correctSelected = true;
+                    }
+                });
+                
+                if (correctSelected) {
+                    feedback.textContent = feedback.textContent || 'Correct!';
+                    feedback.classList.add('correct');
+                    feedback.classList.remove('incorrect');
+                    updateProgress(2);
+                } else {
+                    feedback.textContent = 'Incorrect. Try again!';
+                    feedback.classList.add('incorrect');
+                    feedback.classList.remove('correct');
+                }
+                
+                feedback.style.display = 'block';
+            });
+        });
+        
+        // Complete assessment
+        document.getElementById('complete-assessment').addEventListener('click', () => {
+            const feedback = document.getElementById('assessment-feedback');
+            feedback.textContent = 'Assessment completed! You\'ve demonstrated good understanding of cultural heritage considerations for site inspections in Tasmania.';
+            feedback.classList.add('correct');
+            feedback.classList.remove('incorrect');
+            feedback.style.display = 'block';
+            updateProgress(10);
+        });
+        
+        // Progress tracking
+        let progress = 35;
+        
+        function updateProgress(value) {
+            progress = Math.min(progress + value, 100);
+            document.getElementById('main-progress').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = progress + '%';
+        }
+    </script>
+</body>
+</html>
