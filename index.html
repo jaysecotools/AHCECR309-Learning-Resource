@@ -361,6 +361,7 @@
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            position: relative;
         }
         
         .module-card:hover {
@@ -454,6 +455,27 @@
             margin-bottom: 15px;
         }
         
+        .module-active {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--tas-orange);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .module-card.active-module .module-active {
+            display: block;
+        }
+        
+        .module-card.active-module {
+            border: 2px solid var(--tas-orange);
+        }
+        
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -520,7 +542,8 @@
             <p>Explore the following modules to learn about ecological and cultural site inspections in Tasmania.</p>
             
             <div class="module-grid">
-                <div class="module-card">
+                <div class="module-card" id="module-1">
+                    <div class="module-active">Currently Viewing</div>
                     <div class="module-img">
                         <i class="fas fa-leaf"></i>
                     </div>
@@ -529,11 +552,12 @@
                         <p>Learn the fundamentals of ecological site inspections and their importance in conservation work.</p>
                         <div class="badge badge-primary">15 min</div>
                         <div class="badge badge-secondary">Beginner</div>
-                        <a href="Module 1.html" class="btn"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="Module 1.html" class="btn start-module" data-module="1"><i class="fas fa-play"></i> Start Module</a>
                     </div>
                 </div>
                 
-                <div class="module-card">
+                <div class="module-card" id="module-2">
+                    <div class="module-active">Currently Viewing</div>
                     <div class="module-img">
                         <i class="fas fa-mountain"></i>
                     </div>
@@ -542,11 +566,12 @@
                         <p>Explore Tasmania's unique ecosystems and their conservation significance.</p>
                         <div class="badge badge-primary">20 min</div>
                         <div class="badge badge-secondary">Intermediate</div>
-                        <a href="Module 2.html" class="btn"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="Module 2.html" class="btn start-module" data-module="2"><i class="fas fa-play"></i> Start Module</a>
                     </div>
                 </div>
                 
-                <div class="module-card">
+                <div class="module-card" id="module-3">
+                    <div class="module-active">Currently Viewing</div>
                     <div class="module-img">
                         <i class="fas fa-monument"></i>
                     </div>
@@ -555,22 +580,24 @@
                         <p>Understand how to identify and protect cultural heritage sites during inspections.</p>
                         <div class="badge badge-primary">25 min</div>
                         <div class="badge badge-warning">Advanced</div>
-                        <a href="Module 3.html" class="btn"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="Module 3.html" class="btn start-module" data-module="3"><i class="fas fa-play"></i> Start Module</a>
                     </div>
                 </div>
                 
-                <div class="module-card">
-    <div class="module-img">
-        <i class="fas fa-gavel"></i>
-    </div>
-    <div class="module-content">
-        <h3>Legislative Framework</h3>
-        <p>Learn about the laws and regulations governing site inspections in Tasmania.</p>
-        <div class="badge badge-primary">18 min</div>
-        <div class="badge badge-secondary">Intermediate</div>
-        <a href="Module 4.html" class="btn start-module" data-module="Legislative Framework"><i class="fas fa-play"></i> Start Module</a>
-    </div>
-</div>
+                <div class="module-card" id="module-4">
+                    <div class="module-active">Currently Viewing</div>
+                    <div class="module-img">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Legislative Framework</h3>
+                        <p>Learn about the laws and regulations governing site inspections in Tasmania.</p>
+                        <div class="badge badge-primary">18 min</div>
+                        <div class="badge badge-secondary">Intermediate</div>
+                        <a href="Module 4.html" class="btn start-module" data-module="4"><i class="fas fa-play"></i> Start Module</a>
+                    </div>
+                </div>
+            </div>
             
             <div class="card" style="margin-top: 30px;">
                 <div class="card-header">
@@ -1071,6 +1098,25 @@
             });
         });
         
+        // Module starting functionality - FIXED
+        document.querySelectorAll('.start-module').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault(); // This prevents the link from navigating away
+                const module = button.getAttribute('data-module');
+                
+                // Remove active class from all modules
+                document.querySelectorAll('.module-card').forEach(card => {
+                    card.classList.remove('active-module');
+                });
+                
+                // Add active class to the clicked module
+                document.getElementById('module-' + module).classList.add('active-module');
+                
+                alert(`Starting the Module ${module}! This would open the learning content in a real application.`);
+                updateProgress(10);
+            });
+        });
+        
         // Species identification activity
         document.getElementById('check-species').addEventListener('click', () => {
             const select = document.getElementById('species-select');
@@ -1241,15 +1287,6 @@
             }
             
             feedback.style.display = 'block';
-        });
-        
-        // Module starting functionality
-        document.querySelectorAll('.start-module').forEach(button => {
-            button.addEventListener('click', () => {
-                const module = button.getAttribute('data-module');
-                alert(`Starting the ${module} module! This would open the learning content in a real application.`);
-                updateProgress(10);
-            });
         });
         
         // Video play button
