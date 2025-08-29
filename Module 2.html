@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasmanian Ecosystems - Conservation Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #689F38;
+            --accent: #8BC34A;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --tas-blue: #006989;
+            --tas-orange: #E64A19;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23F1F8E9" width="100" height="100"/><path fill="%238BC34A" opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--tas-blue), var(--tas-orange));
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-tab:hover {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .nav-tab.active {
+            background-color: var(--light);
+            color: var(--dark);
+            border-bottom: 4px solid var(--tas-orange);
+            font-weight: bold;
+        }
+        
+        .nav-tab i {
+            font-size: 1.4rem;
+        }
+        
+        .content-section {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            padding: 10px 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .interactive-box {
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: var(--light);
+        }
+        
+        .feedback {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .species-card {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .species-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-right: 1px solid #eee;
+        }
+        
+        .species-info {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .quiz-option {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .site-map {
+            height: 350px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect fill="%23ddd" width="40" height="40"/></svg>');
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .module-img {
+            height: 160px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+        }
+        
+        .module-content {
+            padding: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .inspection-checklist {
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .checklist-item input {
+            width: auto;
+            margin-right: 15px;
+        }
+        
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .download-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .download-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .ecosystem-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .ecosystem-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ecosystem-img {
+            height: 160px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .ecosystem-content {
+            padding: 15px;
+        }
+        
+        .species-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .species-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .species-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .species-thumb {
+            height: 120px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .species-name {
+            padding: 10px;
+            font-weight: bold;
+            background-color: var(--light);
+        }
+        
+        .species-desc {
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .case-study {
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin: 20px 0;
+            background-color: var(--light);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .species-card {
+                flex-direction: column;
+            }
+            
+            .species-img {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .checkbox-item {
+                min-width: 100%;
+            }
+            
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ecosystem-gallery, .species-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tree"></i> Tasmanian Ecosystems Conservation Training</h1>
+            <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
+            <div class="progress-bar">
+                <div class="progress" id="main-progress" style="width: 35%"></div>
+            </div>
+            <p>Course Progress: <span id="progress-text">35%</span> Complete</p>
+        </header>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-target="ecosystems">
+                <i class="fas fa-mountain"></i>
+                <span>Tasmanian Ecosystems</span>
+            </div>
+            <div class="nav-tab" data-target="species">
+                <i class="fas fa-paw"></i>
+                <span>Endemic Species</span>
+            </div>
+            <div class="nav-tab" data-target="threats">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Ecosystem Threats</span>
+            </div>
+            <div class="nav-tab" data-target="strategies">
+                <i class="fas fa-seedling"></i>
+                <span>Conservation Strategies</span>
+            </div>
+            <div class="nav-tab" data-target="interactive">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Interactive Activities</span>
+            </div>
+            <div class="nav-tab" data-target="casestudies">
+                <i class="fas fa-book"></i>
+                <span>Case Studies</span>
+            </div>
+        </div>
+        
+        <!-- Tasmanian Ecosystems Section -->
+        <section id="ecosystems" class="content-section active">
+            <h2><i class="fas fa-mountain"></i> Unique Tasmanian Ecosystems</h2>
+            <p>Tasmania's isolation and varied topography have created diverse and unique ecosystems found nowhere else on Earth.</p>
+            
+            <div class="ecosystem-gallery">
+                <div class="ecosystem-item">
+                    <div class="ecosystem-img">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="ecosystem-content">
+                        <h3>Cool Temperate Rainforests</h3>
+                        <p>Characterized by myrtle beech, sassafras, and leatherwood trees. These ancient forests have remained largely unchanged for millions of years.</p>
+                    </div>
+                </div>
+                
+                <div class="ecosystem-item">
+                    <div class="ecosystem-img">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <div class="ecosystem-content">
+                        <h3>Alpine Ecosystems</h3>
+                        <p>Found above 800m elevation, featuring cushion plants, pencil pines, and unique high-altitude flora adapted to harsh conditions.</p>
+                    </div>
+                </div>
+                
+                <div class="ecosystem-item">
+                    <div class="ecosystem-img">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="ecosystem-content">
+                        <h3>Eucalypt Forests</h3>
+                        <p>Diverse forests dominated by various eucalypt species, providing habitat for many endemic animals.</p>
+                    </div>
+                </div>
+                
+                <div class="ecosystem-item">
+                    <div class="ecosystem-img">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="ecosystem-content">
+                        <h3>Coastal Heathlands</h3>
+                        <p>Wind-swept communities of low-growing shrubs and herbs adapted to saline conditions and poor soils.</p>
+                    </div>
+                </div>
+                
+                <div class="ecosystem-item">
+                    <div class="ecosystem-img">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="ecosystem-content">
+                        <h3>Wetlands & Buttongrass Moorlands</h3>
+                        <p>Peat-accumulating ecosystems with unique hydrological characteristics and specialized plant communities.</p>
+                    </div>
+                </div>
+                
+                <div class="ecosystem-item">
+                    <div class="ecosystem-img">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="ecosystem-content">
+                        <h3>Marine Ecosystems</h3>
+                        <p>Kelp forests, seagrass meadows, and sponge gardens that support diverse marine life including many endemic species.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Key Characteristics of Tasmanian Ecosystems</h3>
+                </div>
+                <ul>
+                    <li><strong>Gondwanan Heritage:</strong> Many plant species are relics from the ancient supercontinent Gondwana</li>
+                    <li><strong>High Endemism:</strong> Isolation has led to the evolution of many species found nowhere else</li>
+                    <li><strong>Climate Refugia:</strong> Tasmania served as a refuge for species during past climate changes</li>
+                    <li><strong>Fire Adaptation:</strong> Many ecosystems have evolved with fire as a natural disturbance regime</li>
+                    <li><strong>Nutrient-Poor Soils:</strong> Many plants have specialized adaptations for nutrient acquisition</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Endemic Species Section -->
+        <section id="species" class="content-section">
+            <h2><i class="fas fa-paw"></i> Endemic Species of Tasmania</h2>
+            <p>Tasmania's isolation has resulted in numerous species that are found nowhere else in the world.</p>
+            
+            <h3>Iconic Endemic Mammals</h3>
+            <div class="species-grid">
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="species-name">Tasmanian Devil</div>
+                    <div class="species-desc">World's largest carnivorous marsupial, known for its powerful jaws and feisty temperament.</div>
+                </div>
+                
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="species-name">Eastern Quoll</div>
+                    <div class="species-desc">Spotted carnivorous marsupial, extinct on mainland Australia but surviving in Tasmania.</div>
+                </div>
+                
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="species-name">Tasmanian Pademelon</div>
+                    <div class="species-desc">Small, stocky macropod with a distinctive short tail and thick fur.</div>
+                </div>
+                
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="species-name">Tasmanian Bettong</div>
+                    <div class="species-desc">Small, nocturnal macropod that uses its prehensile tail to gather nesting material.</div>
+                </div>
+            </div>
+            
+            <h3>Unique Flora</h3>
+            <div class="species-grid">
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="species-name">Huon Pine</div>
+                    <div class="species-desc">One of the longest-living trees in the world, with some specimens over 3,000 years old.</div>
+                </div>
+                
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="species-name">Leatherwood</div>
+                    <div class="species-desc">Unique to Tasmania's rainforests, produces flowers that are the source of distinctive honey.</div>
+                </div>
+                
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="species-name">Pencil Pine</div>
+                    <div class="species-desc">Coniferous tree found in high-altitude areas, extremely slow-growing and long-lived.</div>
+                </div>
+                
+                <div class="species-item">
+                    <div class="species-thumb">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="species-name">Tasmanian Blue Gum</div>
+                    <div class="species-desc">The floral emblem of Tasmania, one of the tallest flowering plants in the world.</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Species of Conservation Significance</h3>
+                </div>
+                <p>Many Tasmanian species are threatened and protected under state and federal legislation:</p>
+                <ul>
+                    <li><strong>Swift Parrot:</strong> Critically endangered migratory bird that breeds only in Tasmania</li>
+                    <li><strong>Orange-bellied Parrot:</strong> One of Australia's most endangered birds with fewer than 50 left in the wild</li>
+                    <li><strong>Giant Freshwater Crayfish:</strong> World's largest freshwater invertebrate, found only in northern Tasmania</li>
+                    <li><strong>Tasmanian Wedge-tailed Eagle:</strong> Unique subspecies with a population of less than 1,000 breeding pairs</li>
+                    <li><strong>Spotted-tail Quoll:</strong> Largest native carnivore on mainland Australia but declining in Tasmania</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Ecosystem Threats Section -->
+        <section id="threats" class="content-section">
+            <h2><i class="fas fa-exclamation-triangle"></i> Ecosystem Threats</h2>
+            <p>Tasmania's unique ecosystems face numerous threats that require careful management and conservation efforts.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-fire"></i>
+                    <h3>Climate Change</h3>
+                </div>
+                <p>Climate change poses significant threats to Tasmania's ecosystems:</p>
+                <ul>
+                    <li><strong>Alpine ecosystem shrinkage:</strong> Rising temperatures are reducing the area of alpine habitats</li>
+                    <li><strong>Sea level rise:</strong> Threatening coastal ecosystems and species</li>
+                    <li><strong>Changed fire regimes:</strong> Altered frequency and intensity of bushfires</li>
+                    <li><strong>Ocean acidification:</strong> Affecting marine ecosystems and species</li>
+                    <li><strong>Species range shifts:</strong> Changing distributions of plants and animals</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Invasive Species</h3>
+                </div>
+                <p>Introduced plants and animals threaten native biodiversity:</p>
+                <ul>
+                    <li><strong>Weeds:</strong> Spanish heath, gorse, blackberry, and willow species outcompete native vegetation</li>
+                    <li><strong>Feral animals:</strong> Cats, foxes, rabbits, and deer impact native species through predation and competition</li>
+                    <li><strong>Pathogens:</strong> Phytophthora root rot and other diseases affect native plants</li>
+                    <li><strong>Marine pests:</strong> Introduced species threaten marine ecosystems</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-hard-hat"></i>
+                    <h3>Habitat Loss and Fragmentation</h3>
+                </div>
+                <p>Human activities continue to impact natural habitats:</p>
+                <ul>
+                    <li><strong>Land clearing:</strong> For agriculture, urban development, and forestry</li>
+                    <li><strong>Infrastructure development:</strong> Roads, powerlines, and other linear infrastructure fragment habitats</li>
+                    <li><strong>Hydrological changes:</strong> Dams, drainage, and water extraction alter wetland ecosystems</li>
+                    <li><strong>Coastal development:</strong> Impacting sensitive coastal and marine environments</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-disease"></i>
+                    <h3>Disease</h3>
+                </div>
+                <p>Disease outbreaks threaten vulnerable species:</p>
+                <ul>
+                    <li><strong>Devil Facial Tumor Disease (DFTD):</strong> Contagious cancer that has devastated Tasmanian devil populations</li>
+                    <li><strong>Chytrid fungus:</strong> Threatening amphibian populations</li>
+                    <li><strong>Phytophthora cinnamomi:</strong> Root rot fungus affecting many plant species</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Conservation Strategies Section -->
+        <section id="strategies" class="content-section">
+            <h2><i class="fas fa-seedling"></i> Conservation Strategies</h2>
+            <p>Effective conservation requires a multi-faceted approach tailored to Tasmania's unique ecosystems.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Protected Areas</h3>
+                </div>
+                <p>Tasmania has an extensive network of protected areas covering approximately 40% of the state:</p>
+                <ul>
+                    <li><strong>National Parks:</strong> 19 national parks protect representative examples of major ecosystems</li>
+                    <li><strong>World Heritage Area:</strong> The Tasmanian Wilderness World Heritage Area covers 1.58 million hectares</li>
+                    <li><strong>Nature Reserves:</strong> More than 400 reserves protect specific natural values</li>
+                    <li><strong>Marine Protected Areas:</strong> 14 marine reserves protect coastal and marine ecosystems</li>
+                    <li><strong>Private Land Conservation:</strong> Conservation covenants and agreements on private land</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>Threatened Species Recovery</h3>
+                </div>
+                <p>Targeted programs for species of conservation concern:</p>
+                <ul>
+                    <li><strong>Save the Tasmanian Devil Program:</strong> Insurance populations, disease research, and monitoring</li>
+                    <li><strong>Orange-bellied Parrot Recovery:</strong> Captive breeding and release, habitat management</li>
+                    <li><strong>Giant Freshwater Crayfish protection:</strong> Habitat protection, water quality management</li>
+                    <li><strong>Swift Parrot conservation:</strong> Protection of breeding habitat and winter foraging resources</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-users"></i>
+                    <h3>Community Engagement</h3>
+                </div>
+                <p>Involving the community in conservation efforts:</p>
+                <ul>
+                    <li><strong>Landcare and Bushcare groups:</strong> Community-based restoration projects</li>
+                    <li><strong>Citizen science programs:</strong> Involving the public in monitoring and data collection</li>
+                    <li><strong>Indigenous partnerships:</strong> Working with Aboriginal communities for cultural and natural resource management</li>
+                    <li><strong>Education programs:</strong> Raising awareness about Tasmania's unique biodiversity</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-tools"></i>
+                    <h3>Threat Management</h3>
+                </div>
+                <p>Specific approaches to managing key threats:</p>
+                <ul>
+                    <li><strong>Weed management:</strong> Strategic control programs for priority weed species</li>
+                    <li><strong>Feral animal control:</strong> Targeted programs for cats, foxes, rabbits, and deer</li>
+                    <li><strong>Fire management:</strong> Planned burning to maintain ecosystem health and reduce wildfire risk</li>
+                    <li><strong>Biosecurity:</strong> Preventing the introduction and spread of new pests and diseases</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Policy and Legislation</h3>
+                </div>
+                <p>Legal frameworks supporting conservation:</p>
+                <ul>
+                    <li><strong>Nature Conservation Act 2002:</strong> Primary legislation for nature conservation in Tasmania</li>
+                    <li><strong>Threatened Species Protection Act 1995:</strong> Provides for protection and management of threatened species</li>
+                    <li><strong>Environmental Management and Pollution Control Act 1994:</strong> Addresses pollution and environmental impacts</li>
+                    <li><strong>National Parks and Reserves Management Act 2002:</strong> Management of Tasmania's reserve system</li>
+                    <li><strong>Forest Practices Act 1985:</strong> Regulates forestry operations to protect environmental values</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Interactive Activities Section -->
+        <section id="interactive" class="content-section">
+            <h2><i class="fas fa-puzzle-piece"></i> Interactive Activities</h2>
+            <p>Test your knowledge with these interactive exercises and simulations.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-search"></i>
+                    <h3>Tasmanian Species Identification</h3>
+                </div>
+                <p>Learn to identify key Tasmanian flora and fauna species that may be encountered during field work.</p>
+                
+                <div class="interactive-box">
+                    <div class="species-card">
+                        <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef;">
+                            <i class="fas fa-leaf" style="font-size: 3rem; color: var(--dark);"></i>
+                        </div>
+                        <div class="species-info">
+                            <h4>What plant species is this?</h4>
+                            <p><strong>Characteristics:</strong> Slow-growing conifer, found in high-altitude areas, extremely long-lived with dense, durable timber.</p>
+                            <div class="form-group">
+                                <select id="plant-species-select">
+                                    <option value="">Select a species</option>
+                                    <option value="huon">Huon Pine</option>
+                                    <option value="pencil">Pencil Pine</option>
+                                    <option value="leatherwood">Leatherwood</option>
+                                    <option value="sassafras">Sassafras</option>
+                                    <option value="myrtle">Myrtle Beech</option>
+                                </select>
+                            </div>
+                            <button class="btn" id="check-plant-species"><i class="fas fa-check"></i> Check Answer</button>
+                            <div class="feedback" id="plant-species-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Ecosystem Mapping</h3>
+                </div>
+                <p>Practice identifying different ecosystem types on a topographic map.</p>
+                
+                <div class="interactive-box">
+                    <div class="site-map">
+                        <i class="fas fa-map" style="font-size: 3rem; color: var(--dark);"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Select the predominant ecosystem type in the marked area:</label>
+                        <select id="ecosystem-select">
+                            <option value="">Select ecosystem type</option>
+                            <option value="rainforest">Cool temperate rainforest</option>
+                            <option value="alpine">Alpine vegetation</option>
+                            <option value="eucalypt">Eucalypt forest</option>
+                            <option value="heathland">Coastal heathland</option>
+                            <option value="wetland">Wetland</option>
+                        </select>
+                    </div>
+                    <button class="btn" id="check-ecosystem"><i class="fas fa-check"></i> Check Answer</button>
+                    <div class="feedback" id="ecosystem-feedback"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Threat Identification</h3>
+                </div>
+                <p>Identify potential ecological threats in different scenarios.</p>
+                
+                <div class="interactive-box">
+                    <p><strong>Scenario:</strong> You're inspecting a site where a new walking track is proposed through a patch of native vegetation. What potential threats should you look for?</p>
+                    
+                    <div class="form-group">
+                        <label>Select all that apply:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat1" value="compaction">
+                                <label for="threat1">Soil compaction</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat2" value="weeds">
+                                <label for="threat2">Weed invasion</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat3" value="fragmentation">
+                                <label for="threat3">Habitat fragmentation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat4" value="erosion">
+                                <label for="threat4">Erosion risk</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat5" value="pollution">
+                                <label for="threat5">Water pollution</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="check-threats"><i class="fas fa-check"></i> Check Answers</button>
+                    <div class="feedback" id="threats-feedback"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Conservation Priority Exercise</h3>
+                </div>
+                <p>Rank these conservation actions in order of priority for a newly discovered population of a threatened orchid species.</p>
+                
+                <div class="interactive-box">
+                    <div class="form-group">
+                        <label>Drag to reorder (highest priority at top):</label>
+                        <ul id="priority-list" style="list-style: none;">
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Conduct population survey and mapping</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Install protective fencing</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Develop long-term management plan</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Collect seed for banking</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Assess threats to the population</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn" id="check-priorities"><i class="fas fa-check"></i> Check Order</button>
+                    <div class="feedback" id="priority-feedback"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Case Studies Section -->
+        <section id="casestudies" class="content-section">
+            <h2><i class="fas fa-book"></i> Case Studies</h2>
+            <p>Real-world examples of conservation challenges and solutions in Tasmania.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-disease"></i>
+                    <h3>Case Study: Tasmanian Devil Conservation</h3>
+                </div>
+                <div class="case-study">
+                    <h4>Challenge</h4>
+                    <p>Devil Facial Tumor Disease (DFTD), a contagious cancer, has caused population declines of more than 80% since the disease was first observed in 1996.</p>
+                    
+                    <h4>Response</h4>
+                    <p>The Save the Tasmanian Devil Program was established, involving:</p>
+                    <ul>
+                        <li>Establishing an insurance population in captivity</li>
+                        <li>Research into disease transmission and treatment</li>
+                        <li>Monitoring wild populations</li>
+                        <li>Trialing wild management approaches</li>
+                        <li>Community engagement and education</li>
+                    </ul>
+                    
+                    <h4>Outcomes</h4>
+                    <p>While DFTD remains a serious threat, some populations are showing signs of resistance or adaptation. The insurance population has been successful, with over 700 devils in captive breeding facilities across Australia.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-feather"></i>
+                    <h3>Case Study: Orange-bellied Parrot Recovery</h3>
+                </div>
+                <div class="case-study">
+                    <h4>Challenge</h4>
+                    <p>The Orange-bellied Parrot is one of Australia's most endangered birds, with fewer than 50 individuals remaining in the wild. Threats include habitat loss, predation, and small population size.</p>
+                    
+                    <h4>Response</h4>
+                    <p>A comprehensive recovery program includes:</p>
+                    <ul>
+                        <li>Captive breeding and release programs</li>
+                        <li>Habitat protection and management at breeding and migration sites</li>
+                        <li>Predator control programs</li>
+                        <li>Supplemental feeding at key sites</li>
+                        <li>Cross-fostering experiments with related species</li>
+                    </ul>
+                    
+                    <h4>Outcomes</h4>
+                    <p>While the species remains critically endangered, intensive management has prevented immediate extinction. The 2021-2022 breeding season saw the highest number of wild-born chicks in over a decade.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-tree"></i>
+                    <h3>Case Study: Giant Trees Conservation</h3>
+                </div>
+                <div class="case-study">
+                    <h4>Challenge</h4>
+                    <p>Tasmania's giant trees, including some of the world's tallest flowering plants, face threats from logging, climate change, and development.</p>
+                    
+                    <h4>Response</h4>
+                    <p>Conservation efforts have included:</p>
+                    <ul>
+                        <li>Identification and mapping of giant trees</li>
+                        <li>Legal protection through forest practices regulations</li>
+                        <li>Community advocacy and awareness campaigns</li>
+                        <li>Reservation of key areas containing giant trees</li>
+                        <li>Research into the ecological role of these trees</li>
+                    </ul>
+                    
+                    <h4>Outcomes</h4>
+                    <p>Many significant giant trees now have formal protection, though debates continue about the balance between conservation and resource use. Public awareness of these remarkable trees has increased significantly.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-water"></i>
+                    <h3>Case Study: Marine Pest Management</h3>
+                </div>
+                <div class="case-study">
+                    <h4>Challenge</h4>
+                    <p>Tasmania's marine environments are threatened by introduced pests, including the Northern Pacific Seastar and Japanese Kelp, which can outcompete native species and disrupt ecosystems.</p>
+                    
+                    <h4>Response</h4>
+                    <p>Management approaches include:</p>
+                    <ul>
+                        <li>Biosecurity measures to prevent new introductions</li>
+                        <li>Monitoring programs to detect new incursions early</li>
+                        <li>Research into control methods for established pests</li>
+                        <li>Community reporting programs</li>
+                        <li>Development of a marine pest management strategy</li>
+                    </ul>
+                    
+                    <h4>Outcomes</h4>
+                    <p>While some pests are now well-established, early detection systems have been successful in identifying new incursions. Community awareness of marine biosecurity has increased, and research continues into control methods.</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works</p>
+            <p>Part of AHC31424 Certificate III in Conservation and Ecosystem Management</p>
+            <p>Tasmanian Context | © 2023 Learning Resource</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab navigation functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding section
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Plant species identification activity
+        document.getElementById('check-plant-species').addEventListener('click', () => {
+            const select = document.getElementById('plant-species-select');
+            const feedback = document.getElementById('plant-species-feedback');
+            
+            if (select.value === 'pencil') {
+                feedback.textContent = 'Correct! This is a Pencil Pine, a slow-growing conifer found in high-altitude areas of Tasmania.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(2);
+            } else {
+                feedback.textContent = 'Incorrect. Try again! The correct answer is Pencil Pine.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Ecosystem mapping activity
+        document.getElementById('check-ecosystem').addEventListener('click', () => {
+            const select = document.getElementById('ecosystem-select');
+            const feedback = document.getElementById('ecosystem-feedback');
+            
+            if (select.value === 'rainforest') {
+                feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(2);
+            } else {
+                feedback.textContent = 'Incorrect. Try again! The correct answer is Cool temperate rainforest.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Threat identification activity
+        document.getElementById('check-threats').addEventListener('click', () => {
+            const threat1 = document.getElementById('threat1').checked;
+            const threat2 = document.getElementById('threat2').checked;
+            const threat3 = document.getElementById('threat3').checked;
+            const threat4 = document.getElementById('threat4').checked;
+            const threat5 = document.getElementById('threat5').checked;
+            const feedback = document.getElementById('threats-feedback');
+            
+            // All threats should be selected for this scenario
+            if (threat1 && threat2 && threat3 && threat4 && threat5) {
+                feedback.textContent = 'Correct! All these threats are potential concerns when establishing new walking tracks.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                updateProgress(3);
+            } else {
+                feedback.textContent = 'Not quite. In this scenario, all the listed threats are potential concerns when establishing new walking tracks through native vegetation.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Conservation priorities activity
+        document.getElementById('check-priorities').addEventListener('click', () => {
+            const feedback = document.getElementById('priority-feedback');
+            
+            // In a real application, we would check the order of the list items
+            // For this example, we'll just provide educational feedback
+            feedback.innerHTML = `
+                <strong>Recommended order of priority:</strong>
+                <ol>
+                    <li>Assess threats to the population (Immediate understanding of risks)</li>
+                    <li>Conduct population survey and mapping (Baseline data collection)</li>
+                    <li>Install protective fencing (Immediate protection if threats are identified)</li>
+                    <li>Collect seed for banking (Insurance against population loss)</li>
+                    <li>Develop long-term management plan (Strategic planning for ongoing conservation)</li>
+                </ol>
+                <p>Prioritization depends on specific circumstances, but immediate threat assessment and protection are typically highest priority.</p>
+            `;
+            feedback.classList.add('correct');
+            feedback.classList.remove('incorrect');
+            feedback.style.display = 'block';
+            updateProgress(5);
+        });
+        
+        // Make priority list sortable (simplified version)
+        const priorityList = document.getElementById('priority-list');
+        let draggedItem = null;
+        
+        priorityList.querySelectorAll('li').forEach(item => {
+            item.setAttribute('draggable', true);
+            
+            item.addEventListener('dragstart', function() {
+                draggedItem = this;
+                setTimeout(() => this.style.opacity = '0.5', 0);
+            });
+            
+            item.addEventListener('dragend', function() {
+                draggedItem = null;
+                setTimeout(() => this.style.opacity = '1', 0);
+            });
+            
+            item.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+            
+            item.addEventListener('drop', function(e) {
+                e.preventDefault();
+                if (draggedItem !== this) {
+                    priorityList.insertBefore(draggedItem, this.nextSibling || this);
+                }
+            });
+        });
+        
+        // Progress tracking
+        let progress = 35;
+        
+        function updateProgress(value) {
+            progress = Math.min(progress + value, 100);
+            document.getElementById('main-progress').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = progress + '%';
+        }
+    </script>
+</body>
+</html>
