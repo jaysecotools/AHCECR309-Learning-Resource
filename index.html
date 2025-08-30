@@ -513,6 +513,33 @@
             border: 1px solid #555;
         }
 
+        /* Progress tracking styles */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .progress-details {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .activity-completion {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .activity-completion i {
+            color: var(--accent);
+        }
+
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -536,6 +563,11 @@
             .module-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .progress-container {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
     </style>
 </head>
@@ -545,9 +577,16 @@
             <h1><i class="fas fa-tree"></i> Ecological & Cultural Site Inspection</h1>
             <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
             <div class="progress-bar">
-                <div class="progress" id="main-progress" style="width: 35%"></div>
+                <div class="progress" id="main-progress" style="width: 0%"></div>
             </div>
-            <p>Course Progress: <span id="progress-text">35%</span> Complete</p>
+            <div class="progress-container">
+                <p>Course Progress: <span id="progress-text">0%</span> Complete</p>
+                <span class="progress-details" id="progress-details">(0/9 activities completed)</span>
+            </div>
+            <div class="activity-completion">
+                <i class="fas fa-tasks"></i>
+                <span id="completed-activities">0</span> activities completed of <span id="total-activities">9</span> total
+            </div>
         </header>
         
         <div class="nav-tabs">
@@ -1117,6 +1156,97 @@
             crossorigin=""></script>
 
     <script>
+        // Progress tracking system
+        const activities = {
+            'species-identification': { completed: false, points: 5 },
+            'ecosystem-mapping': { completed: false, points: 5 },
+            'threat-identification': { completed: false, points: 5 },
+            'quiz-question-1': { completed: false, points: 5 },
+            'quiz-question-2': { completed: false, points: 5 },
+            'terminology-matching': { completed: false, points: 5 },
+            'video-watched': { completed: false, points: 10 },
+            'inspection-submitted': { completed: false, points: 15 },
+            'flashcards-completed': { completed: false, points: 5 }
+        };
+
+        const totalPoints = Object.values(activities).reduce((sum, activity) => sum + activity.points, 0);
+        const totalActivities = Object.keys(activities).length;
+
+        // Initialize progress from localStorage if available
+        function initializeProgress() {
+            const savedProgress = localStorage.getItem('courseProgress');
+            if (savedProgress) {
+                const progressData = JSON.parse(savedProgress);
+                
+                // Update activities from saved data
+                Object.keys(progressData.activities).forEach(activityId => {
+                    if (activities[activityId]) {
+                        activities[activityId].completed = progressData.activities[activityId];
+                    }
+                });
+                
+                updateProgressBar();
+            }
+            
+            // Update activity counters
+            document.getElementById('total-activities').textContent = totalActivities;
+        }
+
+        // Update progress bar display
+        function updateProgressBar() {
+            let earnedPoints = 0;
+            let completedCount = 0;
+            
+            Object.values(activities).forEach(activity => {
+                if (activity.completed) {
+                    earnedPoints += activity.points;
+                    completedCount++;
+                }
+            });
+            
+            const percentage = Math.round((earnedPoints / totalPoints) * 100);
+            
+            document.getElementById('main-progress').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = percentage + '%';
+            document.getElementById('progress-details').textContent = 
+                `(${completedCount}/${totalActivities} activities completed)`;
+            document.getElementById('completed-activities').textContent = completedCount;
+            
+            // Save progress to localStorage
+            const activitiesState = {};
+            Object.keys(activities).forEach(activityId => {
+                activitiesState[activityId] = activities[activityId].completed;
+            });
+            
+            localStorage.setItem('courseProgress', JSON.stringify({
+                activities: activitiesState,
+                percentage: percentage,
+                lastUpdated: new Date().toISOString()
+            }));
+        }
+
+        // Mark activity as complete
+        function completeActivity(activityId) {
+            if (activities[activityId] && !activities[activityId].completed) {
+                activities[activityId].completed = true;
+                updateProgressBar();
+                return true;
+            }
+            return false;
+        }
+
+        // Reset progress
+        function resetProgress() {
+            Object.keys(activities).forEach(activityId => {
+                activities[activityId].completed = false;
+            });
+            localStorage.removeItem('courseProgress');
+            updateProgressBar();
+            
+            // Show notification
+            alert('Progress has been reset. All activities are now marked as incomplete.');
+        }
+
         // Tab navigation functionality
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -1151,7 +1281,7 @@
             
             // Add topographic layer (optional)
             L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-                attribution: 'Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a>',
+                attribution: 'Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://openttopomap.org">OpenTopoMap</a>',
                 maxZoom: 17
             }).addTo(map);
             
@@ -1239,7 +1369,11 @@
                 feedback.textContent = 'Correct! This is a Tasmanian Pademelon, a common marsupial in Tasmania.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateProgress(2);
+                
+                // Update progress
+                if (completeActivity('species-identification')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
                 feedback.textContent = 'Incorrect. Try again! The correct answer is Tasmanian Pademelon.';
                 feedback.classList.add('incorrect');
@@ -1258,7 +1392,11 @@
                 feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest. This ecosystem is characterized by high rainfall, dense canopy cover, and species like myrtle beech and sassafras.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateProgress(2);
+                
+                // Update progress
+                if (completeActivity('ecosystem-mapping')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
                 feedback.textContent = 'Incorrect. Try again! Look at the high rainfall amount (1800mm) and elevation (450m) - these are clues that this is a Cool temperate rainforest.';
                 feedback.classList.add('incorrect');
@@ -1282,7 +1420,11 @@
                 feedback.textContent = 'Correct! All these threats are potential concerns when establishing new walking tracks.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateProgress(3);
+                
+                // Update progress
+                if (completeActivity('threat-identification')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
                 feedback.textContent = 'Not quite. In this scenario, all the listed threats are potential concerns when establishing new walking tracks through native vegetation.';
                 feedback.classList.add('incorrect');
@@ -1320,7 +1462,13 @@
                     feedback.textContent = feedback.textContent || 'Correct!';
                     feedback.classList.add('correct');
                     feedback.classList.remove('incorrect');
-                    updateProgress(5);
+                    
+                    // Update progress for quiz questions
+                    if (questionId === '1' && completeActivity('quiz-question-1')) {
+                        feedback.textContent += ' Progress updated!';
+                    } else if (questionId === '2' && completeActivity('quiz-question-2')) {
+                        feedback.textContent += ' Progress updated!';
+                    }
                 } else {
                     feedback.textContent = 'Incorrect. Try again!';
                     feedback.classList.add('incorrect');
@@ -1351,6 +1499,7 @@
         ];
         
         let currentFlashcard = 0;
+        let flashcardsCompleted = false;
         
         document.getElementById('reveal-flashcard').addEventListener('click', () => {
             const answerDiv = document.getElementById('flashcard-answer');
@@ -1359,6 +1508,14 @@
             if (answerDiv.style.display === 'none') {
                 answerDiv.style.display = 'block';
                 button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+                
+                // Mark flashcards as completed if user has viewed all of them
+                if (!flashcardsCompleted && currentFlashcard === flashcards.length - 1) {
+                    flashcardsCompleted = true;
+                    if (completeActivity('flashcards-completed')) {
+                        answerDiv.textContent += ' [Progress updated!]';
+                    }
+                }
             } else {
                 answerDiv.style.display = 'none';
                 button.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
@@ -1392,7 +1549,11 @@
                 feedback.textContent = 'Correct! EVC is a classification system, and Pre-European vegetation refers to the original vegetation.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateProgress(3);
+                
+                // Update progress
+                if (completeActivity('terminology-matching')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
                 feedback.textContent = 'Incorrect. Try again! EVC is a classification system (B), and Pre-European vegetation refers to the original vegetation (A).';
                 feedback.classList.add('incorrect');
@@ -1405,7 +1566,11 @@
         // Video play button
         document.getElementById('play-video').addEventListener('click', () => {
             window.open('https://www.youtube.com/watch?v=XQxpGRWlVcg', '_blank');
-            updateProgress(5);
+            
+            // Update progress
+            if (completeActivity('video-watched')) {
+                alert('Progress updated for watching the video!');
+            }
         });
         
         // Inspection form submission
@@ -1421,7 +1586,11 @@
                 feedback.textContent = 'Inspection submitted successfully! Good work.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateProgress(15);
+                
+                // Update progress
+                if (completeActivity('inspection-submitted')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             }
             
             feedback.style.display = 'block';
@@ -1452,14 +1621,18 @@
             });
         });
         
-        // Progress tracking
-        let progress = 35;
-        
-        function updateProgress(value) {
-            progress = Math.min(progress + value, 100);
-            document.getElementById('main-progress').style.width = progress + '%';
-            document.getElementById('progress-text').textContent = progress + '%';
-        }
+        // Add reset button for testing
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProgress();
+            
+            // Add reset button for testing (remove in production)
+            const resetBtn = document.createElement('button');
+            resetBtn.textContent = 'Reset Progress';
+            resetBtn.className = 'btn btn-danger';
+            resetBtn.style.marginTop = '10px';
+            resetBtn.onclick = resetProgress;
+            document.querySelector('header').appendChild(resetBtn);
+        });
     </script>
 </body>
 </html>
