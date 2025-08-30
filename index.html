@@ -50,6 +50,10 @@
             position: relative;
             overflow: hidden;
         }
+
+header h1 {
+    color: #fff7cd; /* Very Pale Yellow */
+}
         
         header::before {
             content: "";
@@ -454,6 +458,27 @@
             margin-bottom: 15px;
         }
         
+        .module-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .module-link:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -529,7 +554,7 @@
                         <p>Learn the fundamentals of ecological site inspections and their importance in conservation work.</p>
                         <div class="badge badge-primary">15 min</div>
                         <div class="badge badge-secondary">Beginner</div>
-                        <a href="Module1.html" class="start-module"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="Module1.html" target="_blank" class="module-link"><i class="fas fa-external-link-alt"></i> Open Module</a>
                     </div>
                 </div>
                 
@@ -542,7 +567,7 @@
                         <p>Explore Tasmania's unique ecosystems and their conservation significance.</p>
                         <div class="badge badge-primary">20 min</div>
                         <div class="badge badge-secondary">Intermediate</div>
-                        <a href="Module2.html" class="start-module"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="Module2.html" target="_blank" class="module-link"><i class="fas fa-external-link-alt"></i> Open Module</a>
                     </div>
                 </div>
                 
@@ -555,7 +580,7 @@
                         <p>Understand how to identify and protect cultural heritage sites during inspections.</p>
                         <div class="badge badge-primary">25 min</div>
                         <div class="badge badge-warning">Advanced</div>
-                        <a href="Module3.html" class="start-module"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="Module3.html" target="_blank" class="module-link"><i class="fas fa-external-link-alt"></i> Open Module</a>
                     </div>
                 </div>
                 
@@ -568,7 +593,7 @@
                         <p>Learn about the laws and regulations governing site inspections in Tasmania.</p>
                         <div class="badge badge-primary">18 min</div>
                         <div class="badge badge-secondary">Intermediate</div>
-                        <a href="Module4.html" class="start-module"><i class="fas fa-play"></i> Start Module</a>
+                        <a href="Module4.html" target="_blank" class="module-link"><i class="fas fa-external-link-alt"></i> Open Module</a>
                     </div>
                 </div>
             </div>
@@ -600,9 +625,9 @@
                 
                 <div class="interactive-box">
                     <div class="species-card">
-                        <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef;">
-                            <i class="fas fa-paw" style="font-size: 3rem; color: var(--dark);"></i>
-                        </div>
+                        <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef; background-image: url('TasmanianPademelon.jpg'); background-size: cover; background-position: center;">
+    <!-- Image will be displayed as background, preserving layout -->
+</div>
                         <div class="species-info">
                             <h4>What species is this?</h4>
                             <div class="form-group">
@@ -1244,11 +1269,11 @@
             feedback.style.display = 'block';
         });
         
-        // Video play button
-        document.getElementById('play-video').addEventListener('click', () => {
-            alert('Video playback would start in a real application. This is a simulation.');
-            updateProgress(5);
-        });
+	// Video play button
+	document.getElementById('play-video').addEventListener('click', () => {
+    	    window.open('https://www.youtube.com/watch?v=XQxpGRWlVcg', '_blank');
+    	    updateProgress(5);
+	});
         
         // Inspection form submission
         document.getElementById('submit-inspection').addEventListener('click', () => {
