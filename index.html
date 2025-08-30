@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecological & Cultural Site Inspection - Tasmania</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Leaflet CSS for the map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+          crossorigin=""/>
     <style>
         :root {
             --primary: #2E7D32;
@@ -51,9 +55,9 @@
             overflow: hidden;
         }
 
-header h1 {
-    color: #fff7cd; /* Very Pale Yellow */
-}
+        header h1 {
+            color: #fff7cd; /* Very Pale Yellow */
+        }
         
         header::before {
             content: "";
@@ -316,15 +320,9 @@ header h1 {
         
         .site-map {
             height: 350px;
-            background-color: #e9ecef;
             border-radius: 10px;
             margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), 
-                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect fill="%23ddd" width="40" height="40"/></svg>');
+            z-index: 1;
         }
         
         .progress-bar {
@@ -479,6 +477,42 @@ header h1 {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
+        /* Map marker styles */
+        .area-marker {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .area-marker:hover {
+            transform: scale(1.1);
+        }
+        
+        .map-popup {
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .map-legend {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            line-height: 1.5;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border: 1px solid #555;
+        }
+
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -626,8 +660,7 @@ header h1 {
                 <div class="interactive-box">
                     <div class="species-card">
                         <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef; background-image: url('TasmanianPademelon.jpg'); background-size: cover; background-position: center;">
-    <!-- Image will be displayed as background, preserving layout -->
-</div>
+                        </div>
                         <div class="species-info">
                             <h4>What species is this?</h4>
                             <div class="form-group">
@@ -652,12 +685,10 @@ header h1 {
                     <i class="fas fa-map-marked-alt"></i>
                     <h3>Ecosystem Mapping</h3>
                 </div>
-                <p>Practice identifying different ecosystem types on a topographic map.</p>
+                <p>Practice identifying different ecosystem types on a topographic map. Click on the marked area to learn more about it, then select the ecosystem type you think it represents.</p>
                 
                 <div class="interactive-box">
-                    <div class="site-map">
-                        <i class="fas fa-map" style="font-size: 3rem; color: var(--dark);"></i>
-                    </div>
+                    <div id="map" class="site-map"></div>
                     <div class="form-group">
                         <label>Select the predominant ecosystem type in the marked area:</label>
                         <select id="ecosystem-select">
@@ -1080,6 +1111,11 @@ header h1 {
         </footer>
     </div>
 
+    <!-- Add Leaflet JS for the map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin=""></script>
+
     <script>
         // Tab navigation functionality
         document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -1094,8 +1130,105 @@ header h1 {
                 // Show corresponding section
                 const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
+                
+                // Initialize map if interactive section is selected
+                if (targetId === 'interactive' && !window.mapInitialized) {
+                    initMap();
+                    window.mapInitialized = true;
+                }
             });
         });
+        
+        // Map initialization function
+        function initMap() {
+            // Create map centered on Tasmania
+            const map = L.map('map').setView([-42.5, 147], 8);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Add topographic layer (optional)
+            L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a>',
+                maxZoom: 17
+            }).addTo(map);
+            
+            // Add a marker for the area to identify (simulating a specific location)
+            const targetArea = L.marker([-42.921, 147.259], {
+                icon: L.divIcon({
+                    className: 'area-marker',
+                    html: '<i class="fas fa-search-location" style="font-size: 24px; color: #E64A19;"></i>',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 24]
+                })
+            }).addTo(map);
+            
+            // Add popup to the marker
+            targetArea.bindPopup(`
+                <div class="map-popup">
+                    <h4>Study Area</h4>
+                    <p>Elevation: 430m</p>
+                    <p>Annual Rainfall: 1800mm</p>
+                    <p>Click elsewhere to close</p>
+                </div>
+            `);
+            
+            // Add some context layers for educational purposes
+            // Example: Add a polygon representing a generic forest area
+            const forestArea = L.polygon([
+                [-42.88, 147.25],
+                [-42.87, 147.32],
+                [-42.92, 147.33],
+                [-42.93, 147.26]
+            ], {
+                color: '#2E7D32',
+                fillColor: '#689F38',
+                fillOpacity: 0.3,
+                weight: 2
+            }).addTo(map);
+            
+            forestArea.bindPopup('Forested Area');
+            
+            // Add a water body for context
+            const waterBody = L.polygon([
+                [-42.91, 147.35],
+                [-42.90, 147.38],
+                [-42.93, 147.39],
+                [-42.94, 147.36]
+            ], {
+                color: '#0288D1',
+                fillColor: '#03A9F4',
+                fillOpacity: 0.5,
+                weight: 2
+            }).addTo(map);
+            
+            waterBody.bindPopup('Water Body');
+            
+            // Add a legend
+            const legend = L.control({position: 'bottomright'});
+            legend.onAdd = function(map) {
+                const div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `
+                    <h4>Legend</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #E64A19;"></div>
+                        <span>Study Area</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #689F38; opacity: 0.3;"></div>
+                        <span>Forest</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #03A9F4; opacity: 0.5;"></div>
+                        <span>Water Body</span>
+                    </div>
+                `;
+                return div;
+            };
+            legend.addTo(map);
+        }
         
         // Species identification activity
         document.getElementById('check-species').addEventListener('click', () => {
@@ -1122,12 +1255,12 @@ header h1 {
             const feedback = document.getElementById('ecosystem-feedback');
             
             if (select.value === 'rainforest') {
-                feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest.';
+                feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest. This ecosystem is characterized by high rainfall, dense canopy cover, and species like myrtle beech and sassafras.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 updateProgress(2);
             } else {
-                feedback.textContent = 'Incorrect. Try again! The correct answer is Cool temperate rainforest.';
+                feedback.textContent = 'Incorrect. Try again! Look at the high rainfall amount (1800mm) and elevation (450m) - these are clues that this is a Cool temperate rainforest.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
@@ -1269,11 +1402,11 @@ header h1 {
             feedback.style.display = 'block';
         });
         
-	// Video play button
-	document.getElementById('play-video').addEventListener('click', () => {
-    	    window.open('https://www.youtube.com/watch?v=XQxpGRWlVcg', '_blank');
-    	    updateProgress(5);
-	});
+        // Video play button
+        document.getElementById('play-video').addEventListener('click', () => {
+            window.open('https://www.youtube.com/watch?v=XQxpGRWlVcg', '_blank');
+            updateProgress(5);
+        });
         
         // Inspection form submission
         document.getElementById('submit-inspection').addEventListener('click', () => {
