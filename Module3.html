@@ -310,6 +310,11 @@
             transform: translateX(5px);
         }
         
+        .quiz-option.selected {
+            background-color: #e2e6f0;
+            border-color: #007bff;
+        }
+        
         .site-map {
             height: 350px;
             background-color: #e9ecef;
@@ -949,25 +954,25 @@
                 </div>
                 
                 <div class="interactive-box">
-                    <div class="quiz-question">
+                    <div class="quiz-question" id="legislation-question1">
                         <h4>Question 1: What is the primary legislation protecting Aboriginal heritage in Tasmania?</h4>
                         <div class="quiz-option" data-correct="false">A. Historic Cultural Heritage Act 1995</div>
                         <div class="quiz-option" data-correct="true">B. Aboriginal Heritage Act 1975</div>
                         <div class="quiz-option" data-correct="false">C. Environmental Management Act 1994</div>
                         <div class="quiz-option" data-correct="false">D. Land Use Planning Act 1993</div>
-                        <button class="btn check-answer" data-question="1"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="legislation-question1"><i class="fas fa-check"></i> Check Answer</button>
                         <div class="feedback correct">Correct! The Aboriginal Heritage Act 1975 is the primary legislation protecting Aboriginal heritage in Tasmania.</div>
                     </div>
                 </div>
                 
                 <div class="interactive-box">
-                    <div class="quiz-question">
+                    <div class="quiz-question" id="legislation-question2">
                         <h4>Question 2: What should you do if you discover potential Aboriginal heritage during a site inspection?</h4>
                         <div class="quiz-option" data-correct="false">A. Document it and continue with planned works</div>
                         <div class="quiz-option" data-correct="false">B. Remove the material for safekeeping</div>
                         <div class="quiz-option" data-correct="true">C. Cease works and contact Aboriginal Heritage Tasmania</div>
                         <div class="quiz-option" data-correct="false">D. Only report it if it looks significant</div>
-                        <button class="btn check-answer" data-question="2"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="legislation-question2"><i class="fas fa-check"></i> Check Answer</button>
                         <div class="feedback correct">Correct! You must immediately cease works and contact Aboriginal Heritage Tasmania for guidance.</div>
                     </div>
                 </div>
@@ -1079,23 +1084,23 @@
                 <div class="interactive-box">
                     <p>Test your overall knowledge of cultural heritage considerations with this final assessment:</p>
                     
-                    <div class="quiz-question">
+                    <div class="quiz-question" id="question1">
                         <h4>Question 1: Which of these is NOT typically considered a cultural heritage feature?</h4>
                         <div class="quiz-option" data-correct="false">A. Shell midden</div>
                         <div class="quiz-option" data-correct="false">B. Historic building foundation</div>
                         <div class="quiz-option" data-correct="true">C. Naturally occurring rock formation</div>
                         <div class="quiz-option" data-correct="false">D. Culturally modified tree</div>
-                        <button class="btn check-answer" data-question="3"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="question1"><i class="fas fa-check"></i> Check Answer</button>
                         <div class="feedback correct">Correct! While natural rock formations may have cultural significance, they are not inherently cultural heritage features without evidence of human modification or use.</div>
                     </div>
                     
-                    <div class="quiz-question">
+                    <div class="quiz-question" id="question2">
                         <h4>Question 2: When is it acceptable to remove artifacts from a site during inspection?</h4>
                         <div class="quiz-option" data-correct="false">A. When they appear valuable</div>
                         <div class="quiz-option" data-correct="false">B. When they might be damaged by weather</div>
                         <div class="quiz-option" data-correct="false">C. When you need to show them to authorities</div>
                         <div class="quiz-option" data-correct="true">D. Never without proper authorization</div>
-                        <button class="btn check-answer" data-question="4"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="question2"><i class="fas fa-check"></i> Check Answer</button>
                         <div class="feedback correct">Correct! Artifacts should never be removed from their context without proper authorization, as this destroys important archaeological information.</div>
                     </div>
                 </div>
@@ -1210,35 +1215,50 @@
             feedback.style.display = 'block';
         });
         
-        // Quiz functionality
+        // Quiz functionality - option selection
         document.querySelectorAll('.quiz-option').forEach(option => {
             option.addEventListener('click', () => {
-                document.querySelectorAll('.quiz-option').forEach(o => o.style.backgroundColor = '#f8f9fa');
-                option.style.backgroundColor = '#e9ecef';
+                // Clear previous selections in the same question
+                const questionDiv = option.closest('.quiz-question');
+                questionDiv.querySelectorAll('.quiz-option').forEach(o => {
+                    o.classList.remove('selected');
+                });
+                
+                // Highlight selected option
+                option.classList.add('selected');
             });
         });
         
-        // Check quiz answers
+        // Check quiz answers for all questions
         document.querySelectorAll('.check-answer').forEach(button => {
             button.addEventListener('click', () => {
                 const questionId = button.getAttribute('data-question');
-                const questionDiv = document.querySelector(`.quiz-question`);
+                const questionDiv = document.getElementById(questionId);
                 const options = questionDiv.querySelectorAll('.quiz-option');
                 const feedback = questionDiv.querySelector('.feedback');
                 
                 let correctSelected = false;
+                let selectedOption = null;
                 
                 options.forEach(option => {
-                    if (option.style.backgroundColor === 'rgb(233, 236, 239)' && option.getAttribute('data-correct') === 'true') {
-                        correctSelected = true;
+                    if (option.classList.contains('selected')) {
+                        selectedOption = option;
+                        if (option.getAttribute('data-correct') === 'true') {
+                            correctSelected = true;
+                        }
                     }
                 });
                 
-                if (correctSelected) {
+                if (!selectedOption) {
+                    feedback.textContent = 'Please select an answer first.';
+                    feedback.classList.add('incorrect');
+                    feedback.classList.remove('correct');
+                } else if (correctSelected) {
                     feedback.textContent = feedback.textContent || 'Correct!';
                     feedback.classList.add('correct');
                     feedback.classList.remove('incorrect');
                     updateProgress(2);
+                    button.disabled = true;
                 } else {
                     feedback.textContent = 'Incorrect. Try again!';
                     feedback.classList.add('incorrect');
@@ -1261,11 +1281,16 @@
         
         // Progress tracking
         let progress = 35;
+        let answeredQuestions = new Set();
         
         function updateProgress(value) {
-            progress = Math.min(progress + value, 100);
-            document.getElementById('main-progress').style.width = progress + '%';
-            document.getElementById('progress-text').textContent = progress + '%';
+            // Only update progress if this question hasn't been answered before
+            if (!answeredQuestions.has(value)) {
+                progress = Math.min(progress + value, 100);
+                document.getElementById('main-progress').style.width = progress + '%';
+                document.getElementById('progress-text').textContent = progress + '%';
+                answeredQuestions.add(value);
+            }
         }
     </script>
 </body>
