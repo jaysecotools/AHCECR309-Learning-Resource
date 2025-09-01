@@ -52,8 +52,8 @@
         }
 
         header h1, header p {
-	        color: white;
-	    }
+            color: white;
+        }
         
         header::before {
             content: "";
@@ -534,46 +534,46 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-monument"></i> Cultural Heritage Considerations</h1>
+        <header role="banner">
+            <h1><i class="fas fa-monument" aria-hidden="true"></i> Cultural Heritage Considerations</h1>
             <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
-            <div class="progress-bar">
+            <div class="progress-bar" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">
                 <div class="progress" id="main-progress" style="width: 35%"></div>
             </div>
             <p>Course Progress: <span id="progress-text">35%</span> Complete</p>
         </header>
         
-        <div class="nav-tabs">
-            <div class="nav-tab active" data-target="learning">
-                <i class="fas fa-graduation-cap"></i>
+        <nav class="nav-tabs" role="tablist">
+            <div class="nav-tab active" data-target="learning" role="tab" aria-selected="true" aria-controls="learning" tabindex="0">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                 <span>Learning Materials</span>
             </div>
-            <div class="nav-tab" data-target="identification">
-                <i class="fas fa-search"></i>
+            <div class="nav-tab" data-target="identification" role="tab" aria-selected="false" aria-controls="identification" tabindex="0">
+                <i class="fas fa-search" aria-hidden="true"></i>
                 <span>Identifying Heritage</span>
             </div>
-            <div class="nav-tab" data-target="aboriginal">
-                <i class="fas fa-hands"></i>
+            <div class="nav-tab" data-target="aboriginal" role="tab" aria-selected="false" aria-controls="aboriginal" tabindex="0">
+                <i class="fas fa-hands" aria-hidden="true"></i>
                 <span>Aboriginal Heritage</span>
             </div>
-            <div class="nav-tab" data-target="legislation">
-                <i class="fas fa-gavel"></i>
+            <div class="nav-tab" data-target="legislation" role="tab" aria-selected="false" aria-controls="legislation" tabindex="0">
+                <i class="fas fa-gavel" aria-hidden="true"></i>
                 <span>Legislation</span>
             </div>
-            <div class="nav-tab" data-target="scenarios">
-                <i class="fas fa-puzzle-piece"></i>
+            <div class="nav-tab" data-target="scenarios" role="tab" aria-selected="false" aria-controls="scenarios" tabindex="0">
+                <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
                 <span>Practice Scenarios</span>
             </div>
-        </div>
+        </nav>
         
         <!-- Learning Materials Section -->
-        <section id="learning" class="content-section active">
-            <h2><i class="fas fa-graduation-cap"></i> Cultural Heritage in Tasmania</h2>
+        <section id="learning" class="content-section active" role="tabpanel" aria-labelledby="learning-tab">
+            <h2><i class="fas fa-graduation-cap" aria-hidden="true"></i> Cultural Heritage in Tasmania</h2>
             <p>Understanding cultural heritage considerations is essential for conducting responsible site inspections in Tasmania.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
                     <h3>What is Cultural Heritage?</h3>
                 </div>
                 <p>Cultural heritage refers to places, objects, and traditions that communities have inherited from the past and want to preserve for future generations. In Tasmania, this includes both Aboriginal heritage and historic heritage from European settlement.</p>
@@ -590,7 +590,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                     <h3>Why Cultural Heritage Matters in Site Inspections</h3>
                 </div>
                 <p>When conducting site inspections, it's crucial to consider cultural heritage because:</p>
@@ -621,13 +621,13 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye" aria-hidden="true"></i>
                     <h3>Key Principles for Heritage-Aware Inspections</h3>
                 </div>
                 <p>When conducting site inspections with cultural heritage considerations:</p>
                 
                 <div class="interactive-box">
-                    <h4><i class="fas fa-check-circle"></i> Do:</h4>
+                    <h4><i class="fas fa-check-circle" aria-hidden="true"></i> Do:</h4>
                     <ul style="margin-left: 20px; margin-bottom: 15px;">
                         <li>Research the area's heritage potential before visiting</li>
                         <li>Look for both obvious and subtle heritage indicators</li>
@@ -636,7 +636,7 @@
                         <li>Follow all legislative requirements for heritage protection</li>
                     </ul>
                     
-                    <h4><i class="fas fa-times-circle"></i> Don't:</h4>
+                    <h4><i class="fas fa-times-circle" aria-hidden="true"></i> Don't:</h4>
                     <ul style="margin-left: 20px;">
                         <li>Disturb or remove artifacts or materials from heritage sites</li>
                         <li>Assume that absence of visible features means no heritage values</li>
@@ -648,23 +648,23 @@
         </section>
         
         <!-- Identifying Heritage Section -->
-        <section id="identification" class="content-section">
-            <h2><i class="fas fa-search"></i> Identifying Cultural Heritage Sites</h2>
+        <section id="identification" class="content-section" role="tabpanel" aria-labelledby="identification-tab">
+            <h2><i class="fas fa-search" aria-hidden="true"></i> Identifying Cultural Heritage Sites</h2>
             <p>Learn to recognize potential cultural heritage features during site inspections.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-list"></i>
+                    <i class="fas fa-list" aria-hidden="true"></i>
                     <h3>Types of Cultural Heritage Features</h3>
                 </div>
                 <p>Cultural heritage can manifest in various forms. During inspections, look for these potential heritage indicators:</p>
                 
                 <div class="heritage-feature">
                     <div class="heritage-img">
-                        <i class="fas fa-tree" style="font-size: 3rem; color: var(--dark);"></i>
+                        <i class="fas fa-tree" style="font-size: 3rem; color: var(--dark);" aria-hidden="true"></i>
                     </div>
                     <div class="heritage-info">
-                        <h4>Aboriginal Cultural Heritage</h4>
+                        <h4>Abdominal Cultural Heritage</h4>
                         <ul>
                             <li>Shell middens and stone artifacts</li>
                             <li>Rock art and engraving sites</li>
@@ -677,7 +677,7 @@
                 
                 <div class="heritage-feature">
                     <div class="heritage-img">
-                        <i class="fas fa-landmark" style="font-size: 3rem; color: var(--dark);"></i>
+                        <i class="fas fa-landmark" style="font-size: 3rem; color: var(--dark);" aria-hidden="true"></i>
                     </div>
                     <div class="heritage-info">
                         <h4>Historic Heritage</h4>
@@ -694,7 +694,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-map-marked-alt"></i>
+                    <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
                     <h3>Assessing Heritage Potential</h3>
                 </div>
                 <p>Before and during site inspections, consider these factors that increase heritage potential:</p>
@@ -746,7 +746,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-clipboard-list"></i>
+                    <i class="fas fa-clipboard-list" aria-hidden="true"></i>
                     <h3>Documentation Procedures</h3>
                 </div>
                 <p>When potential heritage features are identified during inspection:</p>
@@ -778,19 +778,19 @@
                     </div>
                 </div>
                 
-                <button class="btn" id="check-documentation"><i class="fas fa-check"></i> Check Documentation Protocol</button>
+                <button class="btn" id="check-documentation"><i class="fas fa-check" aria-hidden="true"></i> Check Documentation Protocol</button>
                 <div class="feedback" id="documentation-feedback"></div>
             </div>
         </section>
         
         <!-- Aboriginal Heritage Section -->
-        <section id="aboriginal" class="content-section">
-            <h2><i class="fas fa-hands"></i> Aboriginal Heritage Recognition</h2>
+        <section id="aboriginal" class="content-section" role="tabpanel" aria-labelledby="aboriginal-tab">
+            <h2><i class="fas fa-hands" aria-hidden="true"></i> Aboriginal Heritage Recognition</h2>
             <p>Understanding and respecting Aboriginal heritage is a critical component of site inspections in Tasmania.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-history"></i>
+                    <i class="fas fa-history" aria-hidden="true"></i>
                     <h3>Tasmanian Aboriginal Heritage</h3>
                 </div>
                 <p>Tasmanian Aboriginal heritage represents one of the oldest continuous cultures in the world, dating back over 40,000 years. Aboriginal people have maintained deep connections to Country despite the impacts of colonization.</p>
@@ -805,14 +805,14 @@
                 </ul>
                 
                 <div class="scenario-box">
-                    <h4><i class="fas fa-lightbulb"></i> Cultural Sensitivity Note:</h4>
+                    <h4><i class="fas fa-lightbulb" aria-hidden="true"></i> Cultural Sensitivity Note:</h4>
                     <p>Some Aboriginal heritage sites contain sensitive cultural information. It's important to follow appropriate protocols for documentation and information sharing, consulting with Aboriginal Heritage Tasmania and relevant Aboriginal communities.</p>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-hands-helping"></i>
+                    <i class="fas fa-hands-helping" aria-hidden="true"></i>
                     <h3>Working with Aboriginal Communities</h3>
                 </div>
                 <p>When Aboriginal heritage is identified or suspected during site inspections:</p>
@@ -833,7 +833,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
                     <h3>Aboriginal Heritage Assessment</h3>
                 </div>
                 <p>When assessing potential Aboriginal heritage during site inspections:</p>
@@ -860,25 +860,25 @@
                     </div>
                 </div>
                 
-                <button class="btn" id="check-resources"><i class="fas fa-check"></i> Verify Resources</button>
+                <button class="btn" id="check-resources"><i class="fas fa-check" aria-hidden="true"></i> Verify Resources</button>
                 <div class="feedback" id="resources-feedback"></div>
             </div>
         </section>
         
         <!-- Legislation Section -->
-        <section id="legislation" class="content-section">
-            <h2><i class="fas fa-gavel"></i> Legislative Requirements</h2>
+        <section id="legislation" class="content-section" role="tabpanel" aria-labelledby="legislation-tab">
+            <h2><i class="fas fa-gavel" aria-hidden="true"></i> Legislative Requirements</h2>
             <p>Understanding the legal framework for cultural heritage protection in Tasmania is essential for compliance during site inspections.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-balance-scale"></i>
+                    <i class="fas fa-balance-scale" aria-hidden="true"></i>
                     <h3>Key Legislation</h3>
                 </div>
                 <p>Several pieces of legislation protect cultural heritage in Tasmania:</p>
                 
                 <div class="interactive-box">
-                    <h4><i class="fas fa-book"></i> Aboriginal Heritage Act 1975</h4>
+                    <h4><i class="fas fa-book" aria-hidden="true"></i> Aboriginal Heritage Act 1975</h4>
                     <p>The primary legislation protecting Aboriginal heritage in Tasmania. It:</p>
                     <ul style="margin-left: 20px; margin-bottom: 15px;">
                         <li>Provides for the recognition and protection of Aboriginal sites</li>
@@ -889,7 +889,7 @@
                 </div>
                 
                 <div class="interactive-box">
-                    <h4><i class="fas fa-book"></i> Historic Cultural Heritage Act 1995</h4>
+                    <h4><i class="fas fa-book" aria-hidden="true"></i> Historic Cultural Heritage Act 1995</h4>
                     <p>Protects historic heritage in Tasmania. It:</p>
                     <ul style="margin-left: 20px; margin-bottom: 15px;">
                         <li>Establishes the Tasmanian Heritage Council</li>
@@ -900,7 +900,7 @@
                 </div>
                 
                 <div class="interactive-box">
-                    <h4><i class="fas fa-book"></i> Other Relevant Legislation</h4>
+                    <h4><i class="fas fa-book" aria-hidden="true"></i> Other Relevant Legislation</h4>
                     <ul style="margin-left: 20px;">
                         <li><strong>Land Use Planning and Approvals Act 1993:</strong> Requires consideration of heritage in planning schemes</li>
                         <li><strong>Environmental Management and Pollution Control Act 1994:</strong> May require heritage considerations in environmental assessments</li>
@@ -911,7 +911,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-clipboard-check"></i>
+                    <i class="fas fa-clipboard-check" aria-hidden="true"></i>
                     <h3>Compliance Requirements</h3>
                 </div>
                 <p>During site inspections, you must be aware of these legal requirements:</p>
@@ -940,7 +940,7 @@
                 </div>
                 
                 <div class="scenario-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Penalties for Non-Compliance:</h4>
+                    <h4><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Penalties for Non-Compliance:</h4>
                     <p>Serious penalties apply for damaging cultural heritage, including:</p>
                     <ul style="margin-left: 20px;">
                         <li>Fines up to $1.5 million for corporations</li>
@@ -953,7 +953,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-question-circle"></i>
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
                     <h3>Legislative Knowledge Check</h3>
                 </div>
                 
@@ -964,7 +964,7 @@
                         <div class="quiz-option" data-correct="true">B. Aboriginal Heritage Act 1975</div>
                         <div class="quiz-option" data-correct="false">C. Environmental Management Act 1994</div>
                         <div class="quiz-option" data-correct="false">D. Land Use Planning Act 1993</div>
-                        <button class="btn check-answer" data-question="legislation-question1"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="legislation-question1"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
                         <div class="feedback correct">Correct! The Aboriginal Heritage Act 1975 is the primary legislation protecting Aboriginal heritage in Tasmania.</div>
                     </div>
                 </div>
@@ -976,7 +976,7 @@
                         <div class="quiz-option" data-correct="false">B. Remove the material for safekeeping</div>
                         <div class="quiz-option" data-correct="true">C. Cease works and contact Aboriginal Heritage Tasmania</div>
                         <div class="quiz-option" data-correct="false">D. Only report it if it looks significant</div>
-                        <button class="btn check-answer" data-question="legislation-question2"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="legislation-question2"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
                         <div class="feedback correct">Correct! You must immediately cease works and contact Aboriginal Heritage Tasmania for guidance.</div>
                     </div>
                 </div>
@@ -984,13 +984,13 @@
         </section>
         
         <!-- Practice Scenarios Section -->
-        <section id="scenarios" class="content-section">
-            <h2><i class="fas fa-puzzle-piece"></i> Practice Scenarios</h2>
+        <section id="scenarios" class="content-section" role="tabpanel" aria-labelledby="scenarios-tab">
+            <h2><i class="fas fa-puzzle-piece" aria-hidden="true"></i> Practice Scenarios</h2>
             <p>Test your knowledge with these interactive scenarios based on real-world situations.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-tree"></i>
+                    <i class="fas fa-tree" aria-hidden="true"></i>
                     <h3>Scenario 1: Coastal Development Inspection</h3>
                 </div>
                 
@@ -1008,14 +1008,14 @@
                         </select>
                     </div>
                     
-                    <button class="btn" id="check-scenario1"><i class="fas fa-check"></i> Check Response</button>
+                    <button class="btn" id="check-scenario1"><i class="fas fa-check" aria-hidden="true"></i> Check Response</button>
                     <div class="feedback" id="scenario1-feedback"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-industry"></i>
+                    <i class="fas fa-industry" aria-hidden="true"></i>
                     <h3>Scenario 2: Historic Site Assessment</h3>
                 </div>
                 
@@ -1033,14 +1033,14 @@
                         </select>
                     </div>
                     
-                    <button class="btn" id="check-scenario2"><i class="fas fa-check"></i> Check Response</button>
+                    <button class="btn" id="check-scenario2"><i class="fas fa-check" aria-hidden="true"></i> Check Response</button>
                     <div class="feedback" id="scenario2-feedback"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                     <h3>Scenario 3: Unexpected Discovery</h3>
                 </div>
                 
@@ -1074,14 +1074,14 @@
                         </div>
                     </div>
                     
-                    <button class="btn" id="check-scenario3"><i class="fas fa-check"></i> Check Response</button>
+                    <button class="btn" id="check-scenario3"><i class="fas fa-check" aria-hidden="true"></i> Check Response</button>
                     <div class="feedback" id="scenario3-feedback"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-certificate"></i>
+                    <i class="fas fa-certificate" aria-hidden="true"></i>
                     <h3>Knowledge Assessment</h3>
                 </div>
                 
@@ -1094,7 +1094,7 @@
                         <div class="quiz-option" data-correct="false">B. Historic building foundation</div>
                         <div class="quiz-option" data-correct="true">C. Naturally occurring rock formation</div>
                         <div class="quiz-option" data-correct="false">D. Culturally modified tree</div>
-                        <button class="btn check-answer" data-question="question1"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="question1"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
                         <div class="feedback correct">Correct! While natural rock formations may have cultural significance, they are not inherently cultural heritage features without evidence of human modification or use.</div>
                     </div>
                     
@@ -1104,17 +1104,17 @@
                         <div class="quiz-option" data-correct="false">B. When they might be damaged by weather</div>
                         <div class="quiz-option" data-correct="false">C. When you need to show them to authorities</div>
                         <div class="quiz-option" data-correct="true">D. Never without proper authorization</div>
-                        <button class="btn check-answer" data-question="question2"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn check-answer" data-question="question2"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
                         <div class="feedback correct">Correct! Artifacts should never be removed from their context without proper authorization, as this destroys important archaeological information.</div>
                     </div>
                 </div>
                 
-                <button class="btn" id="complete-assessment"><i class="fas fa-award"></i> Complete Knowledge Assessment</button>
+                <button class="btn" id="complete-assessment"><i class="fas fa-award" aria-hidden="true"></i> Complete Knowledge Assessment</button>
                 <div class="feedback" id="assessment-feedback"></div>
             </div>
         </section>
         
-        <footer>
+        <footer role="contentinfo">
             <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works.</p>
             <p>Developed by Jay Rowley.</p>
             <p>Tasmanian Context | © 2025</p>
@@ -1135,6 +1135,20 @@
                 // Show corresponding section
                 const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
+                
+                // Update ARIA attributes for accessibility
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.setAttribute('aria-selected', 'true');
+            });
+            
+            // Add keyboard navigation support
+            tab.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    tab.click();
+                }
             });
         });
         
@@ -1231,6 +1245,18 @@
                 // Highlight selected option
                 option.classList.add('selected');
             });
+            
+            // Add keyboard navigation support
+            option.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    option.click();
+                }
+            });
+            
+            // Add ARIA role for accessibility
+            option.setAttribute('role', 'radio');
+            option.setAttribute('tabindex', '0');
         });
         
         // Check quiz answers for all questions
@@ -1283,9 +1309,14 @@
             updateProgress(10);
         });
         
-        // Progress tracking
-        let progress = 35;
-        let answeredQuestions = new Set();
+        // Progress tracking with localStorage
+        let progress = parseInt(localStorage.getItem('heritage-module-progress')) || 35;
+        let answeredQuestions = new Set(JSON.parse(localStorage.getItem('heritage-answered-questions') || '[]'));
+        
+        // Initialize progress bar
+        document.getElementById('main-progress').style.width = progress + '%';
+        document.getElementById('progress-text').textContent = progress + '%';
+        document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', progress);
         
         function updateProgress(value) {
             // Only update progress if this question hasn't been answered before
@@ -1293,9 +1324,35 @@
                 progress = Math.min(progress + value, 100);
                 document.getElementById('main-progress').style.width = progress + '%';
                 document.getElementById('progress-text').textContent = progress + '%';
+                document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', progress);
+                
                 answeredQuestions.add(value);
+                
+                // Save to localStorage
+                localStorage.setItem('heritage-module-progress', progress.toString());
+                localStorage.setItem('heritage-answered-questions', JSON.stringify(Array.from(answeredQuestions)));
             }
         }
+        
+        // Initialize ARIA attributes for tabs
+        document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+            const targetId = tab.getAttribute('data-target');
+            tab.setAttribute('id', `${targetId}-tab`);
+            tab.setAttribute('aria-controls', targetId);
+            if (index === 0) {
+                tab.setAttribute('aria-selected', 'true');
+            } else {
+                tab.setAttribute('aria-selected', 'false');
+            }
+        });
+        
+        // Initialize ARIA attributes for content sections
+        document.querySelectorAll('.content-section').forEach((section, index) => {
+            section.setAttribute('aria-labelledby', `${section.id}-tab`);
+            if (index === 0) {
+                section.classList.add('active');
+            }
+        });
     </script>
 </body>
 </html>
