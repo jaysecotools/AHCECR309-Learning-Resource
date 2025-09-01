@@ -735,11 +735,8 @@
             </div>
             <div class="progress-container">
                 <p>Course Progress: <span id="progress-text">0%</span> Complete</p>
-                <span class="progress-details" id="progress-details">(0/9 activities completed)</span>
             </div>
             <div class="activity-completion">
-                <i class="fas fa-tasks" aria-hidden="true"></i>
-                <span id="completed-activities">0</span> activities completed of <span id="total-activities">9</span> total
             </div>
         </header>
         
@@ -1398,17 +1395,6 @@
             return false;
         }
 
-        // Reset progress
-        function resetProgress() {
-            Object.keys(activities).forEach(activityId => {
-                activities[activityId].completed = false;
-            });
-            localStorage.removeItem('courseProgress');
-            updateProgressBar();
-            
-            // Show notification
-            alert('Progress has been reset. All activities are now marked as incomplete.');
-        }
 
         // Tab navigation functionality
         document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -1812,18 +1798,6 @@
             });
         });
         
-        // Add reset button for testing
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeProgress();
-            
-            // Add reset button for testing (remove in production)
-            const resetBtn = document.createElement('button');
-            resetBtn.textContent = 'Reset Progress';
-            resetBtn.className = 'btn btn-danger';
-            resetBtn.style.marginTop = '10px';
-            resetBtn.onclick = resetProgress;
-            document.querySelector('header').appendChild(resetBtn);
-        });
     </script>
 </body>
 </html>
