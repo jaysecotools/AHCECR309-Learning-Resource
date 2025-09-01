@@ -530,6 +530,120 @@
             background-color: var(--light);
         }
         
+        /* Learning Objectives Component */
+        .learning-objectives {
+            background-color: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .learning-objectives h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .learning-objectives h3 i {
+            font-size: 1.5rem;
+        }
+        
+        /* Key Concept Component */
+        .key-concept {
+            background-color: #E8F5E9;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .key-concept h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .key-concept h3 i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        /* TAS Example Component */
+        .tas-example {
+            background-color: #E3F2FD;
+            border: 1px solid var(--tas-blue);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .tas-example h3 {
+            color: var(--tas-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tas-example h3 i {
+            color: var(--tas-blue);
+            font-size: 1.5rem;
+        }
+        
+        /* Summary Box Component */
+        .summary-box {
+            background-color: var(--light);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .summary-box h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        .summary-box h3 i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        /* Interactive Activity Component */
+        .interactive-activity {
+            background-color: white;
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .interactive-activity h3 {
+            color: var(--warning);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .interactive-activity h3 i {
+            font-size: 1.5rem;
+        }
+        
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -557,56 +671,71 @@
             .ecosystem-gallery, .species-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .learning-objectives, .key-concept, .tas-example, .summary-box {
+                padding: 15px;
+                margin: 20px 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-tree"></i> Tasmanian Ecosystems Conservation Training</h1>
+        <header role="banner">
+            <h1><i class="fas fa-tree" aria-hidden="true"></i> Tasmanian Ecosystems Conservation Training</h1>
             <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
             <div class="progress-bar">
-                <div class="progress" id="main-progress" style="width: 35%"></div>
+                <div class="progress" id="main-progress" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <p>Course Progress: <span id="progress-text">35%</span> Complete</p>
         </header>
         
-        <div class="nav-tabs">
-            <div class="nav-tab active" data-target="ecosystems">
-                <i class="fas fa-mountain"></i>
+        <nav class="nav-tabs" role="tablist" aria-label="Module Navigation">
+            <div class="nav-tab active" data-target="ecosystems" role="tab" aria-selected="true" aria-controls="ecosystems" tabindex="0">
+                <i class="fas fa-mountain" aria-hidden="true"></i>
                 <span>Tasmanian Ecosystems</span>
             </div>
-            <div class="nav-tab" data-target="species">
-                <i class="fas fa-paw"></i>
+            <div class="nav-tab" data-target="species" role="tab" aria-selected="false" aria-controls="species" tabindex="0">
+                <i class="fas fa-paw" aria-hidden="true"></i>
                 <span>Endemic Species</span>
             </div>
-            <div class="nav-tab" data-target="threats">
-                <i class="fas fa-exclamation-triangle"></i>
+            <div class="nav-tab" data-target="threats" role="tab" aria-selected="false" aria-controls="threats" tabindex="0">
+                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                 <span>Ecosystem Threats</span>
             </div>
-            <div class="nav-tab" data-target="strategies">
-                <i class="fas fa-seedling"></i>
+            <div class="nav-tab" data-target="strategies" role="tab" aria-selected="false" aria-controls="strategies" tabindex="0">
+                <i class="fas fa-seedling" aria-hidden="true"></i>
                 <span>Conservation Strategies</span>
             </div>
-            <div class="nav-tab" data-target="interactive">
-                <i class="fas fa-puzzle-piece"></i>
+            <div class="nav-tab" data-target="interactive" role="tab" aria-selected="false" aria-controls="interactive" tabindex="0">
+                <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
                 <span>Interactive Activities</span>
             </div>
-            <div class="nav-tab" data-target="casestudies">
-                <i class="fas fa-book"></i>
+            <div class="nav-tab" data-target="casestudies" role="tab" aria-selected="false" aria-controls="casestudies" tabindex="0">
+                <i class="fas fa-book" aria-hidden="true"></i>
                 <span>Case Studies</span>
             </div>
-        </div>
+        </nav>
         
         <!-- Tasmanian Ecosystems Section -->
-        <section id="ecosystems" class="content-section active">
-            <h2><i class="fas fa-mountain"></i> Unique Tasmanian Ecosystems</h2>
+        <section id="ecosystems" class="content-section active" role="tabpanel" aria-labelledby="ecosystems-tab">
+            <h2><i class="fas fa-mountain" aria-hidden="true"></i> Unique Tasmanian Ecosystems</h2>
             <p>Tasmania's isolation and varied topography have created diverse and unique ecosystems found nowhere else on Earth.</p>
+            
+            <div class="learning-objectives">
+                <h3><i class="fas fa-bullseye" aria-hidden="true"></i> Learning Objectives</h3>
+                <ul>
+                    <li>Identify the major ecosystem types found in Tasmania</li>
+                    <li>Understand the key characteristics of each ecosystem</li>
+                    <li>Recognize the conservation significance of Tasmanian ecosystems</li>
+                    <li>Describe the Gondwanan heritage of Tasmania's flora and fauna</li>
+                </ul>
+            </div>
             
             <div class="ecosystem-gallery">
                 <div class="ecosystem-item">
                     <div class="ecosystem-img">
-                        <i class="fas fa-tree"></i>
+                        <i class="fas fa-tree" aria-hidden="true"></i>
                     </div>
                     <div class="ecosystem-content">
                         <h3>Cool Temperate Rainforests</h3>
@@ -616,7 +745,7 @@
                 
                 <div class="ecosystem-item">
                     <div class="ecosystem-img">
-                        <i class="fas fa-mountain"></i>
+                        <i class="fas fa-mountain" aria-hidden="true"></i>
                     </div>
                     <div class="ecosystem-content">
                         <h3>Alpine Ecosystems</h3>
@@ -626,7 +755,7 @@
                 
                 <div class="ecosystem-item">
                     <div class="ecosystem-img">
-                        <i class="fas fa-tree"></i>
+                        <i class="fas fa-tree" aria-hidden="true"></i>
                     </div>
                     <div class="ecosystem-content">
                         <h3>Eucalypt Forests</h3>
@@ -636,7 +765,7 @@
                 
                 <div class="ecosystem-item">
                     <div class="ecosystem-img">
-                        <i class="fas fa-water"></i>
+                        <i class="fas fa-water" aria-hidden="true"></i>
                     </div>
                     <div class="ecosystem-content">
                         <h3>Coastal Heathlands</h3>
@@ -646,7 +775,7 @@
                 
                 <div class="ecosystem-item">
                     <div class="ecosystem-img">
-                        <i class="fas fa-tint"></i>
+                        <i class="fas fa-tint" aria-hidden="true"></i>
                     </div>
                     <div class="ecosystem-content">
                         <h3>Wetlands & Buttongrass Moorlands</h3>
@@ -656,7 +785,7 @@
                 
                 <div class="ecosystem-item">
                     <div class="ecosystem-img">
-                        <i class="fas fa-water"></i>
+                        <i class="fas fa-water" aria-hidden="true"></i>
                     </div>
                     <div class="ecosystem-content">
                         <h3>Marine Ecosystems</h3>
@@ -665,9 +794,14 @@
                 </div>
             </div>
             
+            <div class="key-concept">
+                <h3><i class="fas fa-lightbulb" aria-hidden="true"></i> Key Concept: Gondwanan Heritage</h3>
+                <p>Tasmania's ecosystems are living relics of the ancient supercontinent Gondwana. Many plant species have remained virtually unchanged for 60 million years, making these ecosystems of global significance.</p>
+            </div>
+            
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
                     <h3>Key Characteristics of Tasmanian Ecosystems</h3>
                 </div>
                 <ul>
@@ -678,18 +812,33 @@
                     <li><strong>Nutrient-Poor Soils:</strong> Many plants have specialized adaptations for nutrient acquisition</li>
                 </ul>
             </div>
+            
+            <div class="tas-example">
+                <h3><i class="fas fa-map-marker-alt" aria-hidden="true"></i> TAS Example: Tarkine Wilderness</h3>
+                <p>The Tarkine region in northwest Tasmania contains the largest single tract of cool temperate rainforest in Australia, spanning over 180,000 hectares. This area represents one of the most significant Gondwanan remnants in the world and supports an incredible diversity of flora and fauna, including many threatened species.</p>
+            </div>
         </section>
         
         <!-- Endemic Species Section -->
-        <section id="species" class="content-section">
-            <h2><i class="fas fa-paw"></i> Endemic Species of Tasmania</h2>
+        <section id="species" class="content-section" role="tabpanel" aria-labelledby="species-tab">
+            <h2><i class="fas fa-paw" aria-hidden="true"></i> Endemic Species of Tasmania</h2>
             <p>Tasmania's isolation has resulted in numerous species that are found nowhere else in the world.</p>
+            
+            <div class="learning-objectives">
+                <h3><i class="fas fa-bullseye" aria-hidden="true"></i> Learning Objectives</h3>
+                <ul>
+                    <li>Identify key endemic species of Tasmania</li>
+                    <li>Understand the conservation status of threatened species</li>
+                    <li>Recognize the ecological roles of different endemic species</li>
+                    <li>Describe the unique adaptations of Tasmanian flora and fauna</li>
+                </ul>
+            </div>
             
             <h3>Iconic Endemic Mammals</h3>
             <div class="species-grid">
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-paw"></i>
+                        <i class="fas fa-paw" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Tasmanian Devil</div>
                     <div class="species-desc">World's largest carnivorous marsupial, known for its powerful jaws and feisty temperament.</div>
@@ -697,7 +846,7 @@
                 
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-paw"></i>
+                        <i class="fas fa-paw" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Eastern Quoll</div>
                     <div class="species-desc">Spotted carnivorous marsupial, extinct on mainland Australia but surviving in Tasmania.</div>
@@ -705,7 +854,7 @@
                 
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-paw"></i>
+                        <i class="fas fa-paw" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Tasmanian Pademelon</div>
                     <div class="species-desc">Small, stocky macropod with a distinctive short tail and thick fur.</div>
@@ -713,7 +862,7 @@
                 
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-paw"></i>
+                        <i class="fas fa-paw" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Tasmanian Bettong</div>
                     <div class="species-desc">Small, nocturnal macropod that uses its prehensile tail to gather nesting material.</div>
@@ -724,7 +873,7 @@
             <div class="species-grid">
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-leaf"></i>
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Huon Pine</div>
                     <div class="species-desc">One of the longest-living trees in the world, with some specimens over 3,000 years old.</div>
@@ -732,7 +881,7 @@
                 
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-leaf"></i>
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Leatherwood</div>
                     <div class="species-desc">Unique to Tasmania's rainforests, produces flowers that are the source of distinctive honey.</div>
@@ -740,7 +889,7 @@
                 
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-leaf"></i>
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Pencil Pine</div>
                     <div class="species-desc">Coniferous tree found in high-altitude areas, extremely slow-growing and long-lived.</div>
@@ -748,16 +897,21 @@
                 
                 <div class="species-item">
                     <div class="species-thumb">
-                        <i class="fas fa-leaf"></i>
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
                     </div>
                     <div class="species-name">Tasmanian Blue Gum</div>
                     <div class="species-desc">The floral emblem of Tasmania, one of the tallest flowering plants in the world.</div>
                 </div>
             </div>
             
+            <div class="key-concept">
+                <h3><i class="fas fa-lightbulb" aria-hidden="true"></i> Key Concept: Endemism</h3>
+                <p>Endemic species are those found naturally in only one geographic location. Tasmania's long isolation has created ideal conditions for endemism, with approximately 30% of Tasmania's terrestrial mammals, 15% of its birds, and 25% of its plants being endemic to the island.</p>
+            </div>
+            
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
                     <h3>Species of Conservation Significance</h3>
                 </div>
                 <p>Many Tasmanian species are threatened and protected under state and federal legislation:</p>
@@ -769,16 +923,43 @@
                     <li><strong>Spotted-tail Quoll:</strong> Largest native carnivore on mainland Australia but declining in Tasmania</li>
                 </ul>
             </div>
+            
+            <div class="tas-example">
+                <h3><i class="fas fa-map-marker-alt" aria-hidden="true"></i> TAS Example: Maria Island Sanctuary</h3>
+                <p>Maria Island serves as an important insurance population site for several threatened Tasmanian species. The island is free of foxes and other key threats, making it an ideal location for reintroduction programs for species like the Tasmanian devil and eastern quoll.</p>
+            </div>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-clipboard-list" aria-hidden="true"></i> Summary: Endemic Species Protection</h3>
+                <p>Protecting Tasmania's unique species requires:</p>
+                <ul>
+                    <li>Habitat conservation and restoration</li>
+                    <li>Threat management (predators, disease, habitat loss)</li>
+                    <li>Monitoring and research programs</li>
+                    <li>Insurance populations and captive breeding</li>
+                    <li>Community engagement and education</li>
+                </ul>
+            </div>
         </section>
         
         <!-- Ecosystem Threats Section -->
-        <section id="threats" class="content-section">
-            <h2><i class="fas fa-exclamation-triangle"></i> Ecosystem Threats</h2>
+        <section id="threats" class="content-section" role="tabpanel" aria-labelledby="threats-tab">
+            <h2><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Ecosystem Threats</h2>
             <p>Tasmania's unique ecosystems face numerous threats that require careful management and conservation efforts.</p>
+            
+            <div class="learning-objectives">
+                <h3><i class="fas fa-bullseye" aria-hidden="true"></i> Learning Objectives</h3>
+                <ul>
+                    <li>Identify major threats to Tasmanian ecosystems</li>
+                    <li>Understand the impacts of climate change on different ecosystems</li>
+                    <li>Recognize the ecological damage caused by invasive species</li>
+                    <li>Describe how habitat fragmentation affects biodiversity</li>
+                </ul>
+            </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-fire"></i>
+                    <i class="fas fa-fire" aria-hidden="true"></i>
                     <h3>Climate Change</h3>
                 </div>
                 <p>Climate change poses significant threats to Tasmania's ecosystems:</p>
@@ -793,7 +974,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-seedling"></i>
+                    <i class="fas fa-seedling" aria-hidden="true"></i>
                     <h3>Invasive Species</h3>
                 </div>
                 <p>Introduced plants and animals threaten native biodiversity:</p>
@@ -805,9 +986,14 @@
                 </ul>
             </div>
             
+            <div class="key-concept">
+                <h3><i class="fas fa-lightbulb" aria-hidden="true"></i> Key Concept: Invasive Species Impacts</h3>
+                <p>Invasive species are the second greatest threat to biodiversity after habitat destruction. In Tasmania, invasive species have contributed to the decline of numerous native plants and animals, altered ecosystem processes, and changed fire regimes.</p>
+            </div>
+            
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-hard-hat"></i>
+                    <i class="fas fa-hard-hat" aria-hidden="true"></i>
                     <h3>Habitat Loss and Fragmentation</h3>
                 </div>
                 <p>Human activities continue to impact natural habitats:</p>
@@ -821,7 +1007,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-disease"></i>
+                    <i class="fas fa-disease" aria-hidden="true"></i>
                     <h3>Disease</h3>
                 </div>
                 <p>Disease outbreaks threaten vulnerable species:</p>
@@ -831,16 +1017,43 @@
                     <li><strong>Phytophthora cinnamomi:</strong> Root rot fungus affecting many plant species</li>
                 </ul>
             </div>
+            
+            <div class="tas-example">
+                <h3><i class="fas fa-map-marker-alt" aria-hidden="true"></i> TAS Example: Fox Incursion</h3>
+                <p>Red foxes were deliberately introduced to Tasmania in the early 2000s, posing a catastrophic threat to native wildlife. A comprehensive eradication program was established, involving baiting, monitoring, and community reporting. While no established population currently exists, ongoing vigilance is required to prevent establishment.</p>
+            </div>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-clipboard-list" aria-hidden="true"></i> Summary: Threat Management Priorities</h3>
+                <p>Effective threat management requires:</p>
+                <ul>
+                    <li>Prevention of new invasions through biosecurity</li>
+                    <li>Early detection and rapid response to new threats</li>
+                    <li>Strategic control of established threats</li>
+                    <li>Ongoing monitoring and evaluation</li>
+                    <li>Community involvement and awareness</li>
+                </ul>
+            </div>
         </section>
         
         <!-- Conservation Strategies Section -->
-        <section id="strategies" class="content-section">
-            <h2><i class="fas fa-seedling"></i> Conservation Strategies</h2>
+        <section id="strategies" class="content-section" role="tabpanel" aria-labelledby="strategies-tab">
+            <h2><i class="fas fa-seedling" aria-hidden="true"></i> Conservation Strategies</h2>
             <p>Effective conservation requires a multi-faceted approach tailored to Tasmania's unique ecosystems.</p>
+            
+            <div class="learning-objectives">
+                <h3><i class="fas fa-bullseye" aria-hidden="true"></i> Learning Objectives</h3>
+                <ul>
+                    <li>Identify key conservation strategies used in Tasmania</li>
+                    <li>Understand the role of protected areas in conservation</li>
+                    <li>Describe threatened species recovery programs</li>
+                    <li>Recognize the importance of community engagement in conservation</li>
+                </ul>
+            </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
                     <h3>Protected Areas</h3>
                 </div>
                 <p>Tasmania has an extensive network of protected areas covering approximately 40% of the state:</p>
@@ -853,9 +1066,14 @@
                 </ul>
             </div>
             
+            <div class="key-concept">
+                <h3><i class="fas fa-lightbulb" aria-hidden="true"></i> Key Concept: Conservation Planning</h3>
+                <p>Systematic conservation planning involves identifying areas that comprehensively represent regional biodiversity while considering threats, costs, and opportunities. Tasmania uses this approach to guide expansion of the protected area network and prioritize conservation actions.</p>
+            </div>
+            
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-sync-alt"></i>
+                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
                     <h3>Threatened Species Recovery</h3>
                 </div>
                 <p>Targeted programs for species of conservation concern:</p>
@@ -869,7 +1087,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-users" aria-hidden="true"></i>
                     <h3>Community Engagement</h3>
                 </div>
                 <p>Involving the community in conservation efforts:</p>
@@ -883,7 +1101,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-tools"></i>
+                    <i class="fas fa-tools" aria-hidden="true"></i>
                     <h3>Threat Management</h3>
                 </div>
                 <p>Specific approaches to managing key threats:</p>
@@ -895,9 +1113,14 @@
                 </ul>
             </div>
             
+            <div class="tas-example">
+                <h3><i class="fas fa-map-marker-alt" aria-hidden="true"></i> TAS Example: Land for Wildlife</h3>
+                <p>The Land for Wildlife program supports private landholders to manage wildlife habitat on their properties. Participants receive technical advice, resources, and recognition for their conservation efforts. This program has been highly successful in Tasmania, with over 1,200 properties covering more than 200,000 hectares participating.</p>
+            </div>
+            
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-balance-scale"></i>
+                    <i class="fas fa-balance-scale" aria-hidden="true"></i>
                     <h3>Policy and Legislation</h3>
                 </div>
                 <p>Legal frameworks supporting conservation:</p>
@@ -909,16 +1132,51 @@
                     <li><strong>Forest Practices Act 1985:</strong> Regulates forestry operations to protect environmental values</li>
                 </ul>
             </div>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-clipboard-list" aria-hidden="true"></i> Summary: Effective Conservation</h3>
+                <p>Successful conservation in Tasmania requires:</p>
+                <ul>
+                    <li>A comprehensive protected area network</li>
+                    <li>Targeted species recovery programs</li>
+                    <li>Effective threat management</li>
+                    <li>Strong policy and legislation</li>
+                    <li>Community involvement and support</li>
+                </ul>
+            </div>
+            
+            <div class="interactive-activity">
+                <h3><i class="fas fa-tasks" aria-hidden="true"></i> Activity: Conservation Priority Setting</h3>
+                <p>Imagine you are a conservation manager with limited resources. Rank these actions in order of priority for protecting a newly discovered population of a threatened orchid species:</p>
+                <ol>
+                    <li>Conduct population survey and mapping</li>
+                    <li>Install protective fencing</li>
+                    <li>Develop long-term management plan</li>
+                    <li>Collect seed for banking</li>
+                    <li>Assess threats to the population</li>
+                </ol>
+                <p>Consider factors like urgency, cost, and potential impact when making your decisions.</p>
+            </div>
         </section>
         
         <!-- Interactive Activities Section -->
-        <section id="interactive" class="content-section">
-            <h2><i class="fas fa-puzzle-piece"></i> Interactive Activities</h2>
+        <section id="interactive" class="content-section" role="tabpanel" aria-labelledby="interactive-tab">
+            <h2><i class="fas fa-puzzle-piece" aria-hidden="true"></i> Interactive Activities</h2>
             <p>Test your knowledge with these interactive exercises and simulations.</p>
+            
+            <div class="learning-objectives">
+                <h3><i class="fas fa-bullseye" aria-hidden="true"></i> Learning Objectives</h3>
+                <ul>
+                    <li>Apply knowledge of Tasmanian species identification</li>
+                    <li>Practice ecosystem mapping skills</li>
+                    <li>Develop threat assessment capabilities</li>
+                    <li>Understand conservation priority setting</li>
+                </ul>
+            </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-search" aria-hidden="true"></i>
                     <h3>Tasmanian Species Identification</h3>
                 </div>
                 <p>Learn to identify key Tasmanian flora and fauna species that may be encountered during field work.</p>
@@ -926,13 +1184,13 @@
                 <div class="interactive-box">
                     <div class="species-card">
                         <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: #e9ecef;">
-                            <i class="fas fa-leaf" style="font-size: 3rem; color: var(--dark);"></i>
+                            <i class="fas fa-leaf" style="font-size: 3rem; color: var(--dark);" aria-hidden="true"></i>
                         </div>
                         <div class="species-info">
                             <h4>What plant species is this?</h4>
                             <p><strong>Characteristics:</strong> Slow-growing conifer, found in high-altitude areas, extremely long-lived with dense, durable timber.</p>
                             <div class="form-group">
-                                <select id="plant-species-select">
+                                <select id="plant-species-select" aria-label="Select plant species">
                                     <option value="">Select a species</option>
                                     <option value="huon">Huon Pine</option>
                                     <option value="pencil">Pencil Pine</option>
@@ -941,8 +1199,8 @@
                                     <option value="myrtle">Myrtle Beech</option>
                                 </select>
                             </div>
-                            <button class="btn" id="check-plant-species"><i class="fas fa-check"></i> Check Answer</button>
-                            <div class="feedback" id="plant-species-feedback"></div>
+                            <button class="btn" id="check-plant-species"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
+                            <div class="feedback" id="plant-species-feedback" role="alert"></div>
                         </div>
                     </div>
                 </div>
@@ -950,17 +1208,17 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-map-marked-alt"></i>
+                    <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
                     <h3>Ecosystem Mapping</h3>
                 </div>
                 <p>Practice identifying different ecosystem types on a topographic map.</p>
                 
                 <div class="interactive-box">
                     <div class="site-map">
-                        <i class="fas fa-map" style="font-size: 3rem; color: var(--dark);"></i>
+                        <i class="fas fa-map" style="font-size: 3rem; color: var(--dark);" aria-hidden="true"></i>
                     </div>
                     <div class="form-group">
-                        <label>Select the predominant ecosystem type in the marked area:</label>
+                        <label for="ecosystem-select">Select the predominant ecosystem type in the marked area:</label>
                         <select id="ecosystem-select">
                             <option value="">Select ecosystem type</option>
                             <option value="rainforest">Cool temperate rainforest</option>
@@ -970,14 +1228,14 @@
                             <option value="wetland">Wetland</option>
                         </select>
                     </div>
-                    <button class="btn" id="check-ecosystem"><i class="fas fa-check"></i> Check Answer</button>
-                    <div class="feedback" id="ecosystem-feedback"></div>
+                    <button class="btn" id="check-ecosystem"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
+                    <div class="feedback" id="ecosystem-feedback" role="alert"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                     <h3>Threat Identification</h3>
                 </div>
                 <p>Identify potential ecological threats in different scenarios.</p>
@@ -1011,44 +1269,64 @@
                         </div>
                     </div>
                     
-                    <button class="btn" id="check-threats"><i class="fas fa-check"></i> Check Answers</button>
-                    <div class="feedback" id="threats-feedback"></div>
+                    <button class="btn" id="check-threats"><i class="fas fa-check" aria-hidden="true"></i> Check Answers</button>
+                    <div class="feedback" id="threats-feedback" role="alert"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-clipboard-list"></i>
+                    <i class="fas fa-clipboard-list" aria-hidden="true"></i>
                     <h3>Conservation Priority Exercise</h3>
                 </div>
                 <p>Rank these conservation actions in order of priority for a newly discovered population of a threatened orchid species.</p>
                 
                 <div class="interactive-box">
                     <div class="form-group">
-                        <label>Drag to reorder (highest priority at top):</label>
+                        <label for="priority-list">Drag to reorder (highest priority at top):</label>
                         <ul id="priority-list" style="list-style: none;">
-                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Conduct population survey and mapping</li>
-                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Install protective fencing</li>
-                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Develop long-term management plan</li>
-                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Collect seed for banking</li>
-                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;"></i> Assess threats to the population</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Conduct population survey and mapping</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Install protective fencing</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Develop long-term management plan</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Collect seed for banking</li>
+                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Assess threats to the population</li>
                         </ul>
                     </div>
                     
-                    <button class="btn" id="check-priorities"><i class="fas fa-check"></i> Check Order</button>
-                    <div class="feedback" id="priority-feedback"></div>
+                    <button class="btn" id="check-priorities"><i class="fas fa-check" aria-hidden="true"></i> Check Order</button>
+                    <div class="feedback" id="priority-feedback" role="alert"></div>
                 </div>
+            </div>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-clipboard-list" aria-hidden="true"></i> Activity Reflection</h3>
+                <p>Consider how these interactive exercises relate to real-world conservation work:</p>
+                <ul>
+                    <li>How might your approach change with different species or ecosystems?</li>
+                    <li>What additional information would be helpful in making these decisions?</li>
+                    <li>How would you balance conservation priorities with other considerations like cost and community needs?</li>
+                </ul>
             </div>
         </section>
         
         <!-- Case Studies Section -->
-        <section id="casestudies" class="content-section">
-            <h2><i class="fas fa-book"></i> Case Studies</h2>
+        <section id="casestudies" class="content-section" role="tabpanel" aria-labelledby="casestudies-tab">
+            <h2><i class="fas fa-book" aria-hidden="true"></i> Case Studies</h2>
             <p>Real-world examples of conservation challenges and solutions in Tasmania.</p>
+            
+            <div class="learning-objectives">
+                <h3><i class="fas fa-bullseye" aria-hidden="true"></i> Learning Objectives</h3>
+                <ul>
+                    <li>Analyze real-world conservation challenges in Tasmania</li>
+                    <li>Understand the multi-faceted approach to species recovery</li>
+                    <li>Recognize the importance of adaptive management in conservation</li>
+                    <li>Identify lessons learned from past conservation efforts</li>
+                </ul>
+            </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-disease"></i>
+                    <i class="fas fa-disease" aria-hidden="true"></i>
                     <h3>Case Study: Tasmanian Devil Conservation</h3>
                 </div>
                 <div class="case-study">
@@ -1070,9 +1348,14 @@
                 </div>
             </div>
             
+            <div class="key-concept">
+                <h3><i class="fas fa-lightbulb" aria-hidden="true"></i> Key Concept: Adaptive Management</h3>
+                <p>The Tasmanian devil conservation program exemplifies adaptive management - an iterative approach where strategies are implemented, monitored, evaluated, and adjusted based on new information and changing conditions.</p>
+            </div>
+            
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-feather"></i>
+                    <i class="fas fa-feather" aria-hidden="true"></i>
                     <h3>Case Study: Orange-bellied Parrot Recovery</h3>
                 </div>
                 <div class="case-study">
@@ -1096,7 +1379,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-tree"></i>
+                    <i class="fas fa-tree" aria-hidden="true"></i>
                     <h3>Case Study: Giant Trees Conservation</h3>
                 </div>
                 <div class="case-study">
@@ -1118,9 +1401,14 @@
                 </div>
             </div>
             
+            <div class="tas-example">
+                <h3><i class="fas fa-map-marker-alt" aria-hidden="true"></i> TAS Example: Styx Valley of the Giants</h3>
+                <p>The Styx Valley contains some of the world's tallest flowering plants, including Eucalyptus regnans specimens over 90 meters tall. Conservation efforts here have involved collaboration between government agencies, conservation organizations, and the forestry industry to protect significant trees while allowing sustainable timber harvesting in less sensitive areas.</p>
+            </div>
+            
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-water"></i>
+                    <i class="fas fa-water" aria-hidden="true"></i>
                     <h3>Case Study: Marine Pest Management</h3>
                 </div>
                 <div class="case-study">
@@ -1141,9 +1429,32 @@
                     <p>While some pests are now well-established, early detection systems have been successful in identifying new incursions. Community awareness of marine biosecurity has increased, and research continues into control methods.</p>
                 </div>
             </div>
+            
+            <div class="summary-box">
+                <h3><i class="fas fa-clipboard-list" aria-hidden="true"></i> Summary: Lessons from Case Studies</h3>
+                <p>These case studies demonstrate several key principles for effective conservation:</p>
+                <ul>
+                    <li>The importance of science-based approaches</li>
+                    <li>The need for multi-faceted strategies addressing multiple threats</li>
+                    <li>The value of collaboration between different stakeholders</li>
+                    <li>The role of adaptive management in responding to new information</li>
+                    <li>The critical importance of community engagement and support</li>
+                </ul>
+            </div>
+            
+            <div class="interactive-activity">
+                <h3><i class="fas fa-tasks" aria-hidden="true"></i> Activity: Case Study Analysis</h3>
+                <p>Select one of the case studies and consider these questions:</p>
+                <ol>
+                    <li>What were the most significant challenges faced in this case?</li>
+                    <li>Which conservation strategies were most effective and why?</li>
+                    <li>What lessons from this case could be applied to other conservation challenges?</li>
+                    <li>How might you approach this situation differently with the benefit of hindsight?</li>
+                </ol>
+            </div>
         </section>
         
-        <footer>
+        <footer role="contentinfo">
             <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works.</p>
             <p>Developed by Jay Rowley.</p>
             <p>Tasmanian Context | © 2025</p>
@@ -1155,15 +1466,27 @@
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 // Remove active class from all tabs and sections
-                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
                 document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
                 
                 // Add active class to clicked tab
                 tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
                 
                 // Show corresponding section
                 const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
+            });
+            
+            // Add keyboard navigation for tabs
+            tab.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    tab.click();
+                }
             });
         });
         
@@ -1258,14 +1581,17 @@
         
         priorityList.querySelectorAll('li').forEach(item => {
             item.setAttribute('draggable', true);
+            item.setAttribute('aria-grabbed', 'false');
             
             item.addEventListener('dragstart', function() {
                 draggedItem = this;
+                this.setAttribute('aria-grabbed', 'true');
                 setTimeout(() => this.style.opacity = '0.5', 0);
             });
             
             item.addEventListener('dragend', function() {
                 draggedItem = null;
+                this.setAttribute('aria-grabbed', 'false');
                 setTimeout(() => this.style.opacity = '1', 0);
             });
             
@@ -1281,14 +1607,33 @@
             });
         });
         
-        // Progress tracking
-        let progress = 35;
+        // Progress tracking with localStorage
+        let progress = localStorage.getItem('moduleProgress') ? parseInt(localStorage.getItem('moduleProgress')) : 35;
         
         function updateProgress(value) {
             progress = Math.min(progress + value, 100);
             document.getElementById('main-progress').style.width = progress + '%';
+            document.getElementById('main-progress').setAttribute('aria-valuenow', progress);
             document.getElementById('progress-text').textContent = progress + '%';
+            
+            // Save progress to localStorage
+            localStorage.setItem('moduleProgress', progress);
         }
+        
+        // Initialize progress on page load
+        document.getElementById('main-progress').style.width = progress + '%';
+        document.getElementById('main-progress').setAttribute('aria-valuenow', progress);
+        document.getElementById('progress-text').textContent = progress + '%';
+        
+        // Add keyboard accessibility to all buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
+                }
+            });
+        });
     </script>
 </body>
 </html>
