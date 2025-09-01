@@ -50,6 +50,10 @@
             position: relative;
             overflow: hidden;
         }
+
+        header h1, header p {
+            color: white;
+        }
         
         header::before {
             content: "";
@@ -561,49 +565,49 @@
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-gavel"></i> Legislative Framework for Site Inspections</h1>
+            <h1><i class="fas fa-gavel" aria-hidden="true"></i> Legislative Framework for Site Inspections</h1>
             <p>Understanding the laws and regulations governing ecological and cultural site inspections in Tasmania</p>
             <div class="progress-bar">
-                <div class="progress" id="main-progress" style="width: 0%"></div>
+                <div class="progress" id="main-progress" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <p>Module Progress: <span id="progress-text">0%</span> Complete</p>
         </header>
         
-        <div class="nav-tabs">
-            <div class="nav-tab active" data-target="overview">
-                <i class="fas fa-info-circle"></i>
+        <nav class="nav-tabs" role="tablist">
+            <div class="nav-tab active" data-target="overview" role="tab" aria-selected="true" aria-controls="overview" tabindex="0">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
                 <span>Overview</span>
             </div>
-            <div class="nav-tab" data-target="laws">
-                <i class="fas fa-balance-scale"></i>
+            <div class="nav-tab" data-target="laws" role="tab" aria-selected="false" aria-controls="laws" tabindex="0">
+                <i class="fas fa-balance-scale" aria-hidden="true"></i>
                 <span>Key Legislation</span>
             </div>
-            <div class="nav-tab" data-target="compliance">
-                <i class="fas fa-clipboard-check"></i>
+            <div class="nav-tab" data-target="compliance" role="tab" aria-selected="false" aria-controls="compliance" tabindex="0">
+                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
                 <span>Compliance</span>
             </div>
-            <div class="nav-tab" data-target="permits">
-                <i class="fas fa-file-contract"></i>
+            <div class="nav-tab" data-target="permits" role="tab" aria-selected="false" aria-controls="permits" tabindex="0">
+                <i class="fas fa-file-contract" aria-hidden="true"></i>
                 <span>Permit Processes</span>
             </div>
-            <div class="nav-tab" data-target="reporting">
-                <i class="fas fa-file-alt"></i>
+            <div class="nav-tab" data-target="reporting" role="tab" aria-selected="false" aria-controls="reporting" tabindex="0">
+                <i class="fas fa-file-alt" aria-hidden="true"></i>
                 <span>Reporting</span>
             </div>
-            <div class="nav-tab" data-target="scenarios">
-                <i class="fas fa-puzzle-piece"></i>
+            <div class="nav-tab" data-target="scenarios" role="tab" aria-selected="false" aria-controls="scenarios" tabindex="0">
+                <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
                 <span>Interactive Scenarios</span>
             </div>
-        </div>
+        </nav>
         
         <!-- Overview Section -->
-        <section id="overview" class="content-section active">
-            <h2><i class="fas fa-info-circle"></i> Legislative Framework Overview</h2>
+        <section id="overview" class="content-section active" role="tabpanel" aria-labelledby="overview-tab">
+            <h2><i class="fas fa-info-circle" aria-hidden="true"></i> Legislative Framework Overview</h2>
             <p>Understanding the legislative framework is essential for conducting ecological and cultural site inspections in Tasmania. This module covers the key laws, regulations, compliance requirements, and permit processes that govern site inspections.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-book"></i>
+                    <i class="fas fa-book" aria-hidden="true"></i>
                     <h3>Why Legislation Matters</h3>
                 </div>
                 <p>Compliance with legislation is not optional—it's a legal requirement. Understanding these laws helps you:</p>
@@ -618,7 +622,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                     <h3>Consequences of Non-Compliance</h3>
                 </div>
                 <p>Failure to comply with relevant legislation can result in:</p>
@@ -633,7 +637,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-lightbulb"></i>
+                    <i class="fas fa-lightbulb" aria-hidden="true"></i>
                     <h3>Key Principles</h3>
                 </div>
                 <p>Several key principles underpin Tasmania's environmental and heritage legislation:</p>
@@ -644,12 +648,12 @@
                 </ul>
             </div>
             
-            <button class="btn" id="next-to-laws"><i class="fas fa-arrow-right"></i> Continue to Key Legislation</button>
+            <button class="btn" id="next-to-laws"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Key Legislation</button>
         </section>
         
         <!-- Key Legislation Section -->
-        <section id="laws" class="content-section">
-            <h2><i class="fas fa-balance-scale"></i> Key Legislation</h2>
+        <section id="laws" class="content-section" role="tabpanel" aria-labelledby="laws-tab">
+            <h2><i class="fas fa-balance-scale" aria-hidden="true"></i> Key Legislation</h2>
             <p>Tasmania has a comprehensive legislative framework governing ecological and cultural heritage protection. The following table outlines the key acts and regulations:</p>
             
             <table class="law-table">
@@ -696,7 +700,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-leaf"></i>
+                    <i class="fas fa-leaf" aria-hidden="true"></i>
                     <h3>Nature Conservation Act 2002</h3>
                 </div>
                 <p>This is the primary legislation for protecting Tasmania's natural values. Key provisions include:</p>
@@ -711,7 +715,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-monument"></i>
+                    <i class="fas fa-monument" aria-hidden="true"></i>
                     <h3>Aboriginal Heritage Act 1975</h3>
                 </div>
                 <p>This Act protects Aboriginal relics and sites of significance. Important aspects include:</p>
@@ -726,7 +730,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-landmark"></i>
+                    <i class="fas fa-landmark" aria-hidden="true"></i>
                     <h3>Historic Cultural Heritage Act 1995</h3>
                 </div>
                 <p>This Act provides for the protection of Tasmania's historic heritage. Key elements include:</p>
@@ -739,17 +743,17 @@
                 <p>Works that may affect a registered place require a permit from the Heritage Council. This includes demolition, alteration, extension, and subdivision.</p>
             </div>
             
-            <button class="btn" id="next-to-compliance"><i class="fas fa-arrow-right"></i> Continue to Compliance Requirements</button>
+            <button class="btn" id="next-to-compliance"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Compliance Requirements</button>
         </section>
         
         <!-- Compliance Requirements Section -->
-        <section id="compliance" class="content-section">
-            <h2><i class="fas fa-clipboard-check"></i> Compliance Requirements</h2>
+        <section id="compliance" class="content-section" role="tabpanel" aria-labelledby="compliance-tab">
+            <h2><i class="fas fa-clipboard-check" aria-hidden="true"></i> Compliance Requirements</h2>
             <p>Understanding your compliance obligations is essential when conducting site inspections. This section outlines key requirements under Tasmanian legislation.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-tree"></i>
+                    <i class="fas fa-tree" aria-hidden="true"></i>
                     <h3>Ecological Compliance</h3>
                 </div>
                 <p>When conducting ecological site inspections, you must comply with:</p>
@@ -763,7 +767,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-history"></i>
+                    <i class="fas fa-history" aria-hidden="true"></i>
                     <h3>Cultural Heritage Compliance</h3>
                 </div>
                 <p>When conducting cultural heritage site inspections, you must comply with:</p>
@@ -777,7 +781,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-list-check"></i>
+                    <i class="fas fa-list-check" aria-hidden="true"></i>
                     <h3>Compliance Checklist</h3>
                 </div>
                 <p>Use this checklist to ensure compliance during site inspections:</p>
@@ -812,7 +816,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
                     <h3>Penalties for Non-Compliance</h3>
                 </div>
                 <p>Penalties for non-compliance with environmental and heritage legislation can be severe:</p>
@@ -825,17 +829,17 @@
                 <p>Directors and managers may also be held personally liable for offenses committed by their organizations.</p>
             </div>
             
-            <button class="btn" id="next-to-permits"><i class="fas fa-arrow-right"></i> Continue to Permit Processes</button>
+            <button class="btn" id="next-to-permits"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Permit Processes</button>
         </section>
         
         <!-- Permit Processes Section -->
-        <section id="permits" class="content-section">
-            <h2><i class="fas fa-file-contract"></i> Permit Processes</h2>
+        <section id="permits" class="content-section" role="tabpanel" aria-labelledby="permits-tab">
+            <h2><i class="fas fa-file-contract" aria-hidden="true"></i> Permit Processes</h2>
             <p>Various activities require permits under Tasmanian legislation. Understanding these processes is essential for compliance.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-leaf"></i>
+                    <i class="fas fa-leaf" aria-hidden="true"></i>
                     <h3>Permits for Ecological Works</h3>
                 </div>
                 <p>The following ecological activities typically require permits:</p>
@@ -850,7 +854,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-monument"></i>
+                    <i class="fas fa-monument" aria-hidden="true"></i>
                     <h3>Permits for Heritage Works</h3>
                 </div>
                 <p>The following heritage activities typically require permits:</p>
@@ -864,7 +868,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-sitemap"></i>
+                    <i class="fas fa-sitemap" aria-hidden="true"></i>
                     <h3>Permit Application Process</h3>
                 </div>
                 
@@ -921,7 +925,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-clock"></i>
+                    <i class="fas fa-clock" aria-hidden="true"></i>
                     <h3>Timeframes and Costs</h3>
                 </div>
                 <p>Permit processing times and costs vary depending on the complexity of the application:</p>
@@ -934,17 +938,17 @@
                 <p>It's essential to factor in these timeframes and costs when planning projects.</p>
             </div>
             
-            <button class="btn" id="next-to-reporting"><i class="fas fa-arrow-right"></i> Continue to Reporting Obligations</button>
+            <button class="btn" id="next-to-reporting"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Reporting Obligations</button>
         </section>
         
         <!-- Reporting Obligations Section -->
-        <section id="reporting" class="content-section">
-            <h2><i class="fas fa-file-alt"></i> Reporting Obligations</h2>
+        <section id="reporting" class="content-section" role="tabpanel" aria-labelledby="reporting-tab">
+            <h2><i class="fas fa-file-alt" aria-hidden="true"></i> Reporting Obligations</h2>
             <p>Various reporting obligations apply under Tasmanian legislation for ecological and cultural site inspections.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
                     <h3>Mandatory Reporting Requirements</h3>
                 </div>
                 <p>Certain discoveries and incidents must be reported by law:</p>
@@ -958,7 +962,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-clipboard-list"></i>
+                    <i class="fas fa-clipboard-list" aria-hidden="true"></i>
                     <h3>Inspection Reporting</h3>
                 </div>
                 <p>Comprehensive site inspection reports should include:</p>
@@ -978,38 +982,38 @@
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-file-pdf"></i>
+                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
                     <h3>Report Templates and Guidelines</h3>
                 </div>
                 <p>Using standardized templates ensures consistency and compliance:</p>
                 
                 <div class="downloads-grid">
                     <div class="download-card">
-                        <i class="fas fa-file-pdf"></i>
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
                         <h4>Ecological Site Inspection Report Template</h4>
                         <p>PDF, 120KB</p>
-                        <button class="btn btn-outline download-resource" data-resource="eco-template"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="eco-template"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
-                        <i class="fas fa-file-pdf"></i>
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
                         <h4>Cultural Heritage Inspection Report Template</h4>
                         <p>PDF, 145KB</p>
-                        <button class="btn btn-outline download-resource" data-resource="heritage-template"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="heritage-template"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
-                        <i class="fas fa-file-pdf"></i>
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
                         <h4>Chance Find Procedure Template</h4>
                         <p>PDF, 95KB</p>
-                        <button class="btn btn-outline download-resource" data-resource="chance-find"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="chance-find"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
                     </div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-database"></i>
+                    <i class="fas fa-database" aria-hidden="true"></i>
                     <h3>Data Submission</h3>
                 </div>
                 <p>Certain data should be submitted to relevant databases:</p>
@@ -1021,17 +1025,17 @@
                 <p>Data submission helps improve the knowledge base for future conservation efforts.</p>
             </div>
             
-            <button class="btn" id="next-to-scenarios"><i class="fas fa-arrow-right"></i> Continue to Interactive Scenarios</button>
+            <button class="btn" id="next-to-scenarios"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Interactive Scenarios</button>
         </section>
         
         <!-- Interactive Scenarios Section -->
-        <section id="scenarios" class="content-section">
-            <h2><i class="fas fa-puzzle-piece"></i> Interactive Scenarios</h2>
+        <section id="scenarios" class="content-section" role="tabpanel" aria-labelledby="scenarios-tab">
+            <h2><i class="fas fa-puzzle-piece" aria-hidden="true"></i> Interactive Scenarios</h2>
             <p>Test your knowledge of Tasmania's legislative framework with these interactive scenarios.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-tree"></i>
+                    <i class="fas fa-tree" aria-hidden="true"></i>
                     <h3>Scenario 1: Threatened Species Discovery</h3>
                 </div>
                 <div class="scenario-box">
@@ -1059,14 +1063,14 @@
                         </div>
                     </div>
                     
-                    <button class="btn" id="check-scenario1"><i class="fas fa-check"></i> Check Answer</button>
+                    <button class="btn" id="check-scenario1"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
                     <div class="feedback" id="scenario1-feedback"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-monument"></i>
+                    <i class="fas fa-monument" aria-hidden="true"></i>
                     <h3>Scenario 2: Aboriginal Heritage Discovery</h3>
                 </div>
                 <div class="scenario-box">
@@ -1094,14 +1098,14 @@
                         </div>
                     </div>
                     
-                    <button class="btn" id="check-scenario2"><i class="fas fa-check"></i> Check Answer</button>
+                    <button class="btn" id="check-scenario2"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
                     <div class="feedback" id="scenario2-feedback"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-gavel"></i>
+                    <i class="fas fa-gavel" aria-hidden="true"></i>
                     <h3>Scenario 3: Permit Requirements</h3>
                 </div>
                 <div class="scenario-box">
@@ -1129,14 +1133,14 @@
                         </div>
                     </div>
                     
-                    <button class="btn" id="check-scenario3"><i class="fas fa-check"></i> Check Answers</button>
+                    <button class="btn" id="check-scenario3"><i class="fas fa-check" aria-hidden="true"></i> Check Answers</button>
                     <div class="feedback" id="scenario3-feedback"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-file-alt"></i>
+                    <i class="fas fa-file-alt" aria-hidden="true"></i>
                     <h3>Scenario 4: Reporting Obligations</h3>
                 </div>
                 <div class="scenario-box">
@@ -1164,7 +1168,7 @@
                         </div>
                     </div>
                     
-                    <button class="btn" id="check-scenario4"><i class="fas fa-check"></i> Check Answer</button>
+                    <button class="btn" id="check-scenario4"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
                     <div class="feedback" id="scenario4-feedback"></div>
                 </div>
             </div>
@@ -1173,11 +1177,11 @@
                 <h3>Module Completion</h3>
                 <p>Congratulations on completing the Legislative Framework module!</p>
                 <div class="progress-bar">
-                    <div class="progress" id="module-progress" style="width: 0%"></div>
+                    <div class="progress" id="module-progress" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <p>Final Score: <span id="score">0</span>/4 scenarios correct</p>
-                <button class="btn" id="retry-module"><i class="fas fa-redo"></i> Retry Module</button>
-                <button class="btn btn-secondary" id="back-to-main"><i class="fas fa-home"></i> Return to Main Menu</button>
+                <button class="btn" id="retry-module"><i class="fas fa-redo" aria-hidden="true"></i> Retry Module</button>
+                <button class="btn btn-secondary" id="back-to-main"><i class="fas fa-home" aria-hidden="true"></i> Return to Main Menu</button>
             </div>
         </section>
         
@@ -1202,6 +1206,20 @@
                 // Show corresponding section
                 const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
+                
+                // Update ARIA attributes
+                tab.setAttribute('aria-selected', 'true');
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    if (t !== tab) t.setAttribute('aria-selected', 'false');
+                });
+            });
+            
+            // Add keyboard navigation
+            tab.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    tab.click();
+                }
             });
         });
         
@@ -1209,40 +1227,50 @@
         document.getElementById('next-to-laws').addEventListener('click', () => {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-target="laws"]').classList.add('active');
+            const lawsTab = document.querySelector('[data-target="laws"]');
+            lawsTab.classList.add('active');
             document.getElementById('laws').classList.add('active');
+            lawsTab.setAttribute('aria-selected', 'true');
             updateProgress(20);
         });
         
         document.getElementById('next-to-compliance').addEventListener('click', () => {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-target="compliance"]').classList.add('active');
+            const complianceTab = document.querySelector('[data-target="compliance"]');
+            complianceTab.classList.add('active');
             document.getElementById('compliance').classList.add('active');
+            complianceTab.setAttribute('aria-selected', 'true');
             updateProgress(40);
         });
         
         document.getElementById('next-to-permits').addEventListener('click', () => {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-target="permits"]').classList.add('active');
+            const permitsTab = document.querySelector('[data-target="permits"]');
+            permitsTab.classList.add('active');
             document.getElementById('permits').classList.add('active');
+            permitsTab.setAttribute('aria-selected', 'true');
             updateProgress(60);
         });
         
         document.getElementById('next-to-reporting').addEventListener('click', () => {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-target="reporting"]').classList.add('active');
+            const reportingTab = document.querySelector('[data-target="reporting"]');
+            reportingTab.classList.add('active');
             document.getElementById('reporting').classList.add('active');
+            reportingTab.setAttribute('aria-selected', 'true');
             updateProgress(80);
         });
         
         document.getElementById('next-to-scenarios').addEventListener('click', () => {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-target="scenarios"]').classList.add('active');
+            const scenariosTab = document.querySelector('[data-target="scenarios"]');
+            scenariosTab.classList.add('active');
             document.getElementById('scenarios').classList.add('active');
+            scenariosTab.setAttribute('aria-selected', 'true');
             updateProgress(90);
         });
         
@@ -1366,14 +1394,18 @@
             // Go back to first section
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-target="overview"]').classList.add('active');
+            const overviewTab = document.querySelector('[data-target="overview"]');
+            overviewTab.classList.add('active');
             document.getElementById('overview').classList.add('active');
+            overviewTab.setAttribute('aria-selected', 'true');
             
             // Reset progress
             progress = 0;
             document.getElementById('main-progress').style.width = '0%';
+            document.getElementById('main-progress').setAttribute('aria-valuenow', '0');
             document.getElementById('progress-text').textContent = '0%';
             document.getElementById('module-progress').style.width = '0%';
+            document.getElementById('module-progress').setAttribute('aria-valuenow', '0');
         });
         
         // Return to main menu button
@@ -1388,11 +1420,13 @@
         function updateProgress(value) {
             progress = Math.min(progress + value, 100);
             document.getElementById('main-progress').style.width = progress + '%';
+            document.getElementById('main-progress').setAttribute('aria-valuenow', progress);
             document.getElementById('progress-text').textContent = progress + '%';
             
             // Update module progress in scenarios section
             if (document.getElementById('module-progress')) {
                 document.getElementById('module-progress').style.width = (score / 4 * 100) + '%';
+                document.getElementById('module-progress').setAttribute('aria-valuenow', (score / 4 * 100));
             }
         }
         
@@ -1403,6 +1437,7 @@
             // Update module progress bar
             if (document.getElementById('module-progress')) {
                 document.getElementById('module-progress').style.width = (score / 4 * 100) + '%';
+                document.getElementById('module-progress').setAttribute('aria-valuenow', (score / 4 * 100));
             }
             
             // If all scenarios completed, show completion message
@@ -1410,6 +1445,25 @@
                 updateProgress(10); // Add final 10% to complete the module
             }
         }
+        
+        // Initialize ARIA attributes
+        document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+            const targetId = tab.getAttribute('data-target');
+            tab.setAttribute('id', `${targetId}-tab`);
+            tab.setAttribute('aria-controls', targetId);
+            if (index === 0) {
+                tab.setAttribute('aria-selected', 'true');
+            } else {
+                tab.setAttribute('aria-selected', 'false');
+            }
+        });
+        
+        document.querySelectorAll('.content-section').forEach((section, index) => {
+            section.setAttribute('aria-labelledby', `${section.getAttribute('id')}-tab`);
+            if (index === 0) {
+                section.classList.add('active');
+            }
+        });
     </script>
 </body>
 </html>
