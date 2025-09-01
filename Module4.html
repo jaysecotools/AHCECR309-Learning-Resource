@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legislative Framework - Ecological & Cultural Site Inspection</title>
+    <title>Ecological & Cultural Site Inspection - Tasmania</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Leaflet CSS for the map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+          crossorigin=""/>
     <style>
         :root {
             --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --primary-dark: #1B5E20;
             --secondary: #689F38;
             --accent: #8BC34A;
             --light: #F1F8E9;
@@ -16,21 +22,32 @@
             --danger: #F44336;
             --tas-blue: #006989;
             --tas-orange: #E64A19;
+            --text-dark: #263238;
+            --text-light: #78909C;
+            --gray-100: #F5F7FA;
+            --gray-200: #E8EAED;
+            --gray-300: #DDE1E6;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.3s ease;
         }
         
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
-            color: #333;
+            background-color: var(--gray-100);
+            color: var(--text-dark);
             line-height: 1.6;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
-                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23F1F8E9" width="100" height="100"/><path fill="%238BC34A" opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23F1F8E9" width="100" height="100"/><path fill="%238BC34A" opacity="0.1" d="M0 0h100v100H0z"/></svg>');
         }
         
         .container {
@@ -40,84 +57,111 @@
         }
         
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
         }
 
-        header h1, header p {
-            color: white;
-        }
-        
         header::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
+            height: 6px;
             background: linear-gradient(90deg, var(--tas-blue), var(--tas-orange));
+            z-index: 1;
+        }
+
+        header h1 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
         }
         
         h1, h2, h3, h4 {
-            margin-bottom: 0.5rem;
-            color: var(--dark);
+            margin-bottom: 0.75rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
         }
         
         .nav-tabs {
             display: flex;
             background-color: white;
-            border-radius: 10px;
+            border-radius: var(--radius);
             overflow: hidden;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
             flex-wrap: wrap;
         }
         
         .nav-tab {
             flex: 1;
-            padding: 18px;
+            padding: 1.25rem;
             text-align: center;
-            color: var(--dark);
+            color: var(--text-dark);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: var(--transition);
             min-width: 120px;
             border-bottom: 4px solid transparent;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
         }
         
         .nav-tab:hover {
             background-color: var(--light);
-            color: var(--dark);
+            color: var(--primary-dark);
+        }
+        
+        .nav-tab:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: -2px;
         }
         
         .nav-tab.active {
             background-color: var(--light);
-            color: var(--dark);
+            color: var(--primary-dark);
             border-bottom: 4px solid var(--tas-orange);
-            font-weight: bold;
+            font-weight: 600;
         }
         
         .nav-tab i {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
         }
         
         .content-section {
             display: none;
             background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
             animation: fadeIn 0.5s ease;
         }
         
@@ -131,56 +175,70 @@
         }
         
         .card {
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
             background-color: white;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
         }
         
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-md);
         }
         
         .card-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
         }
         
         .card-header i {
             font-size: 1.8rem;
             color: var(--primary);
+            background: var(--light);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
         
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
             background: var(--primary);
             color: white;
-            padding: 12px 20px;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: var(--transition);
             font-weight: 500;
+            font-size: 1rem;
         }
         
-        .btn:hover {
-            background: var(--dark);
+        .btn:hover, .btn:focus {
+            background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
+            outline: none;
         }
         
         .btn-secondary {
             background: var(--secondary);
+        }
+        
+        .btn-secondary:hover, .btn-secondary:focus {
+            background: var(--primary-dark);
         }
         
         .btn-warning {
@@ -197,29 +255,30 @@
             color: var(--primary);
         }
         
-        .btn-outline:hover {
+        .btn-outline:hover, .btn-outline:focus {
             background: var(--primary);
             color: white;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-dark);
         }
         
         input, select, textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
             font-size: 1rem;
-            transition: border 0.3s;
+            transition: var(--transition);
+            font-family: inherit;
         }
         
         input:focus, select:focus, textarea:focus {
@@ -231,36 +290,41 @@
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 1rem;
         }
         
         .checkbox-item {
             display: flex;
             align-items: center;
             background: var(--light);
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
             flex: 1;
             min-width: 180px;
+            transition: var(--transition);
+        }
+        
+        .checkbox-item:hover {
+            background: var(--gray-200);
         }
         
         .checkbox-item input {
             width: auto;
-            margin-right: 10px;
+            margin-right: 0.75rem;
         }
         
         .interactive-box {
             border: 2px solid var(--accent);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
             background-color: var(--light);
         }
         
         .feedback {
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: var(--radius-sm);
             display: none;
             animation: fadeIn 0.5s;
         }
@@ -279,119 +343,120 @@
         
         .species-card {
             display: flex;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
             overflow: hidden;
             background: white;
+            box-shadow: var(--shadow-sm);
         }
         
         .species-img {
             width: 200px;
             height: 200px;
             object-fit: cover;
-            border-right: 1px solid #eee;
+            border-right: 1px solid var(--gray-200);
         }
         
         .species-info {
-            padding: 20px;
+            padding: 1.5rem;
             flex: 1;
         }
         
         .quiz-option {
             display: block;
-            padding: 15px;
-            margin: 10px 0;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: var(--transition);
         }
         
-        .quiz-option:hover {
-            background-color: #e9ecef;
+        .quiz-option:hover, .quiz-option:focus {
+            background-color: var(--gray-200);
             transform: translateX(5px);
+            outline: none;
         }
         
         .site-map {
-            height: 350px;
-            background-color: #e9ecef;
-            border-radius: 10px;
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), 
-                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect fill="%23ddd" width="40" height="40"/></svg>');
+            height: 400px;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            z-index: 1;
+            box-shadow: var(--shadow-sm);
         }
         
         .progress-bar {
-            height: 8px;
-            background-color: #e0e0e0;
-            border-radius: 4px;
-            margin: 15px 0;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            margin: 1rem 0;
             overflow: hidden;
         }
         
         .progress {
             height: 100%;
-            background-color: var(--accent);
-            border-radius: 4px;
-            transition: width 0.5s;
+            background-color: var(--tas-orange);
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
+            box-shadow: 0 0 10px rgba(230, 74, 25, 0.4);
         }
         
         footer {
             text-align: center;
-            padding: 25px;
-            margin-top: 30px;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            padding: 2rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
-            border-radius: 10px;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
         }
         
         .module-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
         
         .module-card {
             background: white;
-            border-radius: 10px;
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
         }
         
         .module-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
         
         .module-img {
-            height: 160px;
-            background-color: var(--light);
+            height: 180px;
+            background: linear-gradient(45deg, var(--primary-light), var(--primary));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
+            color: white;
             font-size: 3rem;
         }
         
         .module-content {
-            padding: 20px;
+            padding: 1.5rem;
         }
         
         .badge {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 0.35rem 0.75rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-right: 8px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         
         .badge-primary {
@@ -409,129 +474,194 @@
             color: white;
         }
         
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
         .inspection-checklist {
-            margin: 20px 0;
+            margin: 1.5rem 0;
         }
         
         .checklist-item {
             display: flex;
             align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        
+        .checklist-item:hover {
+            background-color: var(--gray-100);
         }
         
         .checklist-item input {
             width: auto;
-            margin-right: 15px;
+            margin-right: 1rem;
         }
         
         .downloads-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 1.5rem;
         }
         
         .download-card {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: var(--radius);
+            padding: 1.5rem;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
         }
         
         .download-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
         
         .download-card i {
             font-size: 2.5rem;
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
         
-        .law-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        .law-table th, .law-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .law-table th {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-        
-        .law-table tr:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .scenario-box {
-            border-left: 4px solid var(--tas-blue);
-            padding: 15px;
-            margin: 20px 0;
-            background-color: #f8f9fa;
-        }
-        
-        .permit-process {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            margin: 30px 0;
-        }
-        
-        .process-step {
-            display: flex;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
+        .module-link {
+            display: inline-flex;
             align-items: center;
-            margin-right: 20px;
-            flex-shrink: 0;
-            z-index: 2;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
         }
         
-        .step-content {
+        .module-link:hover, .module-link:focus {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            outline: none;
+        }
+
+        /* Map marker styles */
+        .area-marker {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .area-marker:hover {
+            transform: scale(1.1);
+        }
+        
+        .map-popup {
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .map-legend {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            flex: 1;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+            line-height: 1.5;
         }
         
-        .process-step:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            top: 40px;
-            left: 20px;
-            width: 2px;
-            height: 40px;
-            background-color: var(--accent);
-            z-index: 1;
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
         }
         
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            border: 1px solid #555;
+            border-radius: 3px;
+        }
+
+        /* Progress tracking styles */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .progress-details {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .activity-completion {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .activity-completion i {
+            color: var(--accent);
+        }
+
+        /* New visual elements */
+        .visual-divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 1.5rem 0;
+            border: none;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(to right, var(--light), white);
+            border-left: 4px solid var(--tas-orange);
+            padding: 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+        
+        .tip-box {
+            background-color: #E3F2FD;
+            border-left: 4px solid #2196F3;
+            padding: 1rem 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+        
+        .tip-box i {
+            color: #2196F3;
+            margin-right: 0.5rem;
+        }
+        
+        .success-animation {
+            animation: successPulse 2s;
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        /* Focus styles for accessibility */
+        *:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        
+        button:focus, 
+        input:focus, 
+        select:focus, 
+        textarea:focus, 
+        .nav-tab:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -545,7 +675,7 @@
                 width: 100%;
                 height: 200px;
                 border-right: none;
-                border-bottom: 1px solid #eee;
+                border-bottom: 1px solid var(--gray-200);
             }
             
             .checkbox-item {
@@ -556,260 +686,379 @@
                 grid-template-columns: 1fr;
             }
             
-            .process-step::after {
-                display: none;
+            .progress-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            header {
+                padding: 1.5rem;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .nav-tabs, 
+            .btn,
+            .module-link,
+            footer {
+                display: none !important;
+            }
+            
+            .content-section {
+                display: block !important;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            .card {
+                break-inside: avoid;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-gavel" aria-hidden="true"></i> Legislative Framework for Site Inspections</h1>
-            <p>Understanding the laws and regulations governing ecological and cultural site inspections in Tasmania</p>
-            <div class="progress-bar">
-                <div class="progress" id="main-progress" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <header role="banner">
+            <h1><i class="fas fa-tree" aria-hidden="true"></i> Ecological & Cultural Site Inspection</h1>
+            <p>AHCECR309 - Conservation and Ecosystem Management (Tasmanian Context)</p>
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress" id="main-progress" style="width: 0%"></div>
             </div>
-            <p>Module Progress: <span id="progress-text">0%</span> Complete</p>
+            <div class="progress-container">
+                <p>Course Progress: <span id="progress-text">0%</span> Complete</p>
+            </div>
+            <div class="activity-completion">
+            </div>
         </header>
         
-        <nav class="nav-tabs" role="tablist">
-            <div class="nav-tab active" data-target="overview" role="tab" aria-selected="true" aria-controls="overview" tabindex="0">
-                <i class="fas fa-info-circle" aria-hidden="true"></i>
-                <span>Overview</span>
+        <nav class="nav-tabs" role="tablist" aria-label="Course Sections">
+            <div class="nav-tab active" role="tab" aria-selected="true" aria-controls="learning" data-target="learning" tabindex="0">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                <span>Learning Materials</span>
             </div>
-            <div class="nav-tab" data-target="laws" role="tab" aria-selected="false" aria-controls="laws" tabindex="0">
-                <i class="fas fa-balance-scale" aria-hidden="true"></i>
-                <span>Key Legislation</span>
-            </div>
-            <div class="nav-tab" data-target="compliance" role="tab" aria-selected="false" aria-controls="compliance" tabindex="0">
-                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
-                <span>Compliance</span>
-            </div>
-            <div class="nav-tab" data-target="permits" role="tab" aria-selected="false" aria-controls="permits" tabindex="0">
-                <i class="fas fa-file-contract" aria-hidden="true"></i>
-                <span>Permit Processes</span>
-            </div>
-            <div class="nav-tab" data-target="reporting" role="tab" aria-selected="false" aria-controls="reporting" tabindex="0">
-                <i class="fas fa-file-alt" aria-hidden="true"></i>
-                <span>Reporting</span>
-            </div>
-            <div class="nav-tab" data-target="scenarios" role="tab" aria-selected="false" aria-controls="scenarios" tabindex="0">
+            <div class="nav-tab" role="tab" aria-selected="false" aria-controls="interactive" data-target="interactive" tabindex="0">
                 <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
-                <span>Interactive Scenarios</span>
+                <span>Interactive Activities</span>
+            </div>
+            <div class="nav-tab" role="tab" aria-selected="false" aria-controls="inspection" data-target="inspection" tabindex="0">
+                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                <span>Site Inspection Tool</span>
+            </div>
+            <div class="nav-tab" role="tab" aria-selected="false" aria-controls="revision" data-target="revision" tabindex="0">
+                <i class="fas fa-brain" aria-hidden="true"></i>
+                <span>Revision & Quiz</span>
+            </div>
+            <div class="nav-tab" role="tab" aria-selected="false" aria-controls="resources" data-target="resources" tabindex="0">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <span>Resources</span>
             </div>
         </nav>
         
-        <!-- Overview Section -->
-        <section id="overview" class="content-section active" role="tabpanel" aria-labelledby="overview-tab">
-            <h2><i class="fas fa-info-circle" aria-hidden="true"></i> Legislative Framework Overview</h2>
-            <p>Understanding the legislative framework is essential for conducting ecological and cultural site inspections in Tasmania. This module covers the key laws, regulations, compliance requirements, and permit processes that govern site inspections.</p>
+        <!-- Learning Materials Section -->
+        <section id="learning" class="content-section active" role="tabpanel" aria-labelledby="learning-tab">
+            <h2><i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning Materials</h2>
+            <p>Explore the following modules to learn about ecological and cultural site inspections in Tasmania.</p>
+            
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Introduction to Ecological Site Inspection</h3>
+                        <p>Learn the fundamentals of ecological site inspections and their importance in conservation work.</p>
+                        <div class="badge badge-primary">15 min</div>
+                        <div class="badge badge-secondary">Beginner</div>
+                        <a href="Module1.html" target="_blank" class="module-link" aria-label="Open Introduction to Ecological Site Inspection module"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Open Module</a>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-mountain" aria-hidden="true"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Tasmanian Ecosystems</h3>
+                        <p>Explore Tasmania's unique ecosystems and their conservation significance.</p>
+                        <div class="badge badge-primary">20 min</div>
+                        <div class="badge badge-secondary">Intermediate</div>
+                        <a href="Module2.html" target="_blank" class="module-link" aria-label="Open Tasmanian Ecosystems module"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Open Module</a>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-monument" aria-hidden="true"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Cultural Heritage Considerations</h3>
+                        <p>Understand how to identify and protect cultural heritage sites during inspections.</p>
+                        <div class="badge badge-primary">25 min</div>
+                        <div class="badge badge-warning">Advanced</div>
+                        <a href="Module3.html" target="_blank" class="module-link" aria-label="Open Cultural Heritage Considerations module"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Open Module</a>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-img">
+                        <i class="fas fa-gavel" aria-hidden="true"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Legislative Framework</h3>
+                        <p>Learn about the laws and regulations governing site inspections in Tasmania.</p>
+                        <div class="badge badge-primary">18 min</div>
+                        <div class="badge badge-secondary">Intermediate</div>
+                        <a href="Module4.html" target="_blank" class="module-link" aria-label="Open Legislative Framework module"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Open Module</a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="visual-divider" aria-hidden="true">
+            
+            <div class="card success-animation">
+                <div class="card-header">
+                    <i class="fas fa-video" aria-hidden="true"></i>
+                    <h3>Video Lesson: Conducting Site Inspections</h3>
+                </div>
+                <div style="height: 300px; background-color: var(--gray-200); border-radius: var(--radius); display: flex; justify-content: center; align-items: center; margin: 20px 0;">
+                    <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--primary);" aria-hidden="true"></i>
+                </div>
+                <p>Watch this comprehensive video guide to learn the step-by-step process of conducting ecological and cultural site inspections in Tasmania.</p>
+                <button class="btn" id="play-video" aria-label="Play video lesson"><i class="fas fa-play" aria-hidden="true"></i> Play Video</button>
+            </div>
+            
+            <div class="tip-box" role="complementary" aria-label="Learning tip">
+                <p><i class="fas fa-lightbulb" aria-hidden="true"></i> <strong>Tip:</strong> Complete modules in order for the best learning experience. Each module builds on concepts from the previous one.</p>
+            </div>
+        </section>
+        
+        <!-- Interactive Activities Section -->
+        <section id="interactive" class="content-section" role="tabpanel" aria-labelledby="interactive-tab" hidden>
+            <h2><i class="fas fa-puzzle-piece" aria-hidden="true"></i> Interactive Activities</h2>
+            <p>Test your knowledge with these interactive exercises and simulations.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-book" aria-hidden="true"></i>
-                    <h3>Why Legislation Matters</h3>
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <h3>Tasmanian Species Identification</h3>
                 </div>
-                <p>Compliance with legislation is not optional—it's a legal requirement. Understanding these laws helps you:</p>
-                <ul>
-                    <li>Protect Tasmania's unique natural and cultural heritage</li>
-                    <li>Avoid significant penalties for non-compliance</li>
-                    <li>Ensure development occurs sustainably</li>
-                    <li>Fulfill your duty of care obligations</li>
-                    <li>Make informed decisions during site inspections</li>
-                </ul>
+                <p>Learn to identify key Tasmanian flora and fauna species that may be encountered during site inspections.</p>
+                
+                <div class="interactive-box">
+                    <div class="species-card">
+                        <div class="species-img" style="display: flex; justify-content: center; align-items: center; background-color: var(--gray-200); background-image: url('TasmanianPademelon.jpg'); background-size: cover; background-position: center;" aria-label="Image of a Tasmanian animal">
+                        </div>
+                        <div class="species-info">
+                            <h4>What species is this?</h4>
+                            <div class="form-group">
+                                <select id="species-select" aria-label="Select species">
+                                    <option value="">Select a species</option>
+                                    <option value="pademelon">Tasmanian Pademelon</option>
+                                    <option value="devil">Tasmanian Devil</option>
+                                    <option value="quoll">Eastern Quoll</option>
+                                    <option value="gum">Eucalyptus globulus</option>
+                                    <option value="fern">Dicksonia antarctica</option>
+                                </select>
+                            </div>
+                            <button class="btn" id="check-species" aria-label="Check species answer"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
+                            <div class="feedback" id="species-feedback" role="alert"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+                    <h3>Ecosystem Mapping</h3>
+                </div>
+                <p>Practice identifying different ecosystem types on a topographic map. Click on the marked area to learn more about it, then select the ecosystem type you think it represents.</p>
+                
+                <div class="interactive-box">
+                    <div id="map" class="site-map" aria-label="Interactive map of Tasmania" role="application"></div>
+                    <div class="form-group">
+                        <label for="ecosystem-select">Select the predominant ecosystem type in the marked area:</label>
+                        <select id="ecosystem-select">
+                            <option value="">Select ecosystem type</option>
+                            <option value="rainforest">Cool temperate rainforest</option>
+                            <option value="alpine">Alpine vegetation</option>
+                            <option value="eucalypt">Eucalypt forest</option>
+                            <option value="heathland">Coastal heathland</option>
+                            <option value="wetland">Wetland</option>
+                        </select>
+                    </div>
+                    <button class="btn" id="check-ecosystem" aria-label="Check ecosystem answer"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
+                    <div class="feedback" id="ecosystem-feedback" role="alert"></div>
+                </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                    <h3>Consequences of Non-Compliance</h3>
+                    <h3>Threat Identification</h3>
                 </div>
-                <p>Failure to comply with relevant legislation can result in:</p>
-                <ul>
-                    <li>Substantial fines for individuals and organizations</li>
-                    <li>Project delays or cessation of works</li>
-                    <li>Legal prosecution</li>
-                    <li>Damage to professional reputation</li>
-                    <li>Irreversible harm to ecological and cultural values</li>
-                </ul>
+                <p>Identify potential ecological threats in different scenarios.</p>
+                
+                <div class="interactive-box">
+                    <p><strong>Scenario:</strong> You're inspecting a site where a new walking track is proposed through a patch of native vegetation. What potential threats should you look for?</p>
+                    
+                    <div class="form-group">
+                        <label>Select all that apply:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat1" value="compaction">
+                                <label for="threat1">Soil compaction</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat2" value="weeds">
+                                <label for="threat2">Weed invasion</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat3" value="fragmentation">
+                                <label for="threat3">Habitat fragmentation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat4" value="erosion">
+                                <label for="threat4">Erosion risk</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="threat5" value="pollution">
+                                <label for="threat5">Water pollution</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="check-threats" aria-label="Check threats answers"><i class="fas fa-check" aria-hidden="true"></i> Check Answers</button>
+                    <div class="feedback" id="threats-feedback" role="alert"></div>
+                </div>
             </div>
+        </section>
+        
+        <!-- Site Inspection Tool Section -->
+        <section id="inspection" class="content-section" role="tabpanel" aria-labelledby="inspection-tab" hidden>
+            <h2><i class="fas fa-clipboard-check" aria-hidden="true"></i> Site Inspection Tool</h2>
+            <p>Use this interactive form to practice conducting ecological and cultural site inspections.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-lightbulb" aria-hidden="true"></i>
-                    <h3>Key Principles</h3>
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    <h3>Site Details</h3>
                 </div>
-                <p>Several key principles underpin Tasmania's environmental and heritage legislation:</p>
-                <ul>
-                    <li><strong>Precautionary Principle:</strong> Where there are threats of serious or irreversible environmental damage, lack of full scientific certainty should not be used as a reason for postponing measures to prevent environmental degradation.</li>
-                    <li><strong>Intergenerational Equity:</strong> Present generations should ensure that the health, diversity, and productivity of the environment is maintained or enhanced for the benefit of future generations.</li>
-                    <li><strong>Conservation of Biological Diversity:</strong> Protecting the variety of all life forms - the different plants, animals and microorganisms, the genes they contain, and the ecosystems they form.</li>
-                </ul>
+                <div class="form-group">
+                    <label for="site-name">Site Name/Location</label>
+                    <input type="text" id="site-name" placeholder="Enter site name or location" aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label for="inspection-date">Inspection Date</label>
+                    <input type="date" id="inspection-date" aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label for="weather-conditions">Weather Conditions</label>
+                    <select id="weather-conditions" aria-required="true">
+                        <option value="">Select weather condition</option>
+                        <option value="sunny">Sunny</option>
+                        <option value="cloudy">Cloudy</option>
+                        <option value="rainy">Rainy</option>
+                        <option value="windy">Windy</option>
+                    </select>
+                </div>
             </div>
-            
-            <button class="btn" id="next-to-laws"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Key Legislation</button>
-        </section>
-        
-        <!-- Key Legislation Section -->
-        <section id="laws" class="content-section" role="tabpanel" aria-labelledby="laws-tab">
-            <h2><i class="fas fa-balance-scale" aria-hidden="true"></i> Key Legislation</h2>
-            <p>Tasmania has a comprehensive legislative framework governing ecological and cultural heritage protection. The following table outlines the key acts and regulations:</p>
-            
-            <table class="law-table">
-                <thead>
-                    <tr>
-                        <th>Legislation</th>
-                        <th>Purpose</th>
-                        <th>Administering Authority</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Nature Conservation Act 2002</strong></td>
-                        <td>Provides for the conservation and protection of Tasmania's flora, fauna, and geological diversity</td>
-                        <td>Department of Natural Resources and Environment Tasmania (NRE Tas)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Aboriginal Heritage Act 1975</strong></td>
-                        <td>Protects and conserves Aboriginal relics and sites of significance</td>
-                        <td>Aboriginal Heritage Tasmania</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Historic Cultural Heritage Act 1995</strong></td>
-                        <td>Provides for the protection and conservation of Tasmania's historic cultural heritage</td>
-                        <td>Heritage Tasmania</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Environmental Management and Pollution Control Act 1994</strong></td>
-                        <td>Provides for the management of pollution and environmental impacts</td>
-                        <td>EPA Tasmania</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Threatened Species Protection Act 1995</strong></td>
-                        <td>Provides for the protection and management of threatened native flora and fauna</td>
-                        <td>NRE Tas</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Land Use Planning and Approvals Act 1993</strong></td>
-                        <td>Provides for planning schemes and development controls</td>
-                        <td>Local Councils & Tasmanian Planning Commission</td>
-                    </tr>
-                </tbody>
-            </table>
             
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-leaf" aria-hidden="true"></i>
-                    <h3>Nature Conservation Act 2002</h3>
+                    <h3>Ecological Assessment</h3>
                 </div>
-                <p>This is the primary legislation for protecting Tasmania's natural values. Key provisions include:</p>
-                <ul>
-                    <li>Establishment of reserved land categories (national parks, nature reserves, etc.)</li>
-                    <li>Protection of threatened species and communities</li>
-                    <li>Regulation of activities that may impact natural values</li>
-                    <li>Controls on taking of protected flora and fauna</li>
-                </ul>
-                <p>Under this Act, certain activities require permits, including scientific research, commercial activities in reserves, and interfering with protected species.</p>
+                
+                <div class="form-group">
+                    <label>Ecosystem Types Present</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco1" value="rainforest">
+                            <label for="eco1">Cool temperate rainforest</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco2" value="alpine">
+                            <label for="eco2">Alpine vegetation</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco3" value="eucalypt">
+                            <label for="eco3">Eucalypt forest</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco4" value="heathland">
+                            <label for="eco4">Coastal heathland</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="eco5" value="wetland">
+                            <label for="eco5">Wetland</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="vegetation-condition">Vegetation Condition</label>
+                    <select id="vegetation-condition" aria-required="true">
+                        <option value="">Select condition</option>
+                        <option value="pristine">Pristine/Undisturbed</option>
+                        <option value="good">Good</option>
+                        <option value="moderate">Moderately Disturbed</option>
+                        <option value="degraded">Degraded</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="threats-observed">Threats Observed</label>
+                    <textarea id="threats-observed" rows="3" placeholder="Describe any threats observed (weeds, erosion, etc.)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="significant-species">Significant Species Observed</label>
+                    <textarea id="significant-species" rows="3" placeholder="List any significant species observed"></textarea>
+                </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-monument" aria-hidden="true"></i>
-                    <h3>Aboriginal Heritage Act 1975</h3>
+                    <h3>Cultural Heritage Assessment</h3>
                 </div>
-                <p>This Act protects Aboriginal relics and sites of significance. Important aspects include:</p>
-                <ul>
-                    <li>Automatic protection for all Aboriginal relics, whether registered or not</li>
-                    <li>Requirement to report discovery of Aboriginal relics</li>
-                    <li>Prohibition of damaging, disturbing, or interfering with Aboriginal relics</li>
-                    <li>Provision for the return of Aboriginal ancestral remains</li>
-                </ul>
-                <p>Any person who discovers a relic must report it to the Minister within 5 days. It is an offense to damage, destroy, or otherwise interfere with a relic without authorization.</p>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-landmark" aria-hidden="true"></i>
-                    <h3>Historic Cultural Heritage Act 1995</h3>
-                </div>
-                <p>This Act provides for the protection of Tasmania's historic heritage. Key elements include:</p>
-                <ul>
-                    <li>Establishment of the Tasmanian Heritage Register</li>
-                    <li>Protection of registered historic heritage places and objects</li>
-                    <li>Requirements for works affecting registered places</li>
-                    <li>Provision for heritage agreements</li>
-                </ul>
-                <p>Works that may affect a registered place require a permit from the Heritage Council. This includes demolition, alteration, extension, and subdivision.</p>
-            </div>
-            
-            <button class="btn" id="next-to-compliance"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Compliance Requirements</button>
-        </section>
-        
-        <!-- Compliance Requirements Section -->
-        <section id="compliance" class="content-section" role="tabpanel" aria-labelledby="compliance-tab">
-            <h2><i class="fas fa-clipboard-check" aria-hidden="true"></i> Compliance Requirements</h2>
-            <p>Understanding your compliance obligations is essential when conducting site inspections. This section outlines key requirements under Tasmanian legislation.</p>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-tree" aria-hidden="true"></i>
-                    <h3>Ecological Compliance</h3>
-                </div>
-                <p>When conducting ecological site inspections, you must comply with:</p>
-                <ul>
-                    <li><strong>Threatened Species Surveys:</strong> If potential habitat for threatened species is present, specific surveys may be required at appropriate times of year</li>
-                    <li><strong>Vegetation Clearance:</strong> Native vegetation clearance may require permits under various mechanisms</li>
-                    <li><strong>Biosecurity Protocols:</strong> Implement measures to prevent the spread of weeds and pathogens</li>
-                    <li><strong>Fauna Protection:</strong> Implement measures to protect fauna during works, including pre-clearance surveys and fauna spotting</li>
-                </ul>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-history" aria-hidden="true"></i>
-                    <h3>Cultural Heritage Compliance</h3>
-                </div>
-                <p>When conducting cultural heritage site inspections, you must comply with:</p>
-                <ul>
-                    <li><strong>Due Diligence Assessments:</strong> Research and assess potential heritage values before works commence</li>
-                    <li><strong>Chance Find Procedures:</strong> Implement protocols for unexpected discoveries of Aboriginal or historic heritage</li>
-                    <li><strong>Consultation Requirements:</strong> Engage with relevant Aboriginal communities for Aboriginal heritage assessments</li>
-                    <li><strong>Heritage Impact Assessments:</strong> Prepare assessments for works affecting registered heritage places</li>
-                </ul>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-list-check" aria-hidden="true"></i>
-                    <h3>Compliance Checklist</h3>
-                </div>
-                <p>Use this checklist to ensure compliance during site inspections:</p>
                 
-                <div class="inspection-checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox" id="check1">
-                        <label for="check1">Research the Natural Values Atlas for listed species and communities</label>
+                <div class="form-group">
+                    <label>Are there any visible cultural heritage features?</label>
+                    <div>
+                        <input type="radio" id="heritage-yes" name="heritage" value="yes">
+                        <label for="heritage-yes">Yes</label>
+                        <input type="radio" id="heritage-no" name="heritage" value="no">
+                        <label for="heritage-no">No</label>
                     </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="check2">
-                        <label for="check2">Check the Tasmanian Heritage Register for listed places</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="check3">
-                        <label for="check3">Consult with Aboriginal Heritage Tasmania for potential Aboriginal heritage values</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="check4">
-                        <label for="check4">Check local planning scheme provisions and zoning</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="check5">
-                        <label for="check5">Identify potential impacts on watercourses (Water Management Act 1999)</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="check6">
-                        <label for="check6">Assess potential for soil contamination (Environmental Management and Pollution Control Act 1994)</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="heritage-description">If yes, describe the features</label>
+                    <textarea id="heritage-description" rows="3" placeholder="Describe any cultural heritage features observed"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Is the area known to have Aboriginal heritage significance?</label>
+                    <div>
+                        <input type="radio" id="aboriginal-yes" name="aboriginal" value="yes">
+                        <label for="aboriginal-yes">Yes</label>
+                        <input type="radio" id="aboriginal-no" name="aboriginal" value="no">
+                        <label for="aboriginal-no">No</label>
+                        <input type="radio" id="aboriginal-unknown" name="aboriginal" value="unknown">
+                        <label for="aboriginal-unknown">Unknown</label>
                     </div>
                 </div>
             </div>
@@ -817,404 +1066,367 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                    <h3>Penalties for Non-Compliance</h3>
-                </div>
-                <p>Penalties for non-compliance with environmental and heritage legislation can be severe:</p>
-                <ul>
-                    <li><strong>Nature Conservation Act:</strong> Up to 2 years imprisonment or $324,000 fine for corporations</li>
-                    <li><strong>Aboriginal Heritage Act:</strong> Up to $157,000 fine or 2 years imprisonment for damaging a relic</li>
-                    <li><strong>Historic Cultural Heritage Act:</strong> Up to $157,000 fine for damaging a registered place</li>
-                    <li><strong>Threatened Species Protection Act:</strong> Up to $324,000 fine for taking a listed species</li>
-                </ul>
-                <p>Directors and managers may also be held personally liable for offenses committed by their organizations.</p>
-            </div>
-            
-            <button class="btn" id="next-to-permits"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Permit Processes</button>
-        </section>
-        
-        <!-- Permit Processes Section -->
-        <section id="permits" class="content-section" role="tabpanel" aria-labelledby="permits-tab">
-            <h2><i class="fas fa-file-contract" aria-hidden="true"></i> Permit Processes</h2>
-            <p>Various activities require permits under Tasmanian legislation. Understanding these processes is essential for compliance.</p>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-leaf" aria-hidden="true"></i>
-                    <h3>Permits for Ecological Works</h3>
-                </div>
-                <p>The following ecological activities typically require permits:</p>
-                <ul>
-                    <li>Taking or disturbing threatened flora or fauna</li>
-                    <li>Scientific research on protected species</li>
-                    <li>Commercial activities in reserved lands</li>
-                    <li>Clearance of native vegetation (in certain circumstances)</li>
-                    <li>Import or export of wildlife specimens</li>
-                </ul>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-monument" aria-hidden="true"></i>
-                    <h3>Permits for Heritage Works</h3>
-                </div>
-                <p>The following heritage activities typically require permits:</p>
-                <ul>
-                    <li>Works affecting a place listed on the Tasmanian Heritage Register</li>
-                    <li>Works that may disturb or damage Aboriginal heritage</li>
-                    <li>Archaeological investigations</li>
-                    <li>Export of heritage objects</li>
-                </ul>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-sitemap" aria-hidden="true"></i>
-                    <h3>Permit Application Process</h3>
+                    <h3>Risk Assessment</h3>
                 </div>
                 
-                <div class="permit-process">
-                    <div class="process-step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>Determine Permit Requirements</h4>
-                            <p>Research which permits are required for your proposed activities. This may involve consulting multiple agencies.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="process-step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Prepare Application Documentation</h4>
-                            <p>Gather all required information, which may include site plans, impact assessments, method statements, and consultation evidence.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="process-step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>Submit Application</h4>
-                            <p>Submit your application to the relevant authority with all required documentation and fees.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="process-step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h4>Application Assessment</h4>
-                            <p>The authority will assess your application, which may involve requesting additional information or public notification.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="process-step">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h4>Decision</h4>
-                            <p>The authority will make a decision to approve, approve with conditions, or refuse the application.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="process-step">
-                        <div class="step-number">6</div>
-                        <div class="step-content">
-                            <h4>Comply with Conditions</h4>
-                            <p>If approved, ensure you comply with all conditions of the permit and submit any required compliance reports.</p>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="erosion-risk">Erosion Risk</label>
+                    <select id="erosion-risk" aria-required="true">
+                        <option value="">Select risk level</option>
+                        <option value="low">Low</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="weed-risk">Weed Invasion Risk</label>
+                    <select id="weed-risk" aria-required="true">
+                        <option value="">Select risk level</option>
+                        <option value="low">Low</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recommendations">Recommendations</label>
+                    <textarea id="recommendations" rows="4" placeholder="Enter recommendations based on your inspection"></textarea>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-clock" aria-hidden="true"></i>
-                    <h3>Timeframes and Costs</h3>
-                </div>
-                <p>Permit processing times and costs vary depending on the complexity of the application:</p>
-                <ul>
-                    <li><strong>Standard permits:</strong> 20-40 business days processing time</li>
-                    <li><strong>Complex applications:</strong> Up to 60 business days or more</li>
-                    <li><strong>Application fees:</strong> Range from $100 to several thousand dollars depending on the activity</li>
-                    <li><strong>Additional costs:</strong> May include expert reports, consultation costs, and bonds</li>
-                </ul>
-                <p>It's essential to factor in these timeframes and costs when planning projects.</p>
-            </div>
-            
-            <button class="btn" id="next-to-reporting"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Reporting Obligations</button>
+            <button class="btn" id="submit-inspection" aria-label="Submit inspection report"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Inspection Report</button>
+            <button class="btn btn-secondary" id="save-draft" aria-label="Save inspection as draft"><i class="fas fa-save" aria-hidden="true"></i> Save as Draft</button>
+            <div class="feedback" id="inspection-feedback" role="alert"></div>
         </section>
         
-        <!-- Reporting Obligations Section -->
-        <section id="reporting" class="content-section" role="tabpanel" aria-labelledby="reporting-tab">
-            <h2><i class="fas fa-file-alt" aria-hidden="true"></i> Reporting Obligations</h2>
-            <p>Various reporting obligations apply under Tasmanian legislation for ecological and cultural site inspections.</p>
+        <!-- Revision & Quiz Section -->
+        <section id="revision" class="content-section" role="tabpanel" aria-labelledby="revision-tab" hidden>
+            <h2><i class="fas fa-brain" aria-hidden="true"></i> Revision & Quiz</h2>
+            <p>Test your knowledge of ecological and cultural site inspection procedures.</p>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                    <h3>Mandatory Reporting Requirements</h3>
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    <h3>Quick Quiz</h3>
                 </div>
-                <p>Certain discoveries and incidents must be reported by law:</p>
-                <ul>
-                    <li><strong>Discovery of Aboriginal relics:</strong> Must be reported to the Minister within 5 days (Aboriginal Heritage Act 1975)</li>
-                    <li><strong>Discovery of human remains:</strong> Must be reported to police immediately</li>
-                    <li><strong>Environmental incidents:</strong> Pollution incidents must be reported to EPA Tasmania</li>
-                    <li><strong>Discovery of threatened species:</strong> Should be reported to Natural Values Atlas</li>
-                </ul>
+                
+                <div class="interactive-box">
+                    <div id="quiz-container">
+                        <div class="quiz-question" id="question-1">
+                            <h4>Question 1: What is the first step in conducting an ecological site inspection?</h4>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">A. Document all plant species</div>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">B. Assess soil conditions</div>
+                            <div class="quiz-option" data-correct="true" tabindex="0" role="button">C. Review existing information about the site</div>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">D. Look for wildlife</div>
+                            <button class="btn check-answer" data-question="1" aria-label="Check answer for question 1"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
+                            <div class="feedback correct">Correct! Reviewing existing information helps you know what to look for during the inspection.</div>
+                        </div>
+                        
+                        <div class="quiz-question" id="question-2" style="display: none;">
+                            <h4>Question 2: Which legislation primarily protects Aboriginal heritage in Tasmania?</h4>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">A. Environmental Protection Act</div>
+                            <div class="quiz-option" data-correct="true" tabindex="0" role="button">B. Aboriginal Heritage Act</div>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">C. Nature Conservation Act</div>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">D. Land Use Planning Act</div>
+                            <button class="btn check-answer" data-question="2" aria-label="Check answer for question 2"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
+                            <div class="feedback correct">Correct! The Aboriginal Heritage Act 1975 is the primary legislation protecting Aboriginal heritage in Tasmania.</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="next-question" style="margin-top: 20px;" aria-label="Go to next question"><i class="fas fa-arrow-right" aria-hidden="true"></i> Next Question</button>
+                </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-clipboard-list" aria-hidden="true"></i>
-                    <h3>Inspection Reporting</h3>
+                    <i class="fas fa-sticky-note" aria-hidden="true"></i>
+                    <h3>Flashcards</h3>
                 </div>
-                <p>Comprehensive site inspection reports should include:</p>
-                <ul>
-                    <li>Site location and description</li>
-                    <li>Date and time of inspection</li>
-                    <li>Weather conditions</li>
-                    <li>Personnel present</li>
-                    <li>Methodology used</li>
-                    <li>Ecological values observed</li>
-                    <li>Cultural heritage values observed</li>
-                    <li>Potential impacts identified</li>
-                    <li>Recommendations for management</li>
-                    <li>Photographic evidence</li>
-                </ul>
+                <p>Use these flashcards to revise key concepts and terminology.</p>
+                
+                <div class="interactive-box" style="text-align: center;">
+                    <div id="flashcard-content" style="height: 150px; display: flex; justify-content: center; align-items: center; background-color: var(--light); border-radius: var(--radius); margin-bottom: 20px; padding: 20px;">
+                        <h4>What does EVC stand for?</h4>
+                    </div>
+                    <button class="btn" id="reveal-flashcard" aria-label="Reveal flashcard answer"><i class="fas fa-eye" aria-hidden="true"></i> Reveal Answer</button>
+                    <div class="feedback" id="flashcard-answer" style="display: none;">
+                        Ecological Vegetation Class - a classification system for vegetation types in Tasmania.
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" id="prev-flashcard" aria-label="Go to previous flashcard"><i class="fas fa-arrow-left" aria-hidden="true"></i> Previous</button>
+                    <button class="btn" id="next-flashcard" aria-label="Go to next flashcard">Next <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                    <h3>Report Templates and Guidelines</h3>
+                    <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
+                    <h3>Key Terminology</h3>
                 </div>
-                <p>Using standardized templates ensures consistency and compliance:</p>
+                
+                <div class="interactive-box">
+                    <p><strong>Match the terms to their definitions:</strong></p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="padding: 15px; background-color: var(--gray-100); border-radius: var(--radius-sm);">
+                            <p>1. Ecological Vegetation Class (EVC)</p>
+                        </div>
+                        <div style="padding: 15px; background-color: var(--gray-100); border-radius: var(--radius-sm);">
+                            <p>A. The original vegetation that would have existed at a site</p>
+                        </div>
+                        
+                        <div style="padding: 15px; background-color: var(--gray-100); border-radius: var(--radius-sm);">
+                            <p>2. Pre-European vegetation</p>
+                        </div>
+                        <div style="padding: 15px; background-color: var(--gray-100); border-radius: var(--radius-sm);">
+                            <p>B. A classification system for vegetation types</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="match-1">Match 1 to:</label>
+                        <select id="match-1">
+                            <option value="">Select match</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="match-2">Match 2 to:</label>
+                        <select id="match-2">
+                            <option value="">Select match</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" id="check-matching" aria-label="Check matching answers"><i class="fas fa-check" aria-hidden="true"></i> Check Matching</button>
+                    <div class="feedback" id="matching-feedback" role="alert"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Resources Section -->
+        <section id="resources" class="content-section" role="tabpanel" aria-labelledby="resources-tab" hidden>
+            <h2><i class="fas fa-book-open" aria-hidden="true"></i> Resources</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-file-download" aria-hidden="true"></i>
+                    <h3>Downloadable Resources</h3>
+                </div>
                 
                 <div class="downloads-grid">
                     <div class="download-card">
                         <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                        <h4>Ecological Site Inspection Report Template</h4>
-                        <p>PDF, 120KB</p>
-                        <button class="btn btn-outline download-resource" data-resource="eco-template"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
+                        <h4>Site Inspection Checklist</h4>
+                        <p>PDF, 256KB</p>
+                        <button class="btn btn-outline download-resource" data-resource="checklist" aria-label="Download Site Inspection Checklist"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
-                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                        <h4>Cultural Heritage Inspection Report Template</h4>
-                        <p>PDF, 145KB</p>
-                        <button class="btn btn-outline download-resource" data-resource="heritage-template"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
+                        <i class="fas fa-book" aria-hidden="true"></i>
+                        <h4>Tasmanian Threatened Species Guide</h4>
+                        <p>PDF, 3.2MB</p>
+                        <button class="btn btn-outline download-resource" data-resource="species-guide" aria-label="Download Tasmanian Threatened Species Guide"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
-                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                        <h4>Chance Find Procedure Template</h4>
-                        <p>PDF, 95KB</p>
-                        <button class="btn btn-outline download-resource" data-resource="chance-find"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
+                        <i class="fas fa-landmark" aria-hidden="true"></i>
+                        <h4>Cultural Heritage Assessment Guidelines</h4>
+                        <p>PDF, 1.8MB</p>
+                        <button class="btn btn-outline download-resource" data-resource="heritage-guide" aria-label="Download Cultural Heritage Assessment Guidelines"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
+                    </div>
+                    
+                    <div class="download-card">
+                        <i class="fas fa-gavel" aria-hidden="true"></i>
+                        <h4>Legislative Requirements Summary</h4>
+                        <p>PDF, 512KB</p>
+                        <button class="btn btn-outline download-resource" data-resource="legislation" aria-label="Download Legislative Requirements Summary"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
                     </div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-database" aria-hidden="true"></i>
-                    <h3>Data Submission</h3>
+                    <i class="fas fa-link" aria-hidden="true"></i>
+                    <h3>Useful Links</h3>
                 </div>
-                <p>Certain data should be submitted to relevant databases:</p>
-                <ul>
-                    <li><strong>Natural Values Atlas:</strong> For records of threatened species and communities</li>
-                    <li><strong>Tasmanian Heritage Database:</strong> For information about historic heritage places</li>
-                    <li><strong>Abultural Heritage Tasmania:</strong> For information about Aboriginal heritage places</li>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Natural Values Atlas">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Natural Values Atlas
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Tasmanian Heritage Council">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Tasmanian Heritage Council
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit DPIPWE Website">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> DPIPWE Website
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Aboriginal Heritage Tasmania">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Aboriginal Heritage Tasmania
+                        </a>
+                    </li>
                 </ul>
-                <p>Data submission helps improve the knowledge base for future conservation efforts.</p>
-            </div>
-            
-            <button class="btn" id="next-to-scenarios"><i class="fas fa-arrow-right" aria-hidden="true"></i> Continue to Interactive Scenarios</button>
-        </section>
-        
-        <!-- Interactive Scenarios Section -->
-        <section id="scenarios" class="content-section" role="tabpanel" aria-labelledby="scenarios-tab">
-            <h2><i class="fas fa-puzzle-piece" aria-hidden="true"></i> Interactive Scenarios</h2>
-            <p>Test your knowledge of Tasmania's legislative framework with these interactive scenarios.</p>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-tree" aria-hidden="true"></i>
-                    <h3>Scenario 1: Threatened Species Discovery</h3>
-                </div>
-                <div class="scenario-box">
-                    <p>During a site inspection for a proposed development, you identify potential habitat for the threatened Swift Parrot. What are your legal obligations?</p>
-                </div>
-                
-                <div class="interactive-box">
-                    <div class="form-group">
-                        <label>Select the most appropriate course of action:</label>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario1" id="scenario1-a" value="a">
-                            <label for="scenario1-a">Proceed with the development but avoid the specific trees where parrots might nest</label>
-                        </div>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario1" id="scenario1-b" value="b">
-                            <label for="scenario1-b">Note the finding in your report but take no further action</label>
-                        </div>
-                        <div class="quiz-option" data-correct="true">
-                            <input type="radio" name="scenario1" id="scenario1-c" value="c">
-                            <label for="scenario1-c">Recommend further surveys by a qualified ecologist and consider redesigning the development to avoid impacts</label>
-                        </div>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario1" id="scenario1-d" value="d">
-                            <label for="scenario1-d">Immediately report the finding to police as an emergency</label>
-                        </div>
-                    </div>
-                    
-                    <button class="btn" id="check-scenario1"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
-                    <div class="feedback" id="scenario1-feedback"></div>
-                </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-monument" aria-hidden="true"></i>
-                    <h3>Scenario 2: Aboriginal Heritage Discovery</h3>
+                    <i class="fas fa-video" aria-hidden="true"></i>
+                    <h3>Video Resources</h3>
                 </div>
-                <div class="scenario-box">
-                    <p>During ground disturbance works, a worker uncovers what appears to be a stone tool. What should happen next?</p>
-                </div>
+                <p>Watch these videos to learn more about site inspection techniques:</p>
                 
-                <div class="interactive-box">
-                    <div class="form-group">
-                        <label>Select the legally required response:</label>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario2" id="scenario2-a" value="a">
-                            <label for="scenario2-a">Take a photograph for your records and continue working</label>
-                        </div>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario2" id="scenario2-b" value="b">
-                            <label for="scenario2-b">Remove the object to a safe location to prevent damage</label>
-                        </div>
-                        <div class="quiz-option" data-correct="true">
-                            <input type="radio" name="scenario2" id="scenario2-c" value="c">
-                            <label for="scenario2-c">Stop works in the immediate area and report the find to Aboriginal Heritage Tasmania within 5 days</label>
-                        </div>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario2" id="scenario2-d" value="d">
-                            <label for="scenario2-d">Contact the local museum to collect the artifact</label>
-                        </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="height: 180px; background-color: var(--gray-200); border-radius: var(--radius); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;" aria-hidden="true"></i>
+                        <p>Identifying Tasmanian Ecosystems</p>
                     </div>
-                    
-                    <button class="btn" id="check-scenario2"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
-                    <div class="feedback" id="scenario2-feedback"></div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-gavel" aria-hidden="true"></i>
-                    <h3>Scenario 3: Permit Requirements</h3>
-                </div>
-                <div class="scenario-box">
-                    <p>A client wants to remove several native trees from their property to improve views. The trees are not threatened species but provide habitat for native birds. What permits might be required?</p>
-                </div>
-                
-                <div class="interactive-box">
-                    <div class="form-group">
-                        <label>Select all that apply:</label>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="permit1" value="forestry">
-                            <label for="permit1">Forest Practices permit</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="permit2" value="planning">
-                            <label for="permit2">Planning permit under local council scheme</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="permit3" value="vegetation">
-                            <label for="permit3">Vegetation clearance permit</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="permit4" value="fauna">
-                            <label for="permit4">Fauna taking permit</label>
-                        </div>
+                    <div style="height: 180px; background-color: var(--gray-200); border-radius: var(--radius); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;" aria-hidden="true"></i>
+                        <p>Cultural Heritage Assessment</p>
                     </div>
-                    
-                    <button class="btn" id="check-scenario3"><i class="fas fa-check" aria-hidden="true"></i> Check Answers</button>
-                    <div class="feedback" id="scenario3-feedback"></div>
                 </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-file-alt" aria-hidden="true"></i>
-                    <h3>Scenario 4: Reporting Obligations</h3>
-                </div>
-                <div class="scenario-box">
-                    <p>During a site inspection, you notice evidence of soil erosion that appears to be entering a waterway. What are your reporting obligations?</p>
-                </div>
-                
-                <div class="interactive-box">
-                    <div class="form-group">
-                        <label>Select the correct statement:</label>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario4" id="scenario4-a" value="a">
-                            <label for="scenario4-a">This is only reportable if the waterway is used for drinking water</label>
-                        </div>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario4" id="scenario4-b" value="b">
-                            <label for="scenario4-b">This should be noted in your report but doesn't require immediate action</label>
-                        </div>
-                        <div class="quiz-option" data-correct="true">
-                            <input type="radio" name="scenario4" id="scenario4-c" value="c">
-                            <label for="scenario4-c">This may constitute environmental harm and should be reported to EPA Tasmania if causing or likely to cause environmental harm</label>
-                        </div>
-                        <div class="quiz-option" data-correct="false">
-                            <input type="radio" name="scenario4" id="scenario4-d" value="d">
-                            <label for="scenario4-d">This should only be reported if fish kills are observed</label>
-                        </div>
-                    </div>
-                    
-                    <button class="btn" id="check-scenario4"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
-                    <div class="feedback" id="scenario4-feedback"></div>
-                </div>
-            </div>
-            
-            <div class="card" style="text-align: center;">
-                <h3>Module Completion</h3>
-                <p>Congratulations on completing the Legislative Framework module!</p>
-                <div class="progress-bar">
-                    <div class="progress" id="module-progress" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p>Final Score: <span id="score">0</span>/4 scenarios correct</p>
-                <button class="btn" id="retry-module"><i class="fas fa-redo" aria-hidden="true"></i> Retry Module</button>
-                <button class="btn btn-secondary" id="back-to-main"><i class="fas fa-home" aria-hidden="true"></i> Return to Main Menu</button>
             </div>
         </section>
         
-        <footer>
-            <p>Legislative Framework for Ecological and Cultural Site Inspections in Tasmania</p>
-            <p>Part of AHCECR309 - Conduct an ecological and cultural site inspection prior to works</p>
-            <p>© 2023 Learning Resource | Tasmanian Context</p>
+        <footer role="contentinfo">
+            <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works.</p>
+            <p>Developed by Jay Rowley.</p>
+            <p>Tasmanian Context | © 2025</p>
         </footer>
     </div>
 
+    <!-- Add Leaflet JS for the map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin=""></script>
+
     <script>
+        // Progress tracking system
+        const activities = {
+            'species-identification': { completed: false, points: 5 },
+            'ecosystem-mapping': { completed: false, points: 5 },
+            'threat-identification': { completed: false, points: 5 },
+            'quiz-question-1': { completed: false, points: 5 },
+            'quiz-question-2': { completed: false, points: 5 },
+            'terminology-matching': { completed: false, points: 5 },
+            'video-watched': { completed: false, points: 10 },
+            'inspection-submitted': { completed: false, points: 15 },
+            'flashcards-completed': { completed: false, points: 5 }
+        };
+
+        const totalPoints = Object.values(activities).reduce((sum, activity) => sum + activity.points, 0);
+        const totalActivities = Object.keys(activities).length;
+
+        // Initialize progress from localStorage if available
+        function initializeProgress() {
+            const savedProgress = localStorage.getItem('courseProgress');
+            if (savedProgress) {
+                const progressData = JSON.parse(savedProgress);
+                
+                // Update activities from saved data
+                Object.keys(progressData.activities).forEach(activityId => {
+                    if (activities[activityId]) {
+                        activities[activityId].completed = progressData.activities[activityId];
+                    }
+                });
+                
+                updateProgressBar();
+            }
+            
+            // Update activity counters
+            document.getElementById('total-activities').textContent = totalActivities;
+        }
+
+        // Update progress bar display
+        function updateProgressBar() {
+            let earnedPoints = 0;
+            let completedCount = 0;
+            
+            Object.values(activities).forEach(activity => {
+                if (activity.completed) {
+                    earnedPoints += activity.points;
+                    completedCount++;
+                }
+            });
+            
+            const percentage = Math.round((earnedPoints / totalPoints) * 100);
+            
+            document.getElementById('main-progress').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = percentage + '%';
+            document.getElementById('progress-details').textContent = 
+                `(${completedCount}/${totalActivities} activities completed)`;
+            document.getElementById('completed-activities').textContent = completedCount;
+            
+            // Update ARIA attribute
+            document.querySelector('.progress-bar').setAttribute('aria-valuenow', percentage);
+            
+            // Save progress to localStorage
+            const activitiesState = {};
+            Object.keys(activities).forEach(activityId => {
+                activitiesState[activityId] = activities[activityId].completed;
+            });
+            
+            localStorage.setItem('courseProgress', JSON.stringify({
+                activities: activitiesState,
+                percentage: percentage,
+                lastUpdated: new Date().toISOString()
+            }));
+        }
+
+        // Mark activity as complete
+        function completeActivity(activityId) {
+            if (activities[activityId] && !activities[activityId].completed) {
+                activities[activityId].completed = true;
+                updateProgressBar();
+                return true;
+            }
+            return false;
+        }
+
+
         // Tab navigation functionality
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 // Remove active class from all tabs and sections
-                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                document.querySelectorAll('.content-section').forEach(s => {
+                    s.classList.remove('active');
+                    s.setAttribute('hidden', 'true');
+                });
                 
                 // Add active class to clicked tab
                 tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
                 
                 // Show corresponding section
                 const targetId = tab.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
+                const targetSection = document.getElementById(targetId);
+                targetSection.classList.add('active');
+                targetSection.removeAttribute('hidden');
                 
-                // Update ARIA attributes
-                tab.setAttribute('aria-selected', 'true');
-                document.querySelectorAll('.nav-tab').forEach(t => {
-                    if (t !== tab) t.setAttribute('aria-selected', 'false');
-                });
+                // Initialize map if interactive section is selected
+                if (targetId === 'interactive' && !window.mapInitialized) {
+                    initMap();
+                    window.mapInitialized = true;
+                }
             });
             
-            // Add keyboard navigation
+            // Add keyboard navigation for tabs
             tab.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -1223,73 +1435,113 @@
             });
         });
         
-        // Navigation buttons
-        document.getElementById('next-to-laws').addEventListener('click', () => {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            const lawsTab = document.querySelector('[data-target="laws"]');
-            lawsTab.classList.add('active');
-            document.getElementById('laws').classList.add('active');
-            lawsTab.setAttribute('aria-selected', 'true');
-            updateProgress(20);
-        });
-        
-        document.getElementById('next-to-compliance').addEventListener('click', () => {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            const complianceTab = document.querySelector('[data-target="compliance"]');
-            complianceTab.classList.add('active');
-            document.getElementById('compliance').classList.add('active');
-            complianceTab.setAttribute('aria-selected', 'true');
-            updateProgress(40);
-        });
-        
-        document.getElementById('next-to-permits').addEventListener('click', () => {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            const permitsTab = document.querySelector('[data-target="permits"]');
-            permitsTab.classList.add('active');
-            document.getElementById('permits').classList.add('active');
-            permitsTab.setAttribute('aria-selected', 'true');
-            updateProgress(60);
-        });
-        
-        document.getElementById('next-to-reporting').addEventListener('click', () => {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            const reportingTab = document.querySelector('[data-target="reporting"]');
-            reportingTab.classList.add('active');
-            document.getElementById('reporting').classList.add('active');
-            reportingTab.setAttribute('aria-selected', 'true');
-            updateProgress(80);
-        });
-        
-        document.getElementById('next-to-scenarios').addEventListener('click', () => {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            const scenariosTab = document.querySelector('[data-target="scenarios"]');
-            scenariosTab.classList.add('active');
-            document.getElementById('scenarios').classList.add('active');
-            scenariosTab.setAttribute('aria-selected', 'true');
-            updateProgress(90);
-        });
-        
-        // Scenario 1 - Threatened Species
-        document.getElementById('check-scenario1').addEventListener('click', () => {
-            const selectedOption = document.querySelector('input[name="scenario1"]:checked');
-            const feedback = document.getElementById('scenario1-feedback');
+        // Map initialization function
+        function initMap() {
+            // Create map centered on Tasmania
+            const map = L.map('map').setView([-42.5, 147], 8);
             
-            if (!selectedOption) {
-                feedback.textContent = 'Please select an answer.';
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-            } else if (selectedOption.value === 'c') {
-                feedback.textContent = 'Correct! Under the Threatened Species Protection Act 1995, potential impacts on threatened species must be properly assessed. This may require surveys by a qualified ecologist and redesign to avoid impacts.';
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Add topographic layer (optional)
+            L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://openttopomap.org">OpenTopoMap</a>',
+                maxZoom: 17
+            }).addTo(map);
+            
+            // Add a marker for the area to identify (simulating a specific location)
+            const targetArea = L.marker([-42.921, 147.259], {
+                icon: L.divIcon({
+                    className: 'area-marker',
+                    html: '<i class="fas fa-search-location" style="font-size: 24px; color: #E64A19;"></i>',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 24]
+                })
+            }).addTo(map);
+            
+            // Add popup to the marker
+            targetArea.bindPopup(`
+                <div class="map-popup">
+                    <h4>Study Area</h4>
+                    <p>Elevation: 430m</p>
+                    <p>Annual Rainfall: 1800mm</p>
+                    <p>Click elsewhere to close</p>
+                </div>
+            `);
+            
+            // Add some context layers for educational purposes
+            // Example: Add a polygon representing a generic forest area
+            const forestArea = L.polygon([
+                [-42.88, 147.25],
+                [-42.87, 147.32],
+                [-42.92, 147.33],
+                [-42.93, 147.26]
+            ], {
+                color: '#2E7D32',
+                fillColor: '#689F38',
+                fillOpacity: 0.3,
+                weight: 2
+            }).addTo(map);
+            
+            forestArea.bindPopup('Forested Area');
+            
+            // Add a water body for context
+            const waterBody = L.polygon([
+                [-42.91, 147.35],
+                [-42.90, 147.38],
+                [-42.93, 147.39],
+                [-42.94, 147.36]
+            ], {
+                color: '#0288D1',
+                fillColor: '#03A9F4',
+                fillOpacity: 0.5,
+                weight: 2
+            }).addTo(map);
+            
+            waterBody.bindPopup('Water Body');
+            
+            // Add a legend
+            const legend = L.control({position: 'bottomright'});
+            legend.onAdd = function(map) {
+                const div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `
+                    <h4>Legend</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #E64A19;"></div>
+                        <span>Study Area</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #689F38; opacity: 0.3;"></div>
+                        <span>Forest</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #03A9F4; opacity: 0.5;"></div>
+                        <span>Water Body</span>
+                    </div>
+                `;
+                return div;
+            };
+            legend.addTo(map);
+        }
+        
+        // Species identification activity
+        document.getElementById('check-species').addEventListener('click', () => {
+            const select = document.getElementById('species-select');
+            const feedback = document.getElementById('species-feedback');
+            
+            if (select.value === 'pademelon') {
+                feedback.textContent = 'Correct! This is a Tasmanian Pademelon, a common marsupial in Tasmania.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateScore(1);
+                
+                // Update progress
+                if (completeActivity('species-identification')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
-                feedback.textContent = 'Incorrect. The proper response is to recommend further surveys and consider redesigning the development to avoid impacts on potential Swift Parrot habitat.';
+                feedback.textContent = 'Incorrect. Try again! The correct answer is Tasmanian Pademelon.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
@@ -1297,22 +1549,22 @@
             feedback.style.display = 'block';
         });
         
-        // Scenario 2 - Aboriginal Heritage
-        document.getElementById('check-scenario2').addEventListener('click', () => {
-            const selectedOption = document.querySelector('input[name="scenario2"]:checked');
-            const feedback = document.getElementById('scenario2-feedback');
+        // Ecosystem mapping activity
+        document.getElementById('check-ecosystem').addEventListener('click', () => {
+            const select = document.getElementById('ecosystem-select');
+            const feedback = document.getElementById('ecosystem-feedback');
             
-            if (!selectedOption) {
-                feedback.textContent = 'Please select an answer.';
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-            } else if (selectedOption.value === 'c') {
-                feedback.textContent = 'Correct! Under the Aboriginal Heritage Act 1975, any discovery of Aboriginal relics must be reported to the Minister within 5 days, and works should cease in the immediate area.';
+            if (select.value === 'rainforest') {
+                feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest. This ecosystem is characterized by high rainfall, dense canopy cover, and species like myrtle beech and sassafras.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateScore(1);
+                
+                // Update progress
+                if (completeActivity('ecosystem-mapping')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
-                feedback.textContent = 'Incorrect. The legally required response is to stop works in the area and report the find to Aboriginal Heritage Tasmania within 5 days.';
+                feedback.textContent = 'Incorrect. Try again! Look at the high rainfall amount (1800mm) and elevation (450m) - these are clues that this is a Cool temperate rainforest.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
@@ -1320,22 +1572,27 @@
             feedback.style.display = 'block';
         });
         
-        // Scenario 3 - Permit Requirements
-        document.getElementById('check-scenario3').addEventListener('click', () => {
-            const permit1 = document.getElementById('permit1').checked;
-            const permit2 = document.getElementById('permit2').checked;
-            const permit3 = document.getElementById('permit3').checked;
-            const permit4 = document.getElementById('permit4').checked;
-            const feedback = document.getElementById('scenario3-feedback');
+        // Threat identification activity
+        document.getElementById('check-threats').addEventListener('click', () => {
+            const threat1 = document.getElementById('threat1').checked;
+            const threat2 = document.getElementById('threat2').checked;
+            const threat3 = document.getElementById('threat3').checked;
+            const threat4 = document.getElementById('threat4').checked;
+            const threat5 = document.getElementById('threat5').checked;
+            const feedback = document.getElementById('threats-feedback');
             
-            // Correct answers: permit2 and permit3 might be required depending on circumstances
-            if (permit2 && permit3 && !permit1 && !permit4) {
-                feedback.textContent = 'Correct! Depending on the location and extent of clearing, a planning permit and/or vegetation clearance permit may be required. A Forest Practices permit is typically for commercial forestry, and a fauna taking permit would only be needed if birds were directly harmed.';
+            // All threats should be selected for this scenario
+            if (threat1 && threat2 && threat3 && threat4 && threat5) {
+                feedback.textContent = 'Correct! All these threats are potential concerns when establishing new walking tracks.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateScore(1);
+                
+                // Update progress
+                if (completeActivity('threat-identification')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
-                feedback.textContent = 'Not quite. The correct answers are: Planning permit under local council scheme and Vegetation clearance permit. The circumstances would determine exactly which permits are needed, but these are the most likely requirements.';
+                feedback.textContent = 'Not quite. In this scenario, all the listed threats are potential concerns when establishing new walking tracks through native vegetation.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
@@ -1343,26 +1600,185 @@
             feedback.style.display = 'block';
         });
         
-        // Scenario 4 - Reporting Obligations
-        document.getElementById('check-scenario4').addEventListener('click', () => {
-            const selectedOption = document.querySelector('input[name="scenario4"]:checked');
-            const feedback = document.getElementById('scenario4-feedback');
+        // Quiz functionality
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.quiz-option').forEach(o => o.style.backgroundColor = '');
+                option.style.backgroundColor = '#e9ecef';
+            });
             
-            if (!selectedOption) {
-                feedback.textContent = 'Please select an answer.';
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-            } else if (selectedOption.value === 'c') {
-                feedback.textContent = 'Correct! Under the Environmental Management and Pollution Control Act 1994, pollution that is causing or likely to cause environmental harm should be reported to EPA Tasmania.';
+            // Add keyboard navigation for quiz options
+            option.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    option.click();
+                }
+            });
+        });
+        
+        // Check quiz answers
+        document.querySelectorAll('.check-answer').forEach(button => {
+            button.addEventListener('click', () => {
+                const questionId = button.getAttribute('data-question');
+                const questionDiv = document.getElementById('question-' + questionId);
+                const options = questionDiv.querySelectorAll('.quiz-option');
+                const feedback = questionDiv.querySelector('.feedback');
+                
+                let correctSelected = false;
+                
+                options.forEach(option => {
+                    if (option.style.backgroundColor === 'rgb(233, 236, 239)' && option.getAttribute('data-correct') === 'true') {
+                        correctSelected = true;
+                    }
+                });
+                
+                if (correctSelected) {
+                    feedback.textContent = feedback.textContent || 'Correct!';
+                    feedback.classList.add('correct');
+                    feedback.classList.remove('incorrect');
+                    
+                    // Update progress for quiz questions
+                    if (questionId === '1' && completeActivity('quiz-question-1')) {
+                        feedback.textContent += ' Progress updated!';
+                    } else if (questionId === '2' && completeActivity('quiz-question-2')) {
+                        feedback.textContent += ' Progress updated!';
+                    }
+                } else {
+                    feedback.textContent = 'Incorrect. Try again!';
+                    feedback.classList.add('incorrect');
+                    feedback.classList.remove('correct');
+                }
+                
+                feedback.style.display = 'block';
+            });
+        });
+        
+        // Next question button
+        document.getElementById('next-question').addEventListener('click', () => {
+            const question1 = document.getElementById('question-1');
+            const question2 = document.getElementById('question-2');
+            
+            if (question1.style.display !== 'none') {
+                question1.style.display = 'none';
+                question2.style.display = 'block';
+                document.getElementById('next-question').style.display = 'none';
+            }
+        });
+        
+        // Flashcard functionality
+        const flashcards = [
+            { question: "What does EVC stand for?", answer: "Ecological Vegetation Class - a classification system for vegetation types in Tasmania." },
+            { question: "What is a threatened species?", answer: "A species that is vulnerable to extinction in the near future." },
+            { question: "What is the purpose of a site inspection?", answer: "To assess ecological and cultural values, identify potential impacts, and inform management decisions." }
+        ];
+        
+        let currentFlashcard = 0;
+        let flashcardsCompleted = false;
+        
+        document.getElementById('reveal-flashcard').addEventListener('click', () => {
+            const answerDiv = document.getElementById('flashcard-answer');
+            const button = document.getElementById('reveal-flashcard');
+            
+            if (answerDiv.style.display === 'none') {
+                answerDiv.style.display = 'block';
+                button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+                button.setAttribute('aria-expanded', 'true');
+                
+                // Mark flashcards as completed if user has viewed all of them
+                if (!flashcardsCompleted && currentFlashcard === flashcards.length - 1) {
+                    flashcardsCompleted = true;
+                    if (completeActivity('flashcards-completed')) {
+                        answerDiv.textContent += ' [Progress updated!]';
+                    }
+                }
+            } else {
+                answerDiv.style.display = 'none';
+                button.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+                button.setAttribute('aria-expanded', 'false');
+            }
+        });
+        
+        document.getElementById('next-flashcard').addEventListener('click', () => {
+            currentFlashcard = (currentFlashcard + 1) % flashcards.length;
+            updateFlashcard();
+        });
+        
+        document.getElementById('prev-flashcard').addEventListener('click', () => {
+            currentFlashcard = (currentFlashcard - 1 + flashcards.length) % flashcards.length;
+            updateFlashcard();
+        });
+        
+        function updateFlashcard() {
+            document.getElementById('flashcard-content').innerHTML = `<h4>${flashcards[currentFlashcard].question}</h4>`;
+            document.getElementById('flashcard-answer').textContent = flashcards[currentFlashcard].answer;
+            document.getElementById('flashcard-answer').style.display = 'none';
+            document.getElementById('reveal-flashcard').innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+            document.getElementById('reveal-flashcard').setAttribute('aria-expanded', 'false');
+        }
+        
+        // Terminology matching activity
+        document.getElementById('check-matching').addEventListener('click', () => {
+            const match1 = document.getElementById('match-1').value;
+            const match2 = document.getElementById('match-2').value;
+            const feedback = document.getElementById('matching-feedback');
+            
+            if (match1 === 'B' && match2 === 'A') {
+                feedback.textContent = 'Correct! EVC is a classification system, and Pre-European vegetation refers to the original vegetation.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
-                updateScore(1);
+                
+                // Update progress
+                if (completeActivity('terminology-matching')) {
+                    feedback.textContent += ' Progress updated!';
+                }
             } else {
-                feedback.textContent = 'Incorrect. The correct answer is that this may constitute environmental harm and should be reported to EPA Tasmania if causing or likely to cause environmental harm.';
+                feedback.textContent = 'Incorrect. Try again! EVC is a classification system (B), and Pre-European vegetation refers to the original vegetation (A).';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
             
+            feedback.style.display = 'block';
+        });
+        
+        // Video play button
+        document.getElementById('play-video').addEventListener('click', () => {
+            window.open('https://www.youtube.com/watch?v=XQxpGRWlVcg', '_blank');
+            
+            // Update progress
+            if (completeActivity('video-watched')) {
+                alert('Progress updated for watching the video!');
+            }
+        });
+        
+        // Inspection form submission
+        document.getElementById('submit-inspection').addEventListener('click', () => {
+            const siteName = document.getElementById('site-name').value;
+            const feedback = document.getElementById('inspection-feedback');
+            
+            if (!siteName) {
+                feedback.textContent = 'Please enter a site name before submitting.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+            } else {
+                feedback.textContent = 'Inspection submitted successfully! Good work.';
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                
+                // Update progress
+                if (completeActivity('inspection-submitted')) {
+                    feedback.textContent += ' Progress updated!';
+                }
+            }
+            
+            feedback.style.display = 'block';
+        });
+        
+        // Save draft button
+        document.getElementById('save-draft').addEventListener('click', () => {
+            const feedback = document.getElementById('inspection-feedback');
+            feedback.textContent = 'Inspection saved as draft.';
+            feedback.classList.add('correct');
+            feedback.classList.remove('incorrect');
             feedback.style.display = 'block';
         });
         
@@ -1374,96 +1790,14 @@
             });
         });
         
-        // Retry module button
-        document.getElementById('retry-module').addEventListener('click', () => {
-            // Reset all scenarios
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.checked = false;
+        // External links
+        document.querySelectorAll('.external-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('This would open an external website in a real application.');
             });
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.checked = false;
-            });
-            document.querySelectorAll('.feedback').forEach(feedback => {
-                feedback.style.display = 'none';
-            });
-            
-            // Reset score
-            score = 0;
-            document.getElementById('score').textContent = '0';
-            
-            // Go back to first section
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            const overviewTab = document.querySelector('[data-target="overview"]');
-            overviewTab.classList.add('active');
-            document.getElementById('overview').classList.add('active');
-            overviewTab.setAttribute('aria-selected', 'true');
-            
-            // Reset progress
-            progress = 0;
-            document.getElementById('main-progress').style.width = '0%';
-            document.getElementById('main-progress').setAttribute('aria-valuenow', '0');
-            document.getElementById('progress-text').textContent = '0%';
-            document.getElementById('module-progress').style.width = '0%';
-            document.getElementById('module-progress').setAttribute('aria-valuenow', '0');
         });
         
-        // Return to main menu button
-        document.getElementById('back-to-main').addEventListener('click', () => {
-            alert('Returning to main menu... In a real application, this would navigate back to the main course page.');
-        });
-        
-        // Progress tracking
-        let progress = 0;
-        let score = 0;
-        
-        function updateProgress(value) {
-            progress = Math.min(progress + value, 100);
-            document.getElementById('main-progress').style.width = progress + '%';
-            document.getElementById('main-progress').setAttribute('aria-valuenow', progress);
-            document.getElementById('progress-text').textContent = progress + '%';
-            
-            // Update module progress in scenarios section
-            if (document.getElementById('module-progress')) {
-                document.getElementById('module-progress').style.width = (score / 4 * 100) + '%';
-                document.getElementById('module-progress').setAttribute('aria-valuenow', (score / 4 * 100));
-            }
-        }
-        
-        function updateScore(value) {
-            score = Math.min(score + value, 4);
-            document.getElementById('score').textContent = score;
-            
-            // Update module progress bar
-            if (document.getElementById('module-progress')) {
-                document.getElementById('module-progress').style.width = (score / 4 * 100) + '%';
-                document.getElementById('module-progress').setAttribute('aria-valuenow', (score / 4 * 100));
-            }
-            
-            // If all scenarios completed, show completion message
-            if (score === 4) {
-                updateProgress(10); // Add final 10% to complete the module
-            }
-        }
-        
-        // Initialize ARIA attributes
-        document.querySelectorAll('.nav-tab').forEach((tab, index) => {
-            const targetId = tab.getAttribute('data-target');
-            tab.setAttribute('id', `${targetId}-tab`);
-            tab.setAttribute('aria-controls', targetId);
-            if (index === 0) {
-                tab.setAttribute('aria-selected', 'true');
-            } else {
-                tab.setAttribute('aria-selected', 'false');
-            }
-        });
-        
-        document.querySelectorAll('.content-section').forEach((section, index) => {
-            section.setAttribute('aria-labelledby', `${section.getAttribute('id')}-tab`);
-            if (index === 0) {
-                section.classList.add('active');
-            }
-        });
     </script>
 </body>
 </html>
