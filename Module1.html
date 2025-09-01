@@ -926,159 +926,162 @@
             </div>
             
             <div class="card">
-    <div class="card-header">
-        <i class="fas fa-clipboard-check"></i>
-        <h3>Inspection Checklist Builder</h3>
-    </div>
-    <p>Create a customized inspection checklist for different Tasmanian ecosystem types:</p>
-    
-    <div class="form-group">
-        <label for="ecosystem-type">Select Ecosystem Type:</label>
-        <select id="ecosystem-type">
-            <option value="">Select ecosystem</option>
-            <option value="rainforest">Cool Temperate Rainforest</option>
-            <option value="alpine">Alpine Vegetation</option>
-            <option value="grassy">Grassy Woodland</option>
-            <option value="coastal">Coastal Heathland</option>
-            <option value="wetland">Freshwater Wetland</option>
-            <option value="riparian">Riparian Zone</option>
-        </select>
-    </div>
-    
-    <div class="inspection-checklist">
-        <h4>Select Assessment Components:</h4>
-        
-        <div class="checklist-category">
-            <h5><i class="fas fa-tree"></i> Vegetation Structure</h5>
-            <div class="checklist-item">
-                <input type="checkbox" id="item1" data-category="vegetation">
-                <label for="item1">Canopy composition and dominant species</label>
+                <div class="card-header">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Inspection Checklist Builder</h3>
+                </div>
+                <p>Create a customized inspection checklist for different Tasmanian ecosystem types:</p>
+                
+                <div class="form-group">
+                    <label for="ecosystem-type">Select Ecosystem Type:</label>
+                    <select id="ecosystem-type">
+                        <option value="">Select ecosystem</option>
+                        <option value="rainforest">Cool Temperate Rainforest</option>
+                        <option value="alpine">Alpine Vegetation</option>
+                        <option value="grassy">Grassy Woodland</option>
+                        <option value="coastal">Coastal Heathland</option>
+                        <option value="wetland">Freshwater Wetland</option>
+                        <option value="riparian">Riparian Zone</option>
+                        <option value="dry-eucalypt">Dry Eucalypt Forest</option>
+                        <option value="wet-eucalypt">Wet Eucalypt Forest</option>
+                        <option value="saltmarsh">Saltmarsh</option>
+                        <option value="other-wetlands">Other Wetlands</option>
+                    </select>
+                </div>
+                
+                <div class="inspection-checklist">
+                    <h4>Select Assessment Components:</h4>
+                    
+                    <div class="checklist-category">
+                        <h5><i class="fas fa-tree"></i> Vegetation Structure</h5>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item1" data-category="vegetation">
+                            <label for="item1">Canopy composition and dominant species</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item2" data-category="vegetation">
+                            <label for="item2">Understory diversity and density</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item3" data-category="vegetation">
+                            <label for="item3">Ground cover percentage and composition</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item4" data-category="vegetation">
+                            <label for="item4">Presence of logs and coarse woody debris</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item5" data-category="vegetation">
+                            <label for="item5">Tree hollows and nesting sites</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-category">
+                        <h5><i class="fas fa-leaf"></i> Flora Assessment</h5>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item6" data-category="flora">
+                            <label for="item6">Presence of threatened plant species</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item7" data-category="flora">
+                            <label for="item7">Weed species abundance and distribution</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item8" data-category="flora">
+                            <label for="item8">Regeneration of key species</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item9" data-category="flora">
+                            <label for="item9">Signs of disease or dieback</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item10" data-category="flora">
+                            <label for="item10">Epiphytes and moss diversity</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-category">
+                        <h5><i class="fas fa-paw"></i> Fauna Habitat</h5>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item11" data-category="fauna">
+                            <label for="item11">Evidence of fauna activity (scats, diggings, nests)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item12" data-category="fauna">
+                            <label for="item12">Potential habitat for threatened species</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item13" data-category="fauna">
+                            <label for="item13">Food sources availability</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item14" data-category="fauna">
+                            <label for="item14">Shelter and refuge sites</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item15" data-category="fauna">
+                            <label for="item15">Wildlife corridors and connectivity</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-category">
+                        <h5><i class="fas fa-tint"></i> Soil & Hydrology</h5>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item16" data-category="soil">
+                            <label for="item16">Soil erosion and stability</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item17" data-category="soil">
+                            <label for="item17">Soil compaction issues</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item18" data-category="soil">
+                            <label for="item18">Water quality indicators</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item19" data-category="soil">
+                            <label for="item19">Drainage patterns and waterlogging</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item20" data-category="soil">
+                            <label for="item20">Riparian zone condition</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-category">
+                        <h5><i class="fas fa-exclamation-triangle"></i> Threats & Disturbances</h5>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item21" data-category="threats">
+                            <label for="item21">Evidence of pest animals</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item22" data-category="threats">
+                            <label for="item22">Weed invasion extent</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item23" data-category="threats">
+                            <label for="item23">Fire history and risk</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item24" data-category="threats">
+                            <label for="item24">Human impacts (vandalism, dumping)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item25" data-category="threats">
+                            <label for="item25">Climate change impacts</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="checklist-notes">Additional Notes:</label>
+                    <textarea id="checklist-notes" rows="3" placeholder="Add any specific notes or observations for your checklist..."></textarea>
+                </div>
+                
+                <button class="btn" id="generate-checklist"><i class="fas fa-download"></i> Generate Checklist PDF</button>
+                <button class="btn btn-outline" id="select-all"><i class="fas fa-check-square"></i> Select All</button>
+                <button class="btn btn-outline" id="deselect-all"><i class="fas fa-times-circle"></i> Deselect All</button>
             </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item2" data-category="vegetation">
-                <label for="item2">Understory diversity and density</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item3" data-category="vegetation">
-                <label for="item3">Ground cover percentage and composition</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item4" data-category="vegetation">
-                <label for="item4">Presence of logs and coarse woody debris</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item5" data-category="vegetation">
-                <label for="item5">Tree hollows and nesting sites</label>
-            </div>
-        </div>
-        
-        <div class="checklist-category">
-            <h5><i class="fas fa-leaf"></i> Flora Assessment</h5>
-            <div class="checklist-item">
-                <input type="checkbox" id="item6" data-category="flora">
-                <label for="item6">Presence of threatened plant species</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item7" data-category="flora">
-                <label for="item7">Weed species abundance and distribution</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item8" data-category="flora">
-                <label for="item8">Regeneration of key species</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item9" data-category="flora">
-                <label for="item9">Signs of disease or dieback</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item10" data-category="flora">
-                <label for="item10">Epiphytes and moss diversity</label>
-            </div>
-        </div>
-        
-        <div class="checklist-category">
-            <h5><i class="fas fa-paw"></i> Fauna Habitat</h5>
-            <div class="checklist-item">
-                <input type="checkbox" id="item11" data-category="fauna">
-                <label for="item11">Evidence of fauna activity (scats, diggings, nests)</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item12" data-category="fauna">
-                <label for="item12">Potential habitat for threatened species</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item13" data-category="fauna">
-                <label for="item13">Food sources availability</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item14" data-category="fauna">
-                <label for="item14">Shelter and refuge sites</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item15" data-category="fauna">
-                <label for="item15">Wildlife corridors and connectivity</label>
-            </div>
-        </div>
-        
-        <div class="checklist-category">
-            <h5><i class="fas fa-tint"></i> Soil & Hydrology</h5>
-            <div class="checklist-item">
-                <input type="checkbox" id="item16" data-category="soil">
-                <label for="item16">Soil erosion and stability</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item17" data-category="soil">
-                <label for="item17">Soil compaction issues</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item18" data-category="soil">
-                <label for="item18">Water quality indicators</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item19" data-category="soil">
-                <label for="item19">Drainage patterns and waterlogging</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item20" data-category="soil">
-                <label for="item20">Riparian zone condition</label>
-            </div>
-        </div>
-        
-        <div class="checklist-category">
-            <h5><i class="fas fa-exclamation-triangle"></i> Threats & Disturbances</h5>
-            <div class="checklist-item">
-                <input type="checkbox" id="item21" data-category="threats">
-                <label for="item21">Evidence of pest animals</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item22" data-category="threats">
-                <label for="item22">Weed invasion extent</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item23" data-category="threats">
-                <label for="item23">Fire history and risk</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item24" data-category="threats">
-                <label for="item24">Human impacts (vandalism, dumping)</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="item25" data-category="threats">
-                <label for="item25">Climate change impacts</label>
-            </div>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label for="checklist-notes">Additional Notes:</label>
-        <textarea id="checklist-notes" rows="3" placeholder="Add any specific notes or observations for your checklist..."></textarea>
-    </div>
-    
-    <button class="btn" id="generate-checklist"><i class="fas fa-download"></i> Generate Checklist PDF</button>
-    <button class="btn btn-outline" id="select-all"><i class="fas fa-check-square"></i> Select All</button>
-    <button class="btn btn-outline" id="deselect-all"><i class="fas fa-times-circle"></i> Deselect All</button>
-</div>
-
             
             <!-- Hidden template for PDF generation -->
             <div id="pdf-template" class="pdf-template">
@@ -1390,30 +1393,76 @@
                     document.getElementById('item2').checked = true;
                     document.getElementById('item4').checked = true;
                     document.getElementById('item6').checked = true;
+                    document.getElementById('item10').checked = true;
                     break;
                 case 'alpine':
                     document.getElementById('item3').checked = true;
                     document.getElementById('item5').checked = true;
                     document.getElementById('item6').checked = true;
+                    document.getElementById('item16').checked = true;
+                    document.getElementById('item25').checked = true;
                     break;
                 case 'grassy':
                     document.getElementById('item2').checked = true;
                     document.getElementById('item3').checked = true;
                     document.getElementById('item5').checked = true;
                     document.getElementById('item6').checked = true;
+                    document.getElementById('item13').checked = true;
                     break;
                 case 'coastal':
                     document.getElementById('item2').checked = true;
                     document.getElementById('item3').checked = true;
                     document.getElementById('item5').checked = true;
+                    document.getElementById('item22').checked = true;
+                    document.getElementById('item24').checked = true;
                     break;
                 case 'wetland':
+                case 'saltmarsh':
+                case 'other-wetlands':
                     document.getElementById('item2').checked = true;
                     document.getElementById('item3').checked = true;
                     document.getElementById('item5').checked = true;
                     document.getElementById('item6').checked = true;
+                    document.getElementById('item18').checked = true;
+                    document.getElementById('item19').checked = true;
+                    document.getElementById('item20').checked = true;
+                    break;
+                case 'dry-eucalypt':
+                    document.getElementById('item1').checked = true;
+                    document.getElementById('item5').checked = true;
+                    document.getElementById('item7').checked = true;
+                    document.getElementById('item12').checked = true;
+                    document.getElementById('item23').checked = true;
+                    break;
+                case 'wet-eucalypt':
+                    document.getElementById('item1').checked = true;
+                    document.getElementById('item4').checked = true;
+                    document.getElementById('item5').checked = true;
+                    document.getElementById('item12').checked = true;
+                    document.getElementById('item14').checked = true;
+                    break;
+                case 'riparian':
+                    document.getElementById('item1').checked = true;
+                    document.getElementById('item5').checked = true;
+                    document.getElementById('item12').checked = true;
+                    document.getElementById('item15').checked = true;
+                    document.getElementById('item20').checked = true;
                     break;
             }
+        });
+        
+        // Select All button functionality
+        document.getElementById('select-all').addEventListener('click', () => {
+            document.querySelectorAll('.checklist-item input').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+        });
+        
+        // Deselect All button functionality
+        document.getElementById('deselect-all').addEventListener('click', () => {
+            document.querySelectorAll('.checklist-item input').forEach(checkbox => {
+                checkbox.checked = false;
+            });
         });
         
         // Progress tracking
