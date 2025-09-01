@@ -953,7 +953,7 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-award"></i>
-                    <h3>Course Completion</h3>
+                    <h3>Module Completion</h3>
                 </div>
                 <p>Congratulations on completing the Ecological Site Inspection Fundamentals module!</p>
                 <p>You've learned about the key concepts, Tasmanian context, and practical approaches to ecological site assessment.</p>
@@ -963,7 +963,6 @@
                 </div>
                 <p>Final Progress: <span>100%</span> Complete</p>
                 
-                <button class="btn" id="get-certificate"><i class="fas fa-certificate"></i> Download Certificate of Completion</button>
             </div>
         </section>
         
@@ -1084,10 +1083,6 @@
             updateProgress(5);
         });
         
-        // Certificate download
-        document.getElementById('get-certificate').addEventListener('click', () => {
-            alert('Certificate of completion downloaded! In a real application, this would generate a PDF certificate.');
-        });
         
         // Ecosystem type selector for checklist
         document.getElementById('ecosystem-type').addEventListener('change', function() {
