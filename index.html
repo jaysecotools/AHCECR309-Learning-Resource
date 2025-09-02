@@ -877,21 +877,21 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
-                    <h3>Ecosystem Mapping</h3>
+                    <h3>TasVeg Ecosystem Mapping</h3>
                 </div>
-                <p>Practice identifying different ecosystem types on a topographic map. Click on the marked area to learn more about it, then select the ecosystem type you think it represents.</p>
+                <p>Practice identifying different TasVeg ecosystem types on a topographic map. Click on the marked area to learn more about it, then select the ecosystem type you think it represents.</p>
                 
                 <div class="interactive-box">
                     <div id="map" class="site-map" aria-label="Interactive map of Tasmania" role="application"></div>
                     <div class="form-group">
-                        <label for="ecosystem-select">Select the predominant ecosystem type in the marked area:</label>
+                        <label for="ecosystem-select">Select the predominant TasVeg ecosystem type in the marked area:</label>
                         <select id="ecosystem-select">
                             <option value="">Select ecosystem type</option>
-                            <option value="rainforest">Cool temperate rainforest</option>
-                            <option value="alpine">Alpine vegetation</option>
-                            <option value="eucalypt">Eucalypt forest</option>
-                            <option value="heathland">Coastal heathland</option>
-                            <option value="wetland">Wetland</option>
+                            <option value="rainforest">Cool Temperate Rainforest</option>
+                            <option value="wet-eucalypt">Wet Eucalypt Forest</option>
+                            <option value="dry-eucalypt">Dry Eucalypt Forest</option>
+                            <option value="alpine">Alpine Complex</option>
+                            <option value="coastal">Coastal Vegetation</option>
                         </select>
                     </div>
                     <button class="btn" id="check-ecosystem" aria-label="Check ecosystem answer"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
@@ -980,27 +980,27 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Ecosystem Types Present</label>
+                    <label>TasVeg Ecosystem Types Present</label>
                     <div class="checkbox-group">
                         <div class="checkbox-item">
                             <input type="checkbox" id="eco1" value="rainforest">
-                            <label for="eco1">Cool temperate rainforest</label>
+                            <label for="eco1">Cool Temperate Rainforest</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco2" value="alpine">
-                            <label for="eco2">Alpine vegetation</label>
+                            <input type="checkbox" id="eco2" value="wet-eucalypt">
+                            <label for="eco2">Wet Eucalypt Forest</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco3" value="eucalypt">
-                            <label for="eco3">Eucalypt forest</label>
+                            <input type="checkbox" id="eco3" value="dry-eucalypt">
+                            <label for="eco3">Dry Eucalypt Forest</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco4" value="heathland">
-                            <label for="eco4">Coastal heathland</label>
+                            <input type="checkbox" id="eco4" value="alpine">
+                            <label for="eco4">Alpine Complex</label>
                         </div>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="eco5" value="wetland">
-                            <label for="eco5">Wetland</label>
+                            <input type="checkbox" id="eco5" value="coastal">
+                            <label for="eco5">Coastal Vegetation</label>
                         </div>
                     </div>
                 </div>
@@ -1112,13 +1112,13 @@
                 <div class="interactive-box">
                     <div id="quiz-container">
                         <div class="quiz-question" id="question-1">
-                            <h4>Question 1: What is the first step in conducting an ecological site inspection?</h4>
-                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">A. Document all plant species</div>
-                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">B. Assess soil conditions</div>
-                            <div class="quiz-option" data-correct="true" tabindex="0" role="button">C. Review existing information about the site</div>
-                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">D. Look for wildlife</div>
+                            <h4>Question 1: What is the Tasmanian vegetation classification system called?</h4>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">A. EVC (Ecological Vegetation Class)</div>
+                            <div class="quiz-option" data-correct="true" tabindex="0" role="button">B. TasVeg</div>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">C. VegClass Tasmania</div>
+                            <div class="quiz-option" data-correct="false" tabindex="0" role="button">D. Tasmanian Flora System</div>
                             <button class="btn check-answer" data-question="1" aria-label="Check answer for question 1"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
-                            <div class="feedback correct">Correct! Reviewing existing information helps you know what to look for during the inspection.</div>
+                            <div class="feedback correct">Correct! TasVeg is the vegetation classification system used in Tasmania.</div>
                         </div>
                         
                         <div class="quiz-question" id="question-2" style="display: none;">
@@ -1145,11 +1145,11 @@
                 
                 <div class="interactive-box" style="text-align: center;">
                     <div id="flashcard-content" style="height: 150px; display: flex; justify-content: center; align-items: center; background-color: var(--light); border-radius: var(--radius); margin-bottom: 20px; padding: 20px;">
-                        <h4>What does EVC stand for?</h4>
+                        <h4>What does TasVeg stand for?</h4>
                     </div>
                     <button class="btn" id="reveal-flashcard" aria-label="Reveal flashcard answer"><i class="fas fa-eye" aria-hidden="true"></i> Reveal Answer</button>
                     <div class="feedback" id="flashcard-answer" style="display: none;">
-                        Ecological Vegetation Class - a classification system for vegetation types in Tasmania.
+                        Tasmanian Vegetation Mapping and Classification System - the standard vegetation classification system used in Tasmania.
                     </div>
                 </div>
                 
@@ -1170,7 +1170,7 @@
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div style="padding: 15px; background-color: var(--gray-100); border-radius: var(--radius-sm);">
-                            <p>1. Ecological Vegetation Class (EVC)</p>
+                            <p>1. TasVeg</p>
                         </div>
                         <div style="padding: 15px; background-color: var(--gray-100); border-radius: var(--radius-sm);">
                             <p>A. The original vegetation that would have existed at a site</p>
@@ -1180,7 +1180,7 @@
                             <p>2. Pre-European vegetation</p>
                         </div>
                         <div style="padding: 15px; background-color: var(--gray-100); border-radius: var(--radius-sm);">
-                            <p>B. A classification system for vegetation types</p>
+                            <p>B. Tasmania's vegetation classification system</p>
                         </div>
                     </div>
                     
@@ -1228,9 +1228,9 @@
                     
                     <div class="download-card">
                         <i class="fas fa-book" aria-hidden="true"></i>
-                        <h4>Tasmanian Threatened Species Guide</h4>
+                        <h4>TasVeg Classification Guide</h4>
                         <p>PDF, 3.2MB</p>
-                        <button class="btn btn-outline download-resource" data-resource="species-guide" aria-label="Download Tasmanian Threatened Species Guide"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
+                        <button class="btn btn-outline download-resource" data-resource="tasveg-guide" aria-label="Download TasVeg Classification Guide"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
                     </div>
                     
                     <div class="download-card">
@@ -1256,22 +1256,22 @@
                 </div>
                 <ul style="list-style: none;">
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Natural Values Atlas">
+                        <a href="https://www.naturalvaluesatlas.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Natural Values Atlas">
                             <i class="fas fa-external-link-alt" aria-hidden="true"></i> Natural Values Atlas
                         </a>
                     </li>
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Tasmanian Heritage Council">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Tasmanian Heritage Council
+                        <a href="https://heritage.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Heritage Tasmania">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Heritage Tasmania
                         </a>
                     </li>
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit DPIPWE Website">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> DPIPWE Website
+                        <a href="https://nre.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit NRE Website">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> NRE Website
                         </a>
                     </li>
                     <li style="margin-bottom: 15px;">
-                        <a href="#" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Aboriginal Heritage Tasmania">
+                        <a href="https://www.aboriginalheritage.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Aboriginal Heritage Tasmania">
                             <i class="fas fa-external-link-alt" aria-hidden="true"></i> Aboriginal Heritage Tasmania
                         </a>
                     </li>
@@ -1444,7 +1444,7 @@
             }).addTo(map);
             
             // Add topographic layer (optional)
-            L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            L.tileLayer('https://{s}.tile.openttopomap.org/{z}/{x}/{y}.png', {
                 attribution: 'Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://openttopomap.org">OpenTopoMap</a>',
                 maxZoom: 17
             }).addTo(map);
@@ -1553,7 +1553,7 @@
             const feedback = document.getElementById('ecosystem-feedback');
             
             if (select.value === 'rainforest') {
-                feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest. This ecosystem is characterized by high rainfall, dense canopy cover, and species like myrtle beech and sassafras.';
+                feedback.textContent = 'Correct! The marked area shows characteristics of Cool Temperate Rainforest. This ecosystem is characterized by high rainfall, dense canopy cover, and species like myrtle beech and sassafras.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 
@@ -1562,7 +1562,7 @@
                     feedback.textContent += ' Progress updated!';
                 }
             } else {
-                feedback.textContent = 'Incorrect. Try again! Look at the high rainfall amount (1800mm) and elevation (450m) - these are clues that this is a Cool temperate rainforest.';
+                feedback.textContent = 'Incorrect. Try again! Look at the high rainfall amount (1800mm) and elevation (430m) - these are clues that this is a Cool Temperate Rainforest.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
@@ -1665,7 +1665,7 @@
         
         // Flashcard functionality
         const flashcards = [
-            { question: "What does EVC stand for?", answer: "Ecological Vegetation Class - a classification system for vegetation types in Tasmania." },
+            { question: "What does TasVeg stand for?", answer: "Tasmanian Vegetation Mapping and Classification System - the standard vegetation classification system used in Tasmania." },
             { question: "What is a threatened species?", answer: "A species that is vulnerable to extinction in the near future." },
             { question: "What is the purpose of a site inspection?", answer: "To assess ecological and cultural values, identify potential impacts, and inform management decisions." }
         ];
@@ -1721,7 +1721,7 @@
             const feedback = document.getElementById('matching-feedback');
             
             if (match1 === 'B' && match2 === 'A') {
-                feedback.textContent = 'Correct! EVC is a classification system, and Pre-European vegetation refers to the original vegetation.';
+                feedback.textContent = 'Correct! TasVeg is Tasmania\'s vegetation classification system, and Pre-European vegetation refers to the original vegetation.';
                 feedback.classList.add('correct');
                 feedback.classList.remove('incorrect');
                 
@@ -1730,7 +1730,7 @@
                     feedback.textContent += ' Progress updated!';
                 }
             } else {
-                feedback.textContent = 'Incorrect. Try again! EVC is a classification system (B), and Pre-European vegetation refers to the original vegetation (A).';
+                feedback.textContent = 'Incorrect. Try again! TasVeg is Tasmania\'s vegetation classification system (B), and Pre-European vegetation refers to the original vegetation (A).';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
