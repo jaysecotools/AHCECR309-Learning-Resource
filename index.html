@@ -463,7 +463,7 @@
         }
         
         .badge-secondary {
-            background-color: var(--secondary);
+            backgroundColor: var(--secondary);
             color: white;
         }
         
@@ -660,6 +660,74 @@
             outline-offset: 2px;
         }
 
+        /* Resource Links Styles */
+        .link-category {
+            margin-bottom: 25px;
+        }
+
+        .link-category h4 {
+            color: var(--primary-dark);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .links-list {
+            list-style: none;
+        }
+
+        .links-list li {
+            margin-bottom: 10px;
+        }
+
+        .resource-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .resource-link:hover, .resource-link:focus {
+            background-color: var(--light);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+            outline: none;
+        }
+
+        .resource-link i {
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .link-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .link-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        #link-search {
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+        }
+
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -699,6 +767,16 @@
             
             .content-section {
                 padding: 1.5rem;
+            }
+            
+            .resource-link {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .resource-link i {
+                margin-bottom: 10px;
+                margin-right: 0;
             }
         }
 
@@ -1254,28 +1332,122 @@
                     <i class="fas fa-link" aria-hidden="true"></i>
                     <h3>Useful Links</h3>
                 </div>
-                <ul style="list-style: none;">
-                    <li style="margin-bottom: 15px;">
-                        <a href="https://www.naturalvaluesatlas.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Natural Values Atlas">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Natural Values Atlas
-                        </a>
-                    </li>
-                    <li style="margin-bottom: 15px;">
-                        <a href="https://heritage.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Heritage Tasmania">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Heritage Tasmania
-                        </a>
-                    </li>
-                    <li style="margin-bottom: 15px;">
-                        <a href="https://nre.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit NRE Website">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> NRE Website
-                        </a>
-                    </li>
-                    <li style="margin-bottom: 15px;">
-                        <a href="https://www.aboriginalheritage.tas.gov.au/" class="btn btn-secondary external-link" style="width: 100%; text-align: left; justify-content: flex-start;" aria-label="Visit Aboriginal Heritage Tasmania">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Aboriginal Heritage Tasmania
-                        </a>
-                    </li>
-                </ul>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <input type="text" id="link-search" placeholder="Search links..." aria-label="Search links">
+                </div>
+                
+                <div id="links-container">
+                    <div class="link-category">
+                        <h4>Government Resources</h4>
+                        <ul class="links-list">
+                            <li>
+                                <a href="https://www.naturalvaluesatlas.tas.gov.au/" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Natural Values Atlas</span>
+                                        <span class="link-description">Database of natural values in Tasmania</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://heritage.tas.gov.au/" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Heritage Tasmania</span>
+                                        <span class="link-description">Information about Tasmania's historic heritage</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://nre.tas.gov.au/" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">NRE Tasmania</span>
+                                        <span class="link-description">Department of Natural Resources and Environment</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.aboriginalheritage.tas.gov.au/" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Aboriginal Heritage Tasmania</span>
+                                        <span class="link-description">Protecting and managing Aboriginal heritage</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-category">
+                        <h4>Educational Resources</h4>
+                        <ul class="links-list">
+                            <li>
+                                <a href="https://www.utas.edu.au/" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">University of Tasmania</span>
+                                        <span class="link-description">Environmental studies and research</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.bushheritage.org.au/places-we-protect/tasmania" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Bush Heritage Australia - Tasmania</span>
+                                        <span class="link-description">Conservation efforts in Tasmania</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.parks.tas.gov.au/" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Parks & Wildlife Service</span>
+                                        <span class="link-description">Managing Tasmania's national parks and reserves</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-category">
+                        <h4>Field Guides & Tools</h4>
+                        <ul class="links-list">
+                            <li>
+                                <a href="https://www.weedinfo.com.au/" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Weed Identification</span>
+                                        <span class="link-description">Comprehensive weed identification resource</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.birdlife.org.au/bird-profile" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Bird Identification</span>
+                                        <span class="link-description">Australian bird species guide</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.environment.gov.au/biodiversity/threatened" target="_blank" class="resource-link">
+                                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    <div class="link-content">
+                                        <span class="link-title">Threatened Species</span>
+                                        <span class="link-description">List of Australia's threatened species</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="feedback" id="links-feedback" role="alert" style="display: none;"></div>
             </div>
             
             <div class="card">
@@ -1794,6 +1966,49 @@
                 e.preventDefault();
                 alert('This would open an external website in a real application.');
             });
+        });
+        
+        // Link search functionality
+        document.getElementById('link-search').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const links = document.querySelectorAll('.resource-link');
+            const categories = document.querySelectorAll('.link-category');
+            let visibleCount = 0;
+            
+            links.forEach(link => {
+                const title = link.querySelector('.link-title').textContent.toLowerCase();
+                const description = link.querySelector('.link-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    link.parentElement.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    link.parentElement.style.display = 'none';
+                }
+            });
+            
+            // Hide empty categories
+            categories.forEach(category => {
+                const visibleLinks = category.querySelectorAll('li').length;
+                const hiddenLinks = category.querySelectorAll('li[style="display: none;"]').length;
+                
+                if (visibleLinks === hiddenLinks) {
+                    category.style.display = 'none';
+                } else {
+                    category.style.display = 'block';
+                }
+            });
+            
+            // Show feedback if no results
+            const feedback = document.getElementById('links-feedback');
+            if (visibleCount === 0 && searchTerm.length > 0) {
+                feedback.textContent = 'No links found matching your search.';
+                feedback.style.display = 'block';
+                feedback.classList.remove('correct');
+                feedback.classList.add('incorrect');
+            } else {
+                feedback.style.display = 'none';
+            }
         });
         
     </script>
