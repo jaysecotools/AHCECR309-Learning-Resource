@@ -1952,18 +1952,19 @@
             feedback.style.display = 'block';
         });
         
-        // Download resources
+// Download resources - FIXED VERSION
 const resources = {
-  checklist: "SiteInspectionChecklist.pdf",
-  // add more if needed later
-  // e.g. "map": "SiteMap.pdf"
+  "SiteInspectionChecklist.pdf": "SiteInspectionChecklist.pdf",
+  "tasveg-guide": "TasVegGuide.pdf", // Replace with actual file names
+  "heritage-guide": "HeritageGuide.pdf", // Replace with actual file names
+  "legislation": "LegislationSummary.pdf" // Replace with actual file names
 };
 
 document.querySelectorAll('.download-resource').forEach(button => {
   button.addEventListener('click', () => {
-    const resource = button.getAttribute('data-resource');
-    if (resources[resource]) {
-      window.location.href = resources[resource];
+    const resourceKey = button.getAttribute('data-resource');
+    if (resources[resourceKey]) {
+      window.location.href = resources[resourceKey];
     } else {
       alert("Resource not found.");
     }
