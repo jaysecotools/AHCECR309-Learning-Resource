@@ -1964,7 +1964,7 @@ document.querySelectorAll('.download-resource').forEach(button => {
   button.addEventListener('click', () => {
     const resourceKey = button.getAttribute('data-resource');
     if (resources[resourceKey]) {
-      window.location.href = resources[resourceKey];
+      window.open(resources[resourceKey], '_blank');
     } else {
       alert("Resource not found.");
     }
