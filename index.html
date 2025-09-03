@@ -1129,7 +1129,7 @@
                 <div class="form-group">
                     <label>Is the area known to have Aboriginal heritage significance?</label>
                     <div>
-                        <input type="radio" id="aboriginal-yes" name="aboriginal" value="yes">
+                                                <input type="radio" id="aboriginal-yes" name="aboriginal" value="yes">
                         <label for="aboriginal-yes">Yes</label>
                         <input type="radio" id="aboriginal-no" name="aboriginal" value="no">
                         <label for="aboriginal-no">No</label>
@@ -1449,25 +1449,6 @@
                 
                 <div class="feedback" id="links-feedback" role="alert" style="display: none;"></div>
             </div>
-
-   <!--     <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-video" aria-hidden="true"></i>
-                    <h3>Video Resources</h3>
-                </div>
-                <p>Watch these videos to learn more about site inspection techniques:</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
-                    <div style="height: 180px; background-color: var(--gray-200); border-radius: var(--radius); display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <i class="fas fa-play-circle" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;" aria-hidden="true"></i>
-                        <p>Identifying Tasmanian Ecosystems</p>
-                    </div>
-                    <div style="height: 180px; background-color: var(--gray-200); border-radius: var(--radius); display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <i class="fas fa-play-circle" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;" aria-hidden="true"></i>
-                        <p>Cultural Heritage Assessment</p>
-                    </div>
-                </div>
-            </div> -->
         </section>
         
         <footer role="contentinfo">
@@ -1701,6 +1682,14 @@
             const select = document.getElementById('species-select');
             const feedback = document.getElementById('species-feedback');
             
+            if (!select.value) {
+                feedback.textContent = 'Please select an answer before checking.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                feedback.style.display = 'block';
+                return;
+            }
+            
             if (select.value === 'pademelon') {
                 feedback.textContent = 'Correct! This is a Tasmanian Pademelon, a common marsupial in Tasmania.';
                 feedback.classList.add('correct');
@@ -1723,6 +1712,14 @@
         document.getElementById('check-ecosystem').addEventListener('click', () => {
             const select = document.getElementById('ecosystem-select');
             const feedback = document.getElementById('ecosystem-feedback');
+            
+            if (!select.value) {
+                feedback.textContent = 'Please select an ecosystem type before checking.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                feedback.style.display = 'block';
+                return;
+            }
             
             if (select.value === 'rainforest') {
                 feedback.textContent = 'Correct! The marked area shows characteristics of Cool Temperate Rainforest. This ecosystem is characterized by high rainfall, dense canopy cover, and species like myrtle beech and sassafras.';
@@ -1750,6 +1747,15 @@
             const threat4 = document.getElementById('threat4').checked;
             const threat5 = document.getElementById('threat5').checked;
             const feedback = document.getElementById('threats-feedback');
+            
+            // Check if at least one option is selected
+            if (!threat1 && !threat2 && !threat3 && !threat4 && !threat5) {
+                feedback.textContent = 'Please select at least one threat before checking.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                feedback.style.display = 'block';
+                return;
+            }
             
             // All threats should be selected for this scenario
             if (threat1 && threat2 && threat3 && threat4 && threat5) {
@@ -1794,13 +1800,25 @@
                 const options = questionDiv.querySelectorAll('.quiz-option');
                 const feedback = questionDiv.querySelector('.feedback');
                 
+                let selected = false;
                 let correctSelected = false;
                 
                 options.forEach(option => {
-                    if (option.style.backgroundColor === 'rgb(233, 236, 239)' && option.getAttribute('data-correct') === 'true') {
-                        correctSelected = true;
+                    if (option.style.backgroundColor === 'rgb(233, 236, 239)') {
+                        selected = true;
+                        if (option.getAttribute('data-correct') === 'true') {
+                            correctSelected = true;
+                        }
                     }
                 });
+                
+                if (!selected) {
+                    feedback.textContent = 'Please select an answer before checking.';
+                    feedback.classList.add('incorrect');
+                    feedback.classList.remove('correct');
+                    feedback.style.display = 'block';
+                    return;
+                }
                 
                 if (correctSelected) {
                     feedback.textContent = feedback.textContent || 'Correct!';
@@ -1858,7 +1876,11 @@
                 if (!flashcardsCompleted && currentFlashcard === flashcards.length - 1) {
                     flashcardsCompleted = true;
                     if (completeActivity('flashcards-completed')) {
-                        answerDiv.textContent += ' [Progress updated!]';
+                        const flashcardFeedback = document.createElement('div');
+                        flashcardFeedback.className = 'feedback correct';
+                        flashcardFeedback.textContent = 'Great job! You\'ve completed all flashcards. Progress updated!';
+                        flashcardFeedback.style.marginTop = '15px';
+                        document.getElementById('flashcard-answer').parentNode.insertBefore(flashcardFeedback, document.getElementById('flashcard-answer').nextSibling);
                     }
                 }
             } else {
@@ -1884,6 +1906,10 @@
             document.getElementById('flashcard-answer').style.display = 'none';
             document.getElementById('reveal-flashcard').innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
             document.getElementById('reveal-flashcard').setAttribute('aria-expanded', 'false');
+            
+            // Remove any existing feedback
+            const existingFeedback = document.querySelectorAll('#flashcard-answer ~ .feedback');
+            existingFeedback.forEach(fb => fb.remove());
         }
         
         // Terminology matching activity
@@ -1891,6 +1917,14 @@
             const match1 = document.getElementById('match-1').value;
             const match2 = document.getElementById('match-2').value;
             const feedback = document.getElementById('matching-feedback');
+            
+            if (!match1 || !match2) {
+                feedback.textContent = 'Please complete both matches before checking.';
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                feedback.style.display = 'block';
+                return;
+            }
             
             if (match1 === 'B' && match2 === 'A') {
                 feedback.textContent = 'Correct! TasVeg is Tasmania\'s vegetation classification system, and Pre-European vegetation refers to the original vegetation.';
@@ -1952,24 +1986,56 @@
             feedback.style.display = 'block';
         });
         
-// Download resources - FIXED VERSION
-const resources = {
-  "SiteInspectionChecklist.pdf": "SiteInspectionChecklist.pdf",
-  "TasVegClassificationGuide.pdf": "TasVegClassificationGuide.pdf",
-  "CulturalHeritageAssessmentGuidelines.pdf": "CulturalHeritageAssessmentGuidelines.pdf",
-  "LegislativeRequirementsSummary.pdf": "LegislativeRequirementsSummary.pdf"
-};
+        // Download resources - FIXED VERSION
+        const resources = {
+            "SiteInspectionChecklist.pdf": "SiteInspectionChecklist.pdf",
+            "TasVegClassificationGuide.pdf": "TasVegClassificationGuide.pdf",
+            "CulturalHeritageAssessmentGuidelines.pdf": "CulturalHeritageAssessmentGuidelines.pdf",
+            "LegislativeRequirementsSummary.pdf": "LegislativeRequirementsSummary.pdf"
+        };
 
-document.querySelectorAll('.download-resource').forEach(button => {
-  button.addEventListener('click', () => {
-    const resourceKey = button.getAttribute('data-resource');
-    if (resources[resourceKey]) {
-      window.open(resources[resourceKey], '_blank');
-    } else {
-      alert("Resource not found.");
-    }
-  });
-});
+        document.querySelectorAll('.download-resource').forEach(button => {
+            button.addEventListener('click', () => {
+                const resourceKey = button.getAttribute('data-resource');
+                const resourceName = button.parentElement.querySelector('h4').textContent;
+                
+                if (resources[resourceKey]) {
+                    // Show download confirmation
+                    const downloadFeedback = document.createElement('div');
+                    downloadFeedback.className = 'feedback correct';
+                    downloadFeedback.textContent = `Downloading ${resourceName}...`;
+                    downloadFeedback.style.marginTop = '10px';
+                    
+                    // Remove any existing feedback
+                    const existingFeedback = button.parentElement.querySelector('.feedback');
+                    if (existingFeedback) {
+                        existingFeedback.remove();
+                    }
+                    
+                    button.parentElement.appendChild(downloadFeedback);
+                    
+                    // Simulate download (in a real application, this would be an actual download)
+                    setTimeout(() => {
+                        downloadFeedback.textContent = `${resourceName} downloaded successfully!`;
+                        window.open(resources[resourceKey], '_blank');
+                    }, 1000);
+                } else {
+                    // Show error message
+                    const errorFeedback = document.createElement('div');
+                    errorFeedback.className = 'feedback incorrect';
+                    errorFeedback.textContent = "Resource not found.";
+                    errorFeedback.style.marginTop = '10px';
+                    
+                    // Remove any existing feedback
+                    const existingFeedback = button.parentElement.querySelector('.feedback');
+                    if (existingFeedback) {
+                        existingFeedback.remove();
+                    }
+                    
+                    button.parentElement.appendChild(errorFeedback);
+                }
+            });
+        });
         
         // External links
         document.querySelectorAll('.external-link').forEach(link => {
@@ -2022,6 +2088,10 @@ document.querySelectorAll('.download-resource').forEach(button => {
             }
         });
         
+        // Initialize progress on page load
+        initializeProgress();
+        
     </script>
 </body>
 </html>
+                           
