@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasmanian Ecosystems - Conservation Training</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
             --primary: #2E7D32;
@@ -648,6 +649,45 @@
             font-size: 1.5rem;
         }
         
+        /* Map Styles */
+        #map-container {
+            height: 400px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            max-width: 200px;
+        }
+        
+        .basemap-selector {
+            margin-bottom: 10px;
+        }
+        
+        .feature-selector {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .feature-checkbox {
+            margin: 5px 0;
+        }
+        
         @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: column;
@@ -679,6 +719,18 @@
             .learning-objectives, .key-concept, .tas-example, .summary-box {
                 padding: 15px;
                 margin: 20px 0;
+            }
+            
+            .map-controls {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 15px;
+                max-width: 100%;
+            }
+            
+            #map-container {
+                height: 350px;
             }
         }
     </style>
@@ -1216,25 +1268,46 @@
                     <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
                     <h3>Ecosystem Mapping</h3>
                 </div>
-                <p>Practice identifying different ecosystem types on a topographic map.</p>
+                <p>Practice identifying different conservation features on an interactive map.</p>
                 
                 <div class="interactive-box">
-                    <div class="site-map">
-                        <i class="fas fa-map" style="font-size: 3rem; color: var(--dark);" aria-hidden="true"></i>
+                    <div id="map-container">
+                        <div id="map"></div>
+                        <div class="map-controls">
+                            <div class="basemap-selector">
+                                <label for="basemap-select">Basemap:</label>
+                                <select id="basemap-select">
+                                    <option value="osm">OpenStreetMap</option>
+                                    <option value="topo">Topographic</option>
+                                    <option value="satellite">Satellite</option>
+                                </select>
+                            </div>
+                            <div class="feature-selector">
+                                <label>Select conservation features:</label>
+                                <div class="feature-checkbox">
+                                    <input type="checkbox" id="water-sources" checked>
+                                    <label for="water-sources">Water Sources</label>
+                                </div>
+                                <div class="feature-checkbox">
+                                    <input type="checkbox" id="steep-terrain" checked>
+                                    <label for="steep-terrain">Steep Terrain</label>
+                                </div>
+                                <div class="feature-checkbox">
+                                    <input type="checkbox" id="protected-areas" checked>
+                                    <label for="protected-areas">Protected Areas</label>
+                                </div>
+                                <div class="feature-checkbox">
+                                    <input type="checkbox" id="threatened-species" checked>
+                                    <label for="threatened-species">Threatened Species Habitat</label>
+                                </div>
+                                <div class="feature-checkbox">
+                                    <input type="checkbox" id="cultural-sites" checked>
+                                    <label for="cultural-sites">Cultural Sites</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ecosystem-select">Select the predominant ecosystem type in the marked area:</label>
-                        <select id="ecosystem-select">
-                            <option value="">Select ecosystem type</option>
-                            <option value="rainforest">Cool temperate rainforest</option>
-                            <option value="alpine">Alpine vegetation</option>
-                            <option value="eucalypt">Eucalypt forest</option>
-                            <option value="heathland">Coastal heathland</option>
-                            <option value="wetland">Wetland</option>
-                        </select>
-                    </div>
-                    <button class="btn" id="check-ecosystem"><i class="fas fa-check" aria-hidden="true"></i> Check Answer</button>
-                    <div class="feedback" id="ecosystem-feedback" role="alert"></div>
+                    <p><strong>Instructions:</strong> Explore the map of Tasmania's Tarkine region. Click on markers to learn about conservation features. Use the checkboxes to show/hide different feature types.</p>
                 </div>
             </div>
             
@@ -1466,6 +1539,7 @@
         </footer>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Tab navigation functionality
         document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -1484,6 +1558,15 @@
                 // Show corresponding section
                 const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
+                
+                // If interactive tab is selected, trigger map resize
+                if (targetId === 'interactive') {
+                    setTimeout(() => {
+                        if (window.map) {
+                            window.map.invalidateSize();
+                        }
+                    }, 300);
+                }
             });
             
             // Add keyboard navigation for tabs
@@ -1507,25 +1590,6 @@
                 updateProgress(2);
             } else {
                 feedback.textContent = 'Incorrect. Try again! The correct answer is Pencil Pine.';
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-            }
-            
-            feedback.style.display = 'block';
-        });
-        
-        // Ecosystem mapping activity
-        document.getElementById('check-ecosystem').addEventListener('click', () => {
-            const select = document.getElementById('ecosystem-select');
-            const feedback = document.getElementById('ecosystem-feedback');
-            
-            if (select.value === 'rainforest') {
-                feedback.textContent = 'Correct! The marked area shows characteristics of cool temperate rainforest.';
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                updateProgress(2);
-            } else {
-                feedback.textContent = 'Incorrect. Try again! The correct answer is Cool temperate rainforest.';
                 feedback.classList.add('incorrect');
                 feedback.classList.remove('correct');
             }
@@ -1638,6 +1702,194 @@
                     button.click();
                 }
             });
+        });
+        
+        // Initialize the map when the interactive section is loaded
+        function initMap() {
+            // Create map centered on Tasmania's Tarkine region
+            const map = L.map('map').setView([-41.5, 145.3], 9);
+            window.map = map;
+            
+            // Define base layers
+            const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            });
+            
+            const topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
+            });
+            
+            const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
+            
+            // Add default base layer
+            osmLayer.addTo(map);
+            
+            // Set up base layer control
+            const baseLayers = {
+                "OpenStreetMap": osmLayer,
+                "Topographic": topoLayer,
+                "Satellite": satelliteLayer
+            };
+            
+            // Sample conservation feature data for the Tarkine region
+            const conservationFeatures = {
+                waterSources: [
+                    { lat: -41.2, lng: 145.1, name: "Pieman River", description: "Major river system providing habitat for native fish species including the endangered Australian grayling." },
+                    { lat: -41.4, lng: 145.2, name: "Lake Chisholm", description: "Natural sinkhole lake surrounded by rainforest. Important water source for wildlife." },
+                    { lat: -41.6, lng: 145.4, name: "Savage River", description: "Pristine river system with high conservation values. Home to threatened freshwater crayfish." }
+                ],
+                steepTerrain: [
+                    { lat: -41.3, lng: 145.5, name: "Mount Lindsay", description: "Steep slopes with rare alpine vegetation. Important habitat for cushion plants and pencil pines." },
+                    { lat: -41.7, lng: 145.1, name: "Tarkine Cliffs", description: "Coastal cliffs with nesting sites for seabirds. Geologically significant formations." }
+                ],
+                protectedAreas: [
+                    { lat: -41.2, lng: 145.3, name: "Tarkine Forest Reserve", description: "Protected area conserving significant tracts of cool temperate rainforest." },
+                    { lat: -41.5, lng: 145.0, name: "Arthur-Pieman Conservation Area", description: "Coastal reserve protecting Aboriginal heritage sites and coastal ecosystems." }
+                ],
+                threatenedSpecies: [
+                    { lat: -41.4, lng: 145.3, name: "Giant Freshwater Crayfish Habitat", description: "Critical habitat for the world's largest freshwater invertebrate, endemic to northern Tasmania." },
+                    { lat: -41.6, lng: 145.2, name: "Wedge-tailed Eagle Nesting Site", description: "Known nesting area for the threatened Tasmanian wedge-tailed eagle." }
+                ],
+                culturalSites: [
+                    { lat: -41.5, lng: 144.9, name: "Kutikina Cave", description: "Archaeologically significant site with evidence of human occupation dating back 20,000 years." },
+                    { lat: -41.3, lng: 145.2, name: "Aboriginal Shell Middens", description: "Coastal sites containing cultural deposits from thousands of years of Aboriginal occupation." }
+                ]
+            };
+            
+            // Create layer groups for each feature type
+            const waterSourcesLayer = L.layerGroup();
+            const steepTerrainLayer = L.layerGroup();
+            const protectedAreasLayer = L.layerGroup();
+            const threatenedSpeciesLayer = L.layerGroup();
+            const culturalSitesLayer = L.layerGroup();
+            
+            // Create markers for each feature
+            conservationFeatures.waterSources.forEach(feature => {
+                const marker = L.marker([feature.lat, feature.lng])
+                    .bindPopup(`<strong>${feature.name}</strong><br>${feature.description}`)
+                    .addTo(waterSourcesLayer);
+            });
+            
+            conservationFeatures.steepTerrain.forEach(feature => {
+                const marker = L.marker([feature.lat, feature.lng])
+                    .bindPopup(`<strong>${feature.name}</strong><br>${feature.description}`)
+                    .addTo(steepTerrainLayer);
+            });
+            
+            conservationFeatures.protectedAreas.forEach(feature => {
+                const marker = L.marker([feature.lat, feature.lng])
+                    .bindPopup(`<strong>${feature.name}</strong><br>${feature.description}`)
+                    .addTo(protectedAreasLayer);
+            });
+            
+            conservationFeatures.threatenedSpecies.forEach(feature => {
+                const marker = L.marker([feature.lat, feature.lng])
+                    .bindPopup(`<strong>${feature.name}</strong><br>${feature.description}`)
+                    .addTo(threatenedSpeciesLayer);
+            });
+            
+            conservationFeatures.culturalSites.forEach(feature => {
+                const marker = L.marker([feature.lat, feature.lng])
+                    .bindPopup(`<strong>${feature.name}</strong><br>${feature.description}`)
+                    .addTo(culturalSitesLayer);
+            });
+            
+            // Add all layers to map initially
+            waterSourcesLayer.addTo(map);
+            steepTerrainLayer.addTo(map);
+            protectedAreasLayer.addTo(map);
+            threatenedSpeciesLayer.addTo(map);
+            culturalSitesLayer.addTo(map);
+            
+            // Set up overlay layers control
+            const overlayLayers = {
+                "Water Sources": waterSourcesLayer,
+                "Steep Terrain": steepTerrainLayer,
+                "Protected Areas": protectedAreasLayer,
+                "Threatened Species Habitat": threatenedSpeciesLayer,
+                "Cultural Sites": culturalSitesLayer
+            };
+            
+            // Add layer control to map
+            L.control.layers(baseLayers, overlayLayers, { collapsed: false }).addTo(map);
+            
+            // Set up checkbox event listeners
+            document.getElementById('water-sources').addEventListener('change', function() {
+                if (this.checked) {
+                    map.addLayer(waterSourcesLayer);
+                } else {
+                    map.removeLayer(waterSourcesLayer);
+                }
+            });
+            
+            document.getElementById('steep-terrain').addEventListener('change', function() {
+                if (this.checked) {
+                    map.addLayer(steepTerrainLayer);
+                } else {
+                    map.removeLayer(steepTerrainLayer);
+                }
+            });
+            
+            document.getElementById('protected-areas').addEventListener('change', function() {
+                if (this.checked) {
+                    map.addLayer(protectedAreasLayer);
+                } else {
+                    map.removeLayer(protectedAreasLayer);
+                }
+            });
+            
+            document.getElementById('threatened-species').addEventListener('change', function() {
+                if (this.checked) {
+                    map.addLayer(threatenedSpeciesLayer);
+                } else {
+                    map.removeLayer(threatenedSpeciesLayer);
+                }
+            });
+            
+            document.getElementById('cultural-sites').addEventListener('change', function() {
+                if (this.checked) {
+                    map.addLayer(culturalSitesLayer);
+                } else {
+                    map.removeLayer(culturalSitesLayer);
+                }
+            });
+            
+            // Set up basemap selector
+            document.getElementById('basemap-select').addEventListener('change', function() {
+                switch(this.value) {
+                    case 'osm':
+                        map.removeLayer(topoLayer);
+                        map.removeLayer(satelliteLayer);
+                        map.addLayer(osmLayer);
+                        break;
+                    case 'topo':
+                        map.removeLayer(osmLayer);
+                        map.removeLayer(satelliteLayer);
+                        map.addLayer(topoLayer);
+                        break;
+                    case 'satellite':
+                        map.removeLayer(osmLayer);
+                        map.removeLayer(topoLayer);
+                        map.addLayer(satelliteLayer);
+                        break;
+                }
+            });
+        }
+        
+        // Initialize map when interactive tab is shown
+        document.querySelector('[data-target="interactive"]').addEventListener('click', function() {
+            // Small delay to ensure the map container is visible
+            setTimeout(() => {
+                if (!window.mapInitialized) {
+                    initMap();
+                    window.mapInitialized = true;
+                } else if (window.map) {
+                    // Trigger map resize if already initialized
+                    window.map.invalidateSize();
+                }
+            }, 300);
         });
     </script>
 </body>
