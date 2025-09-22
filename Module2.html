@@ -1700,30 +1700,37 @@
                 "Satellite": satelliteLayer
             };
             
-            // Sample conservation feature data for the Tarkine region
-            const conservationFeatures = {
-                waterSources: [
-                    { lat: -41.2, lng: 145.1, name: "Pieman River", description: "Major river system providing habitat for native fish species including the endangered Australian grayling." },
-                    { lat: -41.4, lng: 145.2, name: "Lake Chisholm", description: "Natural sinkhole lake surrounded by rainforest. Important water source for wildlife." },
-                    { lat: -41.6, lng: 145.4, name: "Savage River", description: "Pristine river system with high conservation values. Home to threatened freshwater crayfish." }
-                ],
-                steepTerrain: [
-                    { lat: -41.3, lng: 145.5, name: "Mount Lindsay", description: "Steep slopes with rare alpine vegetation. Important habitat for cushion plants and pencil pines." },
-                    { lat: -41.7, lng: 145.1, name: "Tarkine Cliffs", description: "Coastal cliffs with nesting sites for seabirds. Geologically significant formations." }
-                ],
-                protectedAreas: [
-                    { lat: -41.2, lng: 145.3, name: "Tarkine Forest Reserve", description: "Protected area conserving significant tracts of cool temperate rainforest." },
-                    { lat: -41.5, lng: 145.0, name: "Arthur-Pieman Conservation Area", description: "Coastal reserve protecting Aboriginal heritage sites and coastal ecosystems." }
-                ],
-                threatenedSpecies: [
-                    { lat: -41.4, lng: 145.3, name: "Giant Freshwater Crayfish Habitat", description: "Critical habitat for the world's largest freshwater invertebrate, endemic to northern Tasmania." },
-                    { lat: -41.6, lng: 145.2, name: "Wedge-tailed Eagle Nesting Site", description: "Known nesting area for the threatened Tasmanian wedge-tailed eagle." }
-                ],
-                culturalSites: [
-                    { lat: -41.5, lng: 144.9, name: "Kutikina Cave", description: "Archaeologically significant site with evidence of human occupation dating back 20,000 years." },
-                    { lat: -41.3, lng: 145.2, name: "Aboriginal Shell Middens", description: "Coastal sites containing cultural deposits from thousands of years of Aboriginal occupation." }
-                ]
-            };
+// Conservation feature data for the Tarkine region
+const conservationFeatures = {
+    waterSources: [
+        { lat: -41.2, lng: 145.1, name: "Pieman River", description: "Major river system providing habitat for native fish species including the endangered Australian grayling." },
+        { lat: -41.4, lng: 145.2, name: "Lake Chisholm", description: "Natural sinkhole lake surrounded by rainforest. Important water source for wildlife." },
+        { lat: -41.6, lng: 145.4, name: "Savage River", description: "Pristine river system with high conservation values. Habitat for threatened burrowing crayfish species." }
+    ],
+    steepTerrain: [
+        { lat: -41.3, lng: 145.5, name: "Mount Lindsay", description: "Steep slopes with rare alpine vegetation. Important habitat for cushion plants and pencil pines." },
+        { lat: -41.7, lng: 145.1, name: "Tarkine Cliffs", description: "Coastal cliffs with nesting sites for seabirds. Geologically significant formations." },
+        { lat: -41.1, lng: 145.0, name: "Philosopher Falls", description: "Spectacular waterfall set in lush cool temperate rainforest, with rich biodiversity." }
+    ],
+    protectedAreas: [
+        { lat: -41.2, lng: 145.3, name: "Tarkine Forest Reserve", description: "Protected area conserving significant tracts of cool temperate rainforest." },
+        { lat: -41.5, lng: 145.0, name: "Arthur-Pieman Conservation Area", description: "Coastal reserve protecting Aboriginal heritage sites and coastal ecosystems." },
+        { lat: -41.05, lng: 145.03, name: "Sumac Lookout", description: "Panoramic views over the Tarkine’s vast rainforest canopy." }
+    ],
+    threatenedSpecies: [
+        { lat: -41.45, lng: 145.05, name: "Wedge-tailed Eagle Nesting Area", description: "Known nesting areas for the threatened Tasmanian wedge-tailed eagle." },
+        { lat: -41.55, lng: 145.25, name: "Burrowing Crayfish Habitat", description: "Habitat for several threatened burrowing crayfish species endemic to north-west Tasmania." }
+    ],
+    culturalSites: [
+        { lat: -41.5, lng: 144.9, name: "Kutikina Cave", description: "Archaeologically significant site with evidence of human occupation dating back 20,000 years." },
+        { lat: -41.07, lng: 144.72, name: "Aboriginal Shell Middens", description: "Extensive coastal midden sites found along the Arthur-Pieman coast, evidence of continuous Aboriginal occupation." },
+        { lat: -41.25, lng: 144.73, name: "Temma Dunes", description: "Dynamic dune system with Aboriginal heritage values and fragile coastal vegetation." },
+        { lat: -41.2, lng: 144.88, name: "Sarah Anne Rocks", description: "Distinctive rock formations on the Tarkine coast, important for seabirds and marine life." }
+    ]
+};
+
+
+
             
             // Create layer groups for each feature type
             const waterSourcesLayer = L.layerGroup();
