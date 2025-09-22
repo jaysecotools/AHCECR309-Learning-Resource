@@ -1062,7 +1062,7 @@
             </div>
             
             <div class="card">
-                <div class="card-header">
+                <div class="card header">
                     <i class="fas fa-disease" aria-hidden="true"></i>
                     <h3>Disease</h3>
                 </div>
@@ -1273,41 +1273,8 @@
                 <div class="interactive-box">
                     <div id="map-container">
                         <div id="map"></div>
-                        <div class="map-controls">
-                            <div class="basemap-selector">
-                                <label for="basemap-select">Basemap:</label>
-                                <select id="basemap-select">
-                                    <option value="osm">OpenStreetMap</option>
-                                    <option value="topo">Topographic</option>
-                                    <option value="satellite">Satellite</option>
-                                </select>
-                            </div>
-                            <div class="feature-selector">
-                                <label>Select conservation features:</label>
-                                <div class="feature-checkbox">
-                                    <input type="checkbox" id="water-sources" checked>
-                                    <label for="water-sources">Water Sources</label>
-                                </div>
-                                <div class="feature-checkbox">
-                                    <input type="checkbox" id="steep-terrain" checked>
-                                    <label for="steep-terrain">Steep Terrain</label>
-                                </div>
-                                <div class="feature-checkbox">
-                                    <input type="checkbox" id="protected-areas" checked>
-                                    <label for="protected-areas">Protected Areas</label>
-                                </div>
-                                <div class="feature-checkbox">
-                                    <input type="checkbox" id="threatened-species" checked>
-                                    <label for="threatened-species">Threatened Species Habitat</label>
-                                </div>
-                                <div class="feature-checkbox">
-                                    <input type="checkbox" id="cultural-sites" checked>
-                                    <label for="cultural-sites">Cultural Sites</label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <p><strong>Instructions:</strong> Explore the map of Tasmania's Tarkine region. Click on markers to learn about conservation features. Use the checkboxes to show/hide different feature types.</p>
+                    <p><strong>Instructions:</strong> Explore the map of Tasmania's Tarkine region. Use the layer control in the top right corner to show/hide different feature types.</p>
                 </div>
             </div>
             
@@ -1366,7 +1333,7 @@
                             <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Conduct population survey and mapping</li>
                             <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Install protective fencing</li>
                             <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Develop long-term management plan</li>
-                            <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Collect seed for banking</li>
+                            <li style="padding: 10px; margin: 5px 0; background:  #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Collect seed for banking</li>
                             <li style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: move;"><i class="fas fa-bars" style="margin-right: 10px;" aria-hidden="true"></i> Assess threats to the population</li>
                         </ul>
                     </div>
@@ -1814,68 +1781,6 @@
             
             // Add layer control to map
             L.control.layers(baseLayers, overlayLayers, { collapsed: false }).addTo(map);
-            
-            // Set up checkbox event listeners
-            document.getElementById('water-sources').addEventListener('change', function() {
-                if (this.checked) {
-                    map.addLayer(waterSourcesLayer);
-                } else {
-                    map.removeLayer(waterSourcesLayer);
-                }
-            });
-            
-            document.getElementById('steep-terrain').addEventListener('change', function() {
-                if (this.checked) {
-                    map.addLayer(steepTerrainLayer);
-                } else {
-                    map.removeLayer(steepTerrainLayer);
-                }
-            });
-            
-            document.getElementById('protected-areas').addEventListener('change', function() {
-                if (this.checked) {
-                    map.addLayer(protectedAreasLayer);
-                } else {
-                    map.removeLayer(protectedAreasLayer);
-                }
-            });
-            
-            document.getElementById('threatened-species').addEventListener('change', function() {
-                if (this.checked) {
-                    map.addLayer(threatenedSpeciesLayer);
-                } else {
-                    map.removeLayer(threatenedSpeciesLayer);
-                }
-            });
-            
-            document.getElementById('cultural-sites').addEventListener('change', function() {
-                if (this.checked) {
-                    map.addLayer(culturalSitesLayer);
-                } else {
-                    map.removeLayer(culturalSitesLayer);
-                }
-            });
-            
-            // Set up basemap selector
-            document.getElementById('basemap-select').addEventListener('change', function() {
-                switch(this.value) {
-                    case 'osm':
-                        map.removeLayer(topoLayer);
-                        map.removeLayer(satelliteLayer);
-                        map.addLayer(osmLayer);
-                        break;
-                    case 'topo':
-                        map.removeLayer(osmLayer);
-                        map.removeLayer(satelliteLayer);
-                        map.addLayer(topoLayer);
-                        break;
-                    case 'satellite':
-                        map.removeLayer(osmLayer);
-                        map.removeLayer(topoLayer);
-                        map.addLayer(satelliteLayer);
-                        break;
-                }
-            });
         }
         
         // Initialize map when interactive tab is shown
