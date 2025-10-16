@@ -108,6 +108,59 @@
             color: var(--primary);
         }
         
+.learning-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.flow-step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.step-number {
+    background: var(--primary);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.step-content {
+    background: var(--light);
+    padding: 15px;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--accent);
+    flex-grow: 1;
+}
+
+.step-content h4 {
+    margin: 0 0 5px 0;
+    color: var(--dark);
+}
+
+.step-content p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.flow-arrow {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
         .card {
             border: 1px solid #e0e0e0;
             border-radius: var(--radius);
@@ -353,10 +406,82 @@
             </ul>
         </div>
         
-        <div class="graphic">
-            <img src="https://jaysecotools.github.io/AHCECR309-Learning-Resource/images/learning-journey.png" alt="Learning Journey Flow Diagram" />
-            <p><em>The learning journey: Landing Page → Learning Modules → Interactive Activities → Site Inspection Tool → Revision & Quiz → Resources.</em></p>
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-road" aria-hidden="true"></i>
+        <h3>Learning Journey</h3>
+    </div>
+    
+    <div class="learning-flow">
+        <div class="flow-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h4>Landing Page</h4>
+                <p>Start here to understand your progress and navigate between sections</p>
+            </div>
         </div>
+        
+        <div class="flow-arrow">
+            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+        </div>
+        
+        <div class="flow-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h4>Learning Materials</h4>
+                <p>Complete the four core modules in sequence</p>
+            </div>
+        </div>
+        
+        <div class="flow-arrow">
+            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+        </div>
+        
+        <div class="flow-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h4>Interactive Activities</h4>
+                <p>Practice with species ID, mapping, and threat identification</p>
+            </div>
+        </div>
+        
+        <div class="flow-arrow">
+            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+        </div>
+        
+        <div class="flow-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h4>Site Inspection Tool</h4>
+                <p>Apply your knowledge with the practical inspection form</p>
+            </div>
+        </div>
+        
+        <div class="flow-arrow">
+            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+        </div>
+        
+        <div class="flow-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+                <h4>Revision & Quiz</h4>
+                <p>Test your knowledge and reinforce learning</p>
+            </div>
+        </div>
+        
+        <div class="flow-arrow">
+            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+        </div>
+        
+        <div class="flow-step">
+            <div class="step-number">6</div>
+            <div class="step-content">
+                <h4>Resources</h4>
+                <p>Access additional materials and references</p>
+            </div>
+        </div>
+    </div>
+</div>
         
         <h2><i class="fas fa-home" aria-hidden="true"></i> Landing Page</h2>
         <p>The landing page is your home base. From here you can:</p>
