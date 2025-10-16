@@ -1,77 +1,498 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student User Guide – AHCECR309 Learning Resource</title>
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
-    h1, h2, h3 { color: #2c3e50; }
-    ul { margin-left: 20px; }
-    .tip { background: #ecf0f1; padding: 10px; border-radius: 5px; margin: 10px 0; }
-    .graphic { text-align: center; margin: 20px 0; }
-    .graphic img { max-width: 100%; border: 2px solid #bdc3c7; border-radius: 8px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student User Guide – AHCECR309 Learning Resource</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --primary-dark: #1B5E20;
+            --secondary: #689F38;
+            --accent: #8BC34A;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --tas-blue: #006989;
+            --tas-orange: #E64A19;
+            --text-dark: #263238;
+            --text-light: #78909C;
+            --gray-100: #F5F7FA;
+            --gray-200: #E8EAED;
+            --gray-300: #DDE1E6;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --radius: 10px;
+            --radius-sm: 8px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23F1F8E9" width="100" height="100"/><path fill="%238BC34A" opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--tas-blue), var(--tas-orange));
+            z-index: 1;
+        }
+
+        header h1 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h2 i {
+            color: var(--primary);
+        }
+        
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            background: var(--light);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        .btn:hover, .btn:focus {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            outline: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover, .btn-outline:focus {
+            background: var(--primary);
+            color: white;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip-box {
+            background-color: #E3F2FD;
+            border-left: 4px solid #2196F3;
+            padding: 15px 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 20px 0;
+        }
+        
+        .tip-box i {
+            color: #2196F3;
+            margin-right: 0.5rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(to right, var(--light), white);
+            border-left: 4px solid var(--tas-orange);
+            padding: 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 20px 0;
+        }
+        
+        .visual-divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 20px 0;
+            border: none;
+        }
+        
+        .graphic {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .graphic img {
+            max-width: 100%;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .graphic p {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text-light);
+        }
+        
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-img {
+            height: 160px;
+            background: linear-gradient(45deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .module-content {
+            padding: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                padding: 1.5rem;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Student User Guide – AHCECR309: Conduct an Ecological and Cultural Site Inspection</h1>  <h2>Purpose of the Tool</h2>
-  <p>The <strong>AHCECR309 Learning Resource</strong> is designed to help you gain the knowledge and skills needed to carry out an ecological and cultural site inspection. The tools and modules simulate real-world tasks so that you can practise safely before going into the field. By working through the activities, you will learn how to observe, record, and assess environmental and cultural features with confidence.</p>  <h2>Learning Outcomes</h2>
-  <p>By completing this learning resource, you will be able to:</p>
-  <ul>
-    <li>Explain the purpose of ecological and cultural site inspections.</li>
-    <li>Identify key Tasmanian ecosystems and recognise their features on a map.</li>
-    <li>Recognise cultural heritage sites and understand their importance.</li>
-    <li>Apply relevant legislation and guidelines during inspections.</li>
-    <li>Identify threats such as weeds, erosion, and human impacts.</li>
-    <li>Accurately complete a site inspection report using forms, checkboxes, and dropdowns.</li>
-    <li>Review your own learning through quizzes, flashcards, and revision activities.</li>
-  </ul>  <div class="graphic">
-    <img src="https://jaysecotools.github.io/AHCECR309-Learning-Resource/images/learning-journey.png" alt="Learning Journey Flow Diagram" />
-    <p><em>The learning journey: Landing Page → Learning Modules → Interactive Activities → Site Inspection Tool → Revision & Quiz → Resources.</em></p>
-  </div>  <h2>Landing Page</h2>
-  <p>The landing page is your home base. From here you can:</p>
-  <ul>
-    <li>See your <strong>progress bar</strong> (how much you’ve completed).</li>
-    <li>Click the <strong>tabs across the top</strong> to move between sections.</li>
-    <li>Choose a <strong>module</strong> and begin learning.</li>
-  </ul>  <h2>Tabs and What They Do</h2>
-  <p>Each tab leads you to a different part of the learning resource:</p>
-  <ul>
-    <li><strong>Learning Materials</strong> – the main modules. Watch videos, read text, and follow examples.</li>
-    <li><strong>Interactive Activities</strong> – practise with maps, identification tools, and threat scenarios.</li>
-    <li><strong>Site Inspection Tool</strong> – fill out a realistic inspection form using checkboxes, dropdowns, and text fields.</li>
-    <li><strong>Revision & Quiz</strong> – test yourself with quizzes, flashcards, and matching tasks.</li>
-    <li><strong>Resources</strong> – download guides and access external websites for extra support.</li>
-  </ul>  <h2>Learning Modules</h2>
-  <p>Work through the modules in order, starting from the top:</p>
-  <ol>
-    <li><strong>Introduction to Ecological Site Inspection</strong> – understand why site inspections are important.</li>
-    <li><strong>Tasmanian Ecosystems</strong> – explore ecosystem types with interactive TasVeg maps.</li>
-    <li><strong>Cultural Heritage Considerations</strong> – learn how to recognise and respect cultural sites.</li>
-    <li><strong>Legislative Framework</strong> – understand the laws and guidelines you must follow.</li>
-  </ol>
-  <div class="tip"><strong>Tip:</strong> Always complete a module fully before moving to the next one.</div>  <h2>Interactive Activities</h2>
-  <ul>
-    <li><strong>Species Identification</strong> – match species with names and images.</li>
-    <li><strong>Ecosystem Mapping</strong> – zoom and click on interactive TasVeg maps to practise recognising vegetation communities.</li>
-    <li><strong>Threat Identification</strong> – use dropdowns and checkboxes to record threats like weeds, erosion, or human impact.</li>
-  </ul>  <h2>Site Inspection Tool</h2>
-  <p>The tool simulates a real inspection form:</p>
-  <ul>
-    <li>Fill in site details using text fields and dropdowns.</li>
-    <li>Select ecosystem types and threats using checkboxes.</li>
-    <li>Record observations in text boxes (vegetation condition, cultural features, risks).</li>
-    <li>Submit your answers when finished to save your inspection.</li>
-  </ul>  <h2>Revision & Quiz</h2>
-  <ul>
-    <li>Answer multiple-choice questions to check your knowledge.</li>
-    <li>Practise with flashcards and key terminology.</li>
-    <li>Do the matching activity to reinforce your learning.</li>
-  </ul>  <h2>Resources</h2>
-  <p>Download useful PDFs and check external websites for extra learning:</p>
-  <ul>
-    <li><em>Site Inspection Checklist</em></li>
-    <li><em>TasVeg Classification Guide</em></li>
-    <li><em>Cultural Heritage Guidelines</em></li>
-    <li><em>Legislative Requirements Summary</em></li>
-  </ul>  <h2>Final Advice</h2>
-  <p>Move through the resource in order — landing page first, then tabs left to right. Watch the videos, explore the maps, and practise filling out forms with checkboxes and dropdowns. By the end, you’ll be ready to carry out ecological and cultural site inspections in the field with confidence.</p></body>
+    <div class="container">
+        <header role="banner">
+            <h1><i class="fas fa-book-open" aria-hidden="true"></i> Student User Guide</h1>
+            <p>AHCECR309: Conduct an Ecological and Cultural Site Inspection</p>
+            <a href="index.html" class="btn" style="margin-top: 15px; background: linear-gradient(135deg, var(--tas-blue) 0%, var(--primary) 100%); padding: 12px 24px; font-weight: 600; box-shadow: 0 4px 12px rgba(0, 105, 137, 0.3);">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Main Application
+            </a>
+        </header>
+        
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-bullseye" aria-hidden="true"></i>
+                <h3>Purpose of the Tool</h3>
+            </div>
+            <p>The <strong>AHCECR309 Learning Resource</strong> is designed to help you gain the knowledge and skills needed to carry out an ecological and cultural site inspection. The tools and modules simulate real-world tasks so that you can practise safely before going into the field. By working through the activities, you will learn how to observe, record, and assess environmental and cultural features with confidence.</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                <h3>Learning Outcomes</h3>
+            </div>
+            <p>By completing this learning resource, you will be able to:</p>
+            <ul>
+                <li>Explain the purpose of ecological and cultural site inspections.</li>
+                <li>Identify key Tasmanian ecosystems and recognise their features on a map.</li>
+                <li>Recognise cultural heritage sites and understand their importance.</li>
+                <li>Apply relevant legislation and guidelines during inspections.</li>
+                <li>Identify threats such as weeds, erosion, and human impacts.</li>
+                <li>Accurately complete a site inspection report using forms, checkboxes, and dropdowns.</li>
+                <li>Review your own learning through quizzes, flashcards, and revision activities.</li>
+            </ul>
+        </div>
+        
+        <div class="graphic">
+            <img src="https://jaysecotools.github.io/AHCECR309-Learning-Resource/images/learning-journey.png" alt="Learning Journey Flow Diagram" />
+            <p><em>The learning journey: Landing Page → Learning Modules → Interactive Activities → Site Inspection Tool → Revision & Quiz → Resources.</em></p>
+        </div>
+        
+        <h2><i class="fas fa-home" aria-hidden="true"></i> Landing Page</h2>
+        <p>The landing page is your home base. From here you can:</p>
+        <ul>
+            <li>See your <strong>progress bar</strong> (how much you've completed).</li>
+            <li>Click the <strong>tabs across the top</strong> to move between sections.</li>
+            <li>Choose a <strong>module</strong> and begin learning.</li>
+        </ul>
+        
+        <hr class="visual-divider" aria-hidden="true">
+        
+        <h2><i class="fas fa-columns" aria-hidden="true"></i> Tabs and What They Do</h2>
+        <p>Each tab leads you to a different part of the learning resource:</p>
+        
+        <div class="module-grid">
+            <div class="module-card">
+                <div class="module-img">
+                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                </div>
+                <div class="module-content">
+                    <h4>Learning Materials</h4>
+                    <p>The main modules. Watch videos, read text, and follow examples.</p>
+                    <div class="badge badge-primary">Core Content</div>
+                </div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-img">
+                    <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
+                </div>
+                <div class="module-content">
+                    <h4>Interactive Activities</h4>
+                    <p>Practise with maps, identification tools, and threat scenarios.</p>
+                    <div class="badge badge-secondary">Hands-on</div>
+                </div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-img">
+                    <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                </div>
+                <div class="module-content">
+                    <h4>Site Inspection Tool</h4>
+                    <p>Fill out a realistic inspection form using checkboxes, dropdowns, and text fields.</p>
+                    <div class="badge badge-warning">Practical</div>
+                </div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-img">
+                    <i class="fas fa-brain" aria-hidden="true"></i>
+                </div>
+                <div class="module-content">
+                    <h4>Revision & Quiz</h4>
+                    <p>Test yourself with quizzes, flashcards, and matching tasks.</p>
+                    <div class="badge badge-primary">Assessment</div>
+                </div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-img">
+                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                </div>
+                <div class="module-content">
+                    <h4>Resources</h4>
+                    <p>Download guides and access external websites for extra support.</p>
+                    <div class="badge badge-secondary">Reference</div>
+                </div>
+            </div>
+        </div>
+        
+        <hr class="visual-divider" aria-hidden="true">
+        
+        <h2><i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning Modules</h2>
+        <p>Work through the modules in order, starting from the top:</p>
+        <ol>
+            <li><strong>Introduction to Ecological Site Inspection</strong> – understand why site inspections are important.</li>
+            <li><strong>Tasmanian Ecosystems</strong> – explore ecosystem types with interactive TasVeg maps.</li>
+            <li><strong>Cultural Heritage Considerations</strong> – learn how to recognise and respect cultural sites.</li>
+            <li><strong>Legislative Framework</strong> – understand the laws and guidelines you must follow.</li>
+        </ol>
+        
+        <div class="tip-box" role="complementary" aria-label="Learning tip">
+            <p><i class="fas fa-lightbulb" aria-hidden="true"></i> <strong>Tip:</strong> Always complete a module fully before moving to the next one.</p>
+        </div>
+        
+        <hr class="visual-divider" aria-hidden="true">
+        
+        <h2><i class="fas fa-puzzle-piece" aria-hidden="true"></i> Interactive Activities</h2>
+        <ul>
+            <li><strong>Species Identification</strong> – match species with names and images.</li>
+            <li><strong>Ecosystem Mapping</strong> – zoom and click on interactive TasVeg maps to practise recognising vegetation communities.</li>
+            <li><strong>Threat Identification</strong> – use dropdowns and checkboxes to record threats like weeds, erosion, or human impact.</li>
+        </ul>
+        
+        <hr class="visual-divider" aria-hidden="true">
+        
+        <h2><i class="fas fa-clipboard-check" aria-hidden="true"></i> Site Inspection Tool</h2>
+        <p>The tool simulates a real inspection form:</p>
+        <ul>
+            <li>Fill in site details using text fields and dropdowns.</li>
+            <li>Select ecosystem types and threats using checkboxes.</li>
+            <li>Record observations in text boxes (vegetation condition, cultural features, risks).</li>
+            <li>Submit your answers when finished to save your inspection.</li>
+        </ul>
+        
+        <hr class="visual-divider" aria-hidden="true">
+        
+        <h2><i class="fas fa-brain" aria-hidden="true"></i> Revision & Quiz</h2>
+        <ul>
+            <li>Answer multiple-choice questions to check your knowledge.</li>
+            <li>Practise with flashcards and key terminology.</li>
+            <li>Do the matching activity to reinforce your learning.</li>
+        </ul>
+        
+        <hr class="visual-divider" aria-hidden="true">
+        
+        <h2><i class="fas fa-book-open" aria-hidden="true"></i> Resources</h2>
+        <p>Download useful PDFs and check external websites for extra learning:</p>
+        <ul>
+            <li><em>Site Inspection Checklist</em></li>
+            <li><em>TasVeg Classification Guide</em></li>
+            <li><em>Cultural Heritage Guidelines</em></li>
+            <li><em>Legislative Requirements Summary</em></li>
+        </ul>
+        
+        <div class="highlight-box" role="complementary" aria-label="Final advice">
+            <h3><i class="fas fa-flag-checkered" aria-hidden="true"></i> Final Advice</h3>
+            <p>Move through the resource in order — landing page first, then tabs left to right. Watch the videos, explore the maps, and practise filling out forms with checkboxes and dropdowns. By the end, you'll be ready to carry out ecological and cultural site inspections in the field with confidence.</p>
+        </div>
+        
+        <footer role="contentinfo">
+            <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works.</p>
+            <p>Developed by Jay Rowley.</p>
+            <p>Tasmanian Context | © 2025</p>
+        </footer>
+    </div>
+</body>
 </html>
