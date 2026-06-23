@@ -1182,9 +1182,14 @@ allowfullscreen
                 </div>
             </div>
             
-            <button class="btn" id="submit-inspection" aria-label="Submit inspection report"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Inspection Report</button>
-            <button class="btn btn-secondary" id="save-draft" aria-label="Save inspection as draft"><i class="fas fa-save" aria-hidden="true"></i> Save as Draft</button>
-            <div class="feedback" id="inspection-feedback" role="alert"></div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <button class="btn" id="submit-inspection" aria-label="Submit inspection report"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Inspection Report</button>
+    <button class="btn btn-secondary" id="save-draft" aria-label="Save inspection as draft"><i class="fas fa-save" aria-hidden="true"></i> Save as Draft</button>
+    <button class="btn btn-outline" id="load-draft" aria-label="Load saved draft"><i class="fas fa-upload" aria-hidden="true"></i> Load Draft</button>
+    <button class="btn btn-outline" id="clear-draft" aria-label="Clear saved draft" style="color: var(--danger); border-color: var(--danger);"><i class="fas fa-trash" aria-hidden="true"></i> Clear Draft</button>
+</div>
+<div class="feedback" id="inspection-feedback" role="alert"></div>
+<div class="feedback" id="draft-status" role="alert" style="display: none;"></div>
         </section>
         
         <!-- Revision & Quiz Section -->
@@ -1558,44 +1563,129 @@ allowfullscreen
         }
 
 
-        // Tab navigation functionality
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs and sections
-                document.querySelectorAll('.nav-tab').forEach(t => {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
-                });
-                document.querySelectorAll('.content-section').forEach(s => {
-                    s.classList.remove('active');
-                    s.setAttribute('hidden', 'true');
-                });
-                
-                // Add active class to clicked tab
-                tab.classList.add('active');
-                tab.setAttribute('aria-selected', 'true');
-                
-                // Show corresponding section
-                const targetId = tab.getAttribute('data-target');
-                const targetSection = document.getElementById(targetId);
-                targetSection.classList.add('active');
-                targetSection.removeAttribute('hidden');
-                
-                // Initialize map if interactive section is selected
-                if (targetId === 'interactive' && !window.mapInitialized) {
-                    initMap();
-                    window.mapInitialized = true;
-                }
-            });
+// Tab navigation functionality
+function switchTab(tab) {
+    // Remove active class from all tabs and sections
+    document.querySelectorAll('.nav-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.content-section').forEach(s => {
+        s.classList.remove('active');
+        s.setAttribute('hidden', 'true');
+    });
+    
+    // Add active class to clicked tab
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    
+    // Show corresponding section
+    const targetId = tab.getAttribute('data-target');
+    const targetSection = document.getElementById(targetId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        targetSection.removeAttribute('hidden');
+    }
+    
+    // Save last viewed tab to localStorage
+    localStorage.setItem('lastTab', targetId);
+    
+    // Initialize map if interactive section is selected
+    if (targetId === 'interactive') {
+        setTimeout(() => {
+            if (!window.mapInitialized) {
+                initMap();
+                window.mapInitialized = true;
+            } else if (window.map) {
+                window.map.invalidateSize();
+            }
+        }, 300);
+    }
+}
+
+// Set up tab event listeners
+document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        switchTab(tab);
+    });
+    
+    // Add keyboard navigation for tabs
+    tab.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            switchTab(tab);
+        }
+    });
+});
+
+// "Continue Where You Left Off" - Restore last viewed tab
+function restoreLastTab() {
+    const lastTabId = localStorage.getItem('lastTab');
+    if (lastTabId) {
+        // Find the tab with matching data-target
+        const tab = document.querySelector(`.nav-tab[data-target="${lastTabId}"]`);
+        if (tab) {
+            // Small delay to ensure DOM is ready
+            setTimeout(() => {
+                switchTab(tab);
+            }, 100);
+            return true;
+        }
+    }
+    return false;
+}
+
+// Also restore last module from Module pages
+function restoreLastModule() {
+    const lastModule = localStorage.getItem('lastModule');
+    if (lastModule) {
+        // If we're on a module page, we could navigate to it
+        // But this is for the main index page
+        const moduleLink = document.querySelector(`.module-link[href="${lastModule}"]`);
+        if (moduleLink) {
+            // Highlight or show a notification
+            const notification = document.createElement('div');
+            notification.className = 'feedback correct';
+            notification.textContent = `📚 Continue where you left off: ${moduleLink.closest('.module-content').querySelector('h3').textContent}`;
+            notification.style.marginTop = '15px';
+            notification.style.animation = 'fadeIn 0.5s ease';
             
-            // Add keyboard navigation for tabs
-            tab.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    tab.click();
+            const learningSection = document.getElementById('learning');
+            if (learningSection) {
+                // Insert at the top of the section
+                const firstCard = learningSection.querySelector('.card');
+                if (firstCard) {
+                    learningSection.insertBefore(notification, firstCard);
+                    
+                    // Auto-dismiss after 5 seconds
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                        notification.style.transition = 'opacity 0.5s';
+                        setTimeout(() => notification.remove(), 500);
+                    }, 5000);
                 }
-            });
-        });
+            }
+        }
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Try to restore last tab first
+    const restored = restoreLastTab();
+    
+    // If no tab was restored, show the learning section (default)
+    if (!restored) {
+        // Learning tab is active by default, but we'll ensure it's set
+        const learningTab = document.querySelector('.nav-tab[data-target="learning"]');
+        if (learningTab) {
+            switchTab(learningTab);
+        }
+    }
+    
+    // Show module continuation notification if applicable
+    restoreLastModule();
+});
         
         // Map initialization function
         function initMap() {
@@ -2003,14 +2093,194 @@ const videoCard = document.querySelector('.success-animation');
             feedback.style.display = 'block';
         });
         
-        // Save draft button
-        document.getElementById('save-draft').addEventListener('click', () => {
-            const feedback = document.getElementById('inspection-feedback');
-            feedback.textContent = 'Inspection saved as draft.';
-            feedback.classList.add('correct');
-            feedback.classList.remove('incorrect');
-            feedback.style.display = 'block';
-        });
+// Save draft button - ACTUALLY SAVES NOW
+document.getElementById('save-draft').addEventListener('click', () => {
+    // Collect all form data
+    const draftData = {
+        // Site Details
+        siteName: document.getElementById('site-name').value,
+        inspectionDate: document.getElementById('inspection-date').value,
+        weatherConditions: document.getElementById('weather-conditions').value,
+        
+        // Ecological Assessment
+        ecoTypes: {
+            rainforest: document.getElementById('eco1').checked,
+            wetEucalypt: document.getElementById('eco2').checked,
+            dryEucalypt: document.getElementById('eco3').checked,
+            alpine: document.getElementById('eco4').checked,
+            coastal: document.getElementById('eco5').checked
+        },
+        vegetationCondition: document.getElementById('vegetation-condition').value,
+        threatsObserved: document.getElementById('threats-observed').value,
+        significantSpecies: document.getElementById('significant-species').value,
+        
+        // Cultural Heritage Assessment
+        heritageYes: document.getElementById('heritage-yes').checked,
+        heritageNo: document.getElementById('heritage-no').checked,
+        heritageDescription: document.getElementById('heritage-description').value,
+        aboriginalYes: document.getElementById('aboriginal-yes').checked,
+        aboriginalNo: document.getElementById('aboriginal-no').checked,
+        aboriginalUnknown: document.getElementById('aboriginal-unknown').checked,
+        
+        // Risk Assessment
+        erosionRisk: document.getElementById('erosion-risk').value,
+        weedRisk: document.getElementById('weed-risk').value,
+        recommendations: document.getElementById('recommendations').value,
+        
+        // Metadata
+        savedAt: new Date().toISOString(),
+        version: '1.0'
+    };
+    
+    // Check if there's data to save
+    const hasData = draftData.siteName || draftData.inspectionDate || 
+                    draftData.threatsObserved || draftData.recommendations;
+    
+    if (!hasData) {
+        const feedback = document.getElementById('inspection-feedback');
+        feedback.textContent = 'Nothing to save - form is empty. Please fill in some fields first.';
+        feedback.className = 'feedback incorrect';
+        feedback.style.display = 'block';
+        return;
+    }
+    
+    // Save to localStorage
+    try {
+        localStorage.setItem('inspectionDraft', JSON.stringify(draftData));
+        
+        // Show success message
+        const status = document.getElementById('draft-status');
+        status.textContent = `✅ Draft saved successfully at ${new Date().toLocaleTimeString()}`;
+        status.className = 'feedback correct';
+        status.style.display = 'block';
+        
+        // Hide after 5 seconds
+        setTimeout(() => {
+            status.style.display = 'none';
+        }, 5000);
+        
+        // Also show in main feedback
+        const feedback = document.getElementById('inspection-feedback');
+        feedback.textContent = '✅ Draft saved successfully! You can load it later using "Load Draft".';
+        feedback.className = 'feedback correct';
+        feedback.style.display = 'block';
+        
+    } catch (error) {
+        console.error('Failed to save draft:', error);
+        const feedback = document.getElementById('inspection-feedback');
+        feedback.textContent = '❌ Failed to save draft. Please try again.';
+        feedback.className = 'feedback incorrect';
+        feedback.style.display = 'block';
+    }
+});
+
+// Load draft button
+document.getElementById('load-draft').addEventListener('click', () => {
+    const savedData = localStorage.getItem('inspectionDraft');
+    
+    if (!savedData) {
+        const feedback = document.getElementById('inspection-feedback');
+        feedback.textContent = 'No saved draft found. Please save a draft first.';
+        feedback.className = 'feedback incorrect';
+        feedback.style.display = 'block';
+        return;
+    }
+    
+    try {
+        const data = JSON.parse(savedData);
+        
+        // Restore Site Details
+        document.getElementById('site-name').value = data.siteName || '';
+        document.getElementById('inspection-date').value = data.inspectionDate || '';
+        document.getElementById('weather-conditions').value = data.weatherConditions || '';
+        
+        // Restore Ecological Assessment
+        if (data.ecoTypes) {
+            document.getElementById('eco1').checked = data.ecoTypes.rainforest || false;
+            document.getElementById('eco2').checked = data.ecoTypes.wetEucalypt || false;
+            document.getElementById('eco3').checked = data.ecoTypes.dryEucalypt || false;
+            document.getElementById('eco4').checked = data.ecoTypes.alpine || false;
+            document.getElementById('eco5').checked = data.ecoTypes.coastal || false;
+        }
+        document.getElementById('vegetation-condition').value = data.vegetationCondition || '';
+        document.getElementById('threats-observed').value = data.threatsObserved || '';
+        document.getElementById('significant-species').value = data.significantSpecies || '';
+        
+        // Restore Cultural Heritage Assessment
+        if (data.heritageYes) document.getElementById('heritage-yes').checked = true;
+        if (data.heritageNo) document.getElementById('heritage-no').checked = true;
+        document.getElementById('heritage-description').value = data.heritageDescription || '';
+        if (data.aboriginalYes) document.getElementById('aboriginal-yes').checked = true;
+        if (data.aboriginalNo) document.getElementById('aboriginal-no').checked = true;
+        if (data.aboriginalUnknown) document.getElementById('aboriginal-unknown').checked = true;
+        
+        // Restore Risk Assessment
+        document.getElementById('erosion-risk').value = data.erosionRisk || '';
+        document.getElementById('weed-risk').value = data.weedRisk || '';
+        document.getElementById('recommendations').value = data.recommendations || '';
+        
+        // Show success message
+        const status = document.getElementById('draft-status');
+        const savedTime = data.savedAt ? new Date(data.savedAt).toLocaleString() : 'unknown time';
+        status.textContent = `✅ Draft loaded successfully (saved: ${savedTime})`;
+        status.className = 'feedback correct';
+        status.style.display = 'block';
+        
+        setTimeout(() => {
+            status.style.display = 'none';
+        }, 5000);
+        
+        const feedback = document.getElementById('inspection-feedback');
+        feedback.textContent = '✅ Draft loaded successfully! Review and continue your inspection.';
+        feedback.className = 'feedback correct';
+        feedback.style.display = 'block';
+        
+    } catch (error) {
+        console.error('Failed to load draft:', error);
+        const feedback = document.getElementById('inspection-feedback');
+        feedback.textContent = '❌ Failed to load draft. The saved data may be corrupted.';
+        feedback.className = 'feedback incorrect';
+        feedback.style.display = 'block';
+    }
+});
+
+// Clear draft button
+document.getElementById('clear-draft').addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete the saved draft? This cannot be undone.')) {
+        localStorage.removeItem('inspectionDraft');
+        
+        const status = document.getElementById('draft-status');
+        status.textContent = '🗑️ Draft cleared successfully.';
+        status.className = 'feedback incorrect';
+        status.style.display = 'block';
+        
+        setTimeout(() => {
+            status.style.display = 'none';
+        }, 3000);
+        
+        const feedback = document.getElementById('inspection-feedback');
+        feedback.textContent = '🗑️ Draft cleared. Any saved data has been removed.';
+        feedback.className = 'feedback incorrect';
+        feedback.style.display = 'block';
+    }
+});
+
+// Check for existing draft on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedData = localStorage.getItem('inspectionDraft');
+    if (savedData) {
+        try {
+            const data = JSON.parse(savedData);
+            const status = document.getElementById('draft-status');
+            const savedTime = data.savedAt ? new Date(data.savedAt).toLocaleString() : 'unknown time';
+            status.textContent = `💾 A draft was saved at ${savedTime}. Click "Load Draft" to continue.`;
+            status.className = 'feedback correct';
+            status.style.display = 'block';
+        } catch (e) {
+            // Ignore parsing errors
+        }
+    }
+});
         
         // Download resources - FIXED VERSION
         const resources = {
@@ -2114,6 +2384,16 @@ const videoCard = document.querySelector('.success-animation');
             }
         });
         
+// Add tracking for module links to enable "Continue where you left off"
+document.querySelectorAll('.module-link').forEach(link => {
+    link.addEventListener('click', () => {
+        const href = link.getAttribute('href');
+        if (href) {
+            localStorage.setItem('lastModule', href);
+        }
+    });
+});
+
         // Initialize progress on page load
         initializeProgress();
         
