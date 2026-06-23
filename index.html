@@ -1183,7 +1183,7 @@ allowfullscreen
             </div>
             
 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-    <button class="btn" id="submit-inspection" aria-label="Submit inspection report"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Inspection Report</button>
+    <button class="btn" id="submit-inspection" aria-label="Submit inspection report"><i class="fas fa-paper-plane" aria-hidden="true"></i> Generate Report</button>
     <button class="btn btn-secondary" id="save-draft" aria-label="Save inspection as draft"><i class="fas fa-save" aria-hidden="true"></i> Save as Draft</button>
     <button class="btn btn-outline" id="load-draft" aria-label="Load saved draft"><i class="fas fa-upload" aria-hidden="true"></i> Load Draft</button>
     <button class="btn btn-outline" id="clear-draft" aria-label="Clear saved draft" style="color: var(--danger); border-color: var(--danger);"><i class="fas fa-trash" aria-hidden="true"></i> Clear Draft</button>
@@ -2070,28 +2070,131 @@ const videoCard = document.querySelector('.success-animation');
  }
 });
         
-        // Inspection form submission
-        document.getElementById('submit-inspection').addEventListener('click', () => {
-            const siteName = document.getElementById('site-name').value;
-            const feedback = document.getElementById('inspection-feedback');
+// Inspection form submission - Generate printable report
+document.getElementById('submit-inspection').addEventListener('click', () => {
+    const siteName = document.getElementById('site-name').value;
+    const feedback = document.getElementById('inspection-feedback');
+    
+    if (!siteName) {
+        feedback.textContent = 'Please enter a site name before generating a report.';
+        feedback.className = 'feedback incorrect';
+        feedback.style.display = 'block';
+        return;
+    }
+    
+    // Collect all form data
+    const reportData = {
+        siteName: siteName,
+        inspectionDate: document.getElementById('inspection-date').value,
+        weatherConditions: document.getElementById('weather-conditions').value,
+        ecoTypes: {
+            rainforest: document.getElementById('eco1').checked,
+            wetEucalypt: document.getElementById('eco2').checked,
+            dryEucalypt: document.getElementById('eco3').checked,
+            alpine: document.getElementById('eco4').checked,
+            coastal: document.getElementById('eco5').checked
+        },
+        vegetationCondition: document.getElementById('vegetation-condition').value,
+        threatsObserved: document.getElementById('threats-observed').value,
+        significantSpecies: document.getElementById('significant-species').value,
+        heritageYes: document.getElementById('heritage-yes').checked,
+        heritageNo: document.getElementById('heritage-no').checked,
+        heritageDescription: document.getElementById('heritage-description').value,
+        aboriginalYes: document.getElementById('aboriginal-yes').checked,
+        aboriginalNo: document.getElementById('aboriginal-no').checked,
+        aboriginalUnknown: document.getElementById('aboriginal-unknown').checked,
+        erosionRisk: document.getElementById('erosion-risk').value,
+        weedRisk: document.getElementById('weed-risk').value,
+        recommendations: document.getElementById('recommendations').value,
+        generatedAt: new Date().toLocaleString()
+    };
+    
+    // Build printable report HTML
+    const reportHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Site Inspection Report - ${reportData.siteName}</title>
+            <style>
+                body { font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; max-width: 900px; margin: 0 auto; }
+                h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+                h2 { color: #1B5E20; margin-top: 25px; }
+                .section { margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 8px; }
+                .label { font-weight: 600; color: #1B5E20; }
+                .value { margin-left: 10px; }
+                .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #666; text-align: center; }
+                .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 3px; }
+                .badge-green { background: #d4edda; color: #155724; }
+                .badge-red { background: #f8d7da; color: #721c24; }
+                .badge-yellow { background: #fff3cd; color: #856404; }
+            </style>
+        </head>
+        <body>
+            <h1>🌿 Ecological & Cultural Site Inspection Report</h1>
+            <p><strong>Generated:</strong> ${reportData.generatedAt}</p>
             
-            if (!siteName) {
-                feedback.textContent = 'Please enter a site name before submitting.';
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-            } else {
-                feedback.textContent = 'Inspection submitted successfully! Good work.';
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                
-                // Update progress
-                if (completeActivity('inspection-submitted')) {
-                    feedback.textContent += ' Progress updated!';
-                }
-            }
+            <div class="section">
+                <h2>📋 Site Details</h2>
+                <p><span class="label">Site Name:</span> ${reportData.siteName}</p>
+                <p><span class="label">Inspection Date:</span> ${reportData.inspectionDate || 'Not specified'}</p>
+                <p><span class="label">Weather Conditions:</span> ${reportData.weatherConditions || 'Not specified'}</p>
+            </div>
             
-            feedback.style.display = 'block';
-        });
+            <div class="section">
+                <h2>🌱 Ecological Assessment</h2>
+                <p><span class="label">TasVeg Ecosystems Present:</span></p>
+                <ul>
+                    ${Object.entries(reportData.ecoTypes).filter(([key, val]) => val).map(([key]) => `<li>${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</li>`).join('') || '<li>None selected</li>'}
+                </ul>
+                <p><span class="label">Vegetation Condition:</span> ${reportData.vegetationCondition || 'Not specified'}</p>
+                <p><span class="label">Threats Observed:</span> ${reportData.threatsObserved || 'None noted'}</p>
+                <p><span class="label">Significant Species:</span> ${reportData.significantSpecies || 'None noted'}</p>
+            </div>
+            
+            <div class="section">
+                <h2>🏛️ Cultural Heritage Assessment</h2>
+                <p><span class="label">Cultural Heritage Features:</span> ${reportData.heritageYes ? '✅ Yes' : reportData.heritageNo ? '❌ No' : 'Not specified'}</p>
+                ${reportData.heritageDescription ? `<p><span class="label">Description:</span> ${reportData.heritageDescription}</p>` : ''}
+                <p><span class="label">Aboriginal Heritage Significance:</span> ${reportData.aboriginalYes ? '✅ Yes' : reportData.aboriginalNo ? '❌ No' : reportData.aboriginalUnknown ? '❓ Unknown' : 'Not specified'}</p>
+            </div>
+            
+            <div class="section">
+                <h2>⚠️ Risk Assessment</h2>
+                <p><span class="label">Erosion Risk:</span> ${reportData.erosionRisk || 'Not assessed'}</p>
+                <p><span class="label">Weed Invasion Risk:</span> ${reportData.weedRisk || 'Not assessed'}</p>
+                <p><span class="label">Recommendations:</span> ${reportData.recommendations || 'None provided'}</p>
+            </div>
+            
+            <div class="footer">
+                <p>Generated by Ecological & Cultural Site Inspection Tool</p>
+                <p>AHCECR309 - Conduct an ecological and cultural site inspection prior to works</p>
+                <p>Tasmanian Context | © 2025</p>
+            </div>
+        </body>
+        </html>
+    `;
+    
+    // Open in new window for printing/saving
+    const reportWindow = window.open('', '_blank', 'width=900,height=700');
+    if (reportWindow) {
+        reportWindow.document.write(reportHTML);
+        reportWindow.document.close();
+        reportWindow.focus();
+        
+        feedback.textContent = '✅ Report generated! Use the Print button (Ctrl+P) to save as PDF, or close the window.';
+        feedback.className = 'feedback correct';
+        feedback.style.display = 'block';
+        
+        // Update progress
+        if (completeActivity('inspection-submitted')) {
+            feedback.textContent += ' Progress updated!';
+        }
+    } else {
+        feedback.textContent = '⚠️ Please allow pop-ups to generate the report.';
+        feedback.className = 'feedback incorrect';
+        feedback.style.display = 'block';
+    }
+});
         
 // Save draft button - ACTUALLY SAVES NOW
 document.getElementById('save-draft').addEventListener('click', () => {
